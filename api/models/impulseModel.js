@@ -43,6 +43,7 @@ const impulseSchema = new mongoose.Schema(
         },
         'Either location or GPS position must be provided',
       ],
+      default: null,
     },
     gpsLocation: {
       type: pointSchema,
@@ -52,6 +53,7 @@ const impulseSchema = new mongoose.Schema(
         },
         'Either location or GPS position must be provided',
       ],
+      default: null,
     },
     description: {
       type: String,
