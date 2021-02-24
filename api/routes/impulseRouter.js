@@ -1,6 +1,7 @@
 const express = require('express');
 const impulseController = require('./../controllers/impulseController');
 const authController = require('./../controllers/authController');
+const openApiController = require('./../controllers/openApiController');
 
 const router = express.Router();
 
@@ -8,7 +9,10 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(impulseController.getAllImpulses)
+  .get(
+    openApiController.getAllImpulses,
+    impulseController.getAllImpulses,
+  )
   .post(
     impulseController.preUpload,
     impulseController.resizeImage,
@@ -18,7 +22,7 @@ router
 
 router
   .route('/:id')
-  .get(impulseController.getImpulse)
+  .get(openApiController.getImpulseById, impulseController.getImpulse)
   .patch(authController.protect, impulseController.updateImpulse)
   .delete(authController.protect, impulseController.deleteImpulse);
 

@@ -9,7 +9,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
 const impulsesRouter = require('./routes/impulseRouter');
-
+const oapi = require('./utils/openAPI');
 const app = express();
 
 // view engine setup
@@ -22,14 +22,39 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Temporary fix until this PR which updates old packages causing this problem is merged https://github.com/wesleytodd/express-openapi/pull/21
+const openApiCSP = {
+  directives: {
+    'default-src': [
+      "'self'",
+      'bootleg-spatial-recall.fra1.digitaloceanspaces.com',
+    ],
+    'script-src': [
+      "'self'",
+      'bootleg-spatial-recall.fra1.digitaloceanspaces.com',
+      'https://stackpath.bootstrapcdn.com/',
+      "'unsafe-inline'",
+      'blob:',
+      'data:',
+    ],
+    'style-src': [
+      "'self'",
+      'bootleg-spatial-recall.fra1.digitaloceanspaces.com',
+      'https://stackpath.bootstrapcdn.com/',
+      "'unsafe-inline'",
+    ],
+    'object-src': ["'none'"],
+    'upgrade-insecure-requests': [],
+  },
+};
+
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: [
+      'default-src': [
         "'self'",
         'bootleg-spatial-recall.fra1.digitaloceanspaces.com',
       ],
-      scriptSrc: ["'self'"],
     },
   }),
 );
@@ -39,8 +64,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/impulses', impulsesRouter);
-app.use('/users', usersRouter);
+app.use('/api/impulses', impulsesRouter);
+app.use('/api/users', usersRouter);
+app.use(helmet.contentSecurityPolicy(openApiCSP), oapi);
 app.use('/', indexRouter);
 
 app.all('*', (req, res, next) => {
