@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<%- include('./head'); %>	</head>
+	<body>
+		<nav><a href="/impulses"><-- back</a></nav>
+		<div class="impulse-page--flex-row">
+			<div class="left-container--flex-column">
+				<div class="info--flex-column--flex-item">
+					<div><h1><%= name %></h1></div>
+					<div><b><%= new Date(date).toDateString() %></b></div>
+					<div><%= location %></div>					
+					<div><%= description %></div>
+				</div>
+				<div class="spectrum-wrapper--flex-column--flex-item">
+					<canvas id='spectrum'></canvas>
+				</div>
+				<div id="controls" class="controls--flex-item disabled">
+					<div id="mix"><span class="no-click key">dry</span><span class="value"></span><span class="key no-click">wet</span></div>
+					<div id="play"><span class="key">play</span><span class="no-click value"></span></div>
+				</div>
+			</div>
+			<div class="right-container--flex-column">
+				<div><img src="<%= imageUrl %>"></div>
+			</div>
+		</div>
+		<audio id="sample" src="<%= sample %>" controls></audio>
+		<audio id="impulse" src="<%= audioUrl %>" controls></audio>
+	</body>
+  <script src="/javascripts/spectogram.js"></script>
+  <script src="/javascripts/base.js"></script>
+</html>

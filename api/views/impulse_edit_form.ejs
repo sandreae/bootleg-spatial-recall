@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<%- include('./head'); %>	</head>
+	</head>
+	<body>
+	<h1><a href="/"><%= title %></a></h1>
+	<h2>Edit Impulse</h2>
+		<form method="POST" _id="<%= _id %>" id="update_form" action="myapi/send">
+			<input type="text" value="<%= name %>" name="name" />
+			<input type="date" value="<%= date.toISOString().substr(0, 10) %>" name="date" />
+			<input type="text" value="<%= location %>" name="location" />
+			<input type="text" value="<%= description %>" name="description" />
+			<input type="text" value="<%= audioUrl %>" name="audioUrl" readonly/>
+			<input type="text" value="<%= imageUrl %>" name="imageUrl" readonly/>
+			<button type="submit">submit</button>
+		</form>
+  </body>
+  <script src="/javascripts/impulses.js"></script>
+</html>

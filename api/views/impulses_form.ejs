@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<%- include('./head'); %>	</head>
+	</head>
+	<body>
+    <h1><a href="/"><%= title %></a></h1>
+    <h2>New Impulse</h2>
+		<form method="post" action="/impulses" enctype="multipart/form-data">
+			<input type="text" placeholder="Name" name="name" />
+			<input type="date" placeholder="Date" name="date" />
+			<input type="text" placeholder="Location" name="location" />
+			<input type="text" placeholder="Description" name="description" />
+			<label for="imageFile">Image file:</label>
+			<input type="file" placeholder="Image" name="imageFile" />
+			<label for="impulseFile">Audio file:</label>
+			<input type="file" placeholder="Audio" name="impulseFile" />
+			<button type="submit">submit</button>
+		</form>
+  </body>
+</html>

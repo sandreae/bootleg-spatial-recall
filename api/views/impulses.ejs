@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<%- include('./head'); %>	</head>
+	</head>
+	<body>
+    <h1><a href="/"><%= title %></a></h1>
+    <h2>Impulses</h2>
+    <% for (var impulse of impulses) { %>
+        <h3><%= impulse.name %></h3>
+        <ul>
+            <li><%= impulse.date %></li>
+            <li><%= impulse.location %></li>
+            <li><%= impulse.description %></li>
+            <li><%= impulse.imageUrl %></li>
+            <li><%= impulse.audioUrl %></li>
+        </ul>
+        <button _id=<%= impulse._id %> class="edit-button">edit</button>
+        <button _id=<%= impulse._id %> class="delete-button">delete</button>
+        <button _id=<%= impulse._id %> class="listen-button">listen</button>
+    <% } %>
+</body>
+<script src="/javascripts/impulses.js"></script>
+</html>
