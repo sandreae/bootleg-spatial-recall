@@ -14,6 +14,7 @@ router
     impulseController.getAllImpulses,
   )
   .post(
+    openApiController.postImpulse,
     impulseController.preUpload,
     impulseController.resizeImage,
     impulseController.uploadFiles,

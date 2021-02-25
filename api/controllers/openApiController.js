@@ -170,3 +170,69 @@ exports.getImpulseById = oapi.validPath({
     },
   },
 });
+
+exports.postImpulse = oapi.path({
+  tags: ['Impulses'],
+  summary: 'Post an impulse.',
+  description: 'API endpoint to upload new impulses.',
+  requestBody: {
+    content: {
+      'multipart/form-data': {
+        schema: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', example: 'M60 underpass' },
+            location: { type: 'string', example: 'Manchester' },
+            gpsLat: {
+              type: 'number',
+              example: 53.435212,
+            },
+            gpsLon: {
+              type: 'number',
+              example: -2.316901,
+            },
+            description: {
+              type: 'string',
+              example: 'Long reverb in M60 underpass.',
+            },
+            date: {
+              type: 'string',
+              example: '2005-06-07T00:00:00.000Z',
+            },
+            imageFile: {
+              type: 'string',
+              format: 'binary',
+            },
+            impulseFile: {
+              type: 'string',
+              format: 'binary',
+            },
+          },
+          required: [
+            'name',
+            'location',
+            'description',
+            'date',
+            'imageFile',
+            'impulseFile',
+          ],
+        },
+      },
+    },
+    encoding: {
+      imageFile: {
+        contentType: 'image/png, image/jpeg',
+      },
+    },
+  },
+  responses: {
+    500: {
+      description: 'Failure',
+      content: {
+        'application/json': {
+          schema: { $ref: '#/components/errors/500' },
+        },
+      },
+    },
+  },
+});
