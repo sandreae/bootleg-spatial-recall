@@ -44,6 +44,7 @@ const openApiCSP = {
       "'unsafe-inline'",
     ],
     'object-src': ["'none'"],
+    'img-src': ['data:'],
     'upgrade-insecure-requests': [],
   },
 };
