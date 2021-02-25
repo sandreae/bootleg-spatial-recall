@@ -74,7 +74,7 @@ oapi.component('errors', '500', {
   },
 });
 
-exports.getAllImpulses = oapi.path({
+exports.getAllImpulses = oapi.validPath({
   tags: ['Impulses'],
   summary: 'Get all impulses.',
   description:
@@ -106,7 +106,7 @@ exports.getAllImpulses = oapi.path({
   },
 });
 
-exports.getImpulseById = oapi.path({
+exports.getImpulseById = oapi.validPath({
   tags: ['Impulses'],
   summary: 'Get one impulse by ID.',
   description:
@@ -169,19 +169,4 @@ exports.getImpulseById = oapi.path({
       },
     },
   },
-  parameters: [
-    {
-      name: 'id',
-      in: 'path',
-      description: 'ID impulse',
-      required: true,
-      schema: {
-        type: 'array',
-        items: {
-          type: 'string',
-        },
-      },
-      style: 'simple',
-    },
-  ],
 });
