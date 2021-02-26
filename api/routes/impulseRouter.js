@@ -19,16 +19,12 @@ router
 
 router
   .route('/:id')
-  .get(openApiController.getImpulseById, impulseController.getImpulse)
-  .put(
-    openApiController.getImpulseById,
+  .get(openApiController.getImpulse, impulseController.getImpulse)
+  .patch(
+    openApiController.patchImpulse,
     authController.protect,
     impulseController.updateImpulse,
   )
-  .delete(
-    openApiController.getImpulseById,
-    authController.protect,
-    impulseController.deleteImpulse,
-  );
+  .delete(authController.protect, impulseController.deleteImpulse);
 
 module.exports = router;

@@ -107,6 +107,7 @@ exports.createImpulse = catchAsync(async (req, res, next) => {
 });
 
 exports.updateImpulse = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   const impulse = await Impulse.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -119,6 +120,9 @@ exports.updateImpulse = catchAsync(async (req, res, next) => {
   if (!impulse) {
     return next(new AppError('No impulse found with that ID', 404));
   }
+
+  console.log('Updated Impulse');
+  console.log(impulse);
 
   res.status(200).json({
     status: 'success',

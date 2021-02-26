@@ -79,12 +79,6 @@
           "responses": {
             "200": {
               "$ref": "#/components/responses/ImpulseSuccessResponse"
-            },
-            "404": {
-              "$ref": "#/components/responses/404Error"
-            },
-            "500": {
-              "$ref": "#/components/responses/500Error"
             }
           }
         }
@@ -117,12 +111,53 @@
             }
           ]
         },
-        "put": {
+        "patch": {
           "tags": [
             "Impulses"
           ],
-          "summary": "Get or modify one impulse by ID.",
-          "description": "API endpoint for getting or modifying an imulse by it's id.",
+          "summary": "Update an impulse.",
+          "description": "API endpoint to update an existing impulse.",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "M60 underpass"
+                    },
+                    "location": {
+                      "type": "string",
+                      "example": "Manchester"
+                    },
+                    "gpsLat": {
+                      "type": "number",
+                      "example": 53.435212
+                    },
+                    "gpsLon": {
+                      "type": "number",
+                      "example": -2.316901
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Long reverb in M60 underpass."
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "2005-06-07T00:00:00.000Z"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "location",
+                    "description",
+                    "date"
+                  ]
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
               "$ref": "#/components/responses/ImpulseSuccessResponse"

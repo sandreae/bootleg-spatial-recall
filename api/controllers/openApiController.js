@@ -143,7 +143,7 @@ exports.getAllImpulses = oapi.path({
   },
 });
 
-exports.getImpulseById = oapi.path({
+exports.getImpulse = oapi.path({
   tags: ['Impulses'],
   summary: 'Get or modify one impulse by ID.',
   description:
@@ -220,8 +220,64 @@ exports.postImpulse = oapi.path({
     },
   },
   responses: {
+    201: { $ref: '#/components/responses/ImpulseSuccessResponse' },
+    // 404: { $ref: '#/components/responses/404Error' },
+    // 500: { $ref: '#/components/responses/500Error' },
+  },
+});
+
+exports.patchImpulse = oapi.path({
+  tags: ['Impulses'],
+  summary: 'Update an impulse.',
+  description: 'API endpoint to update an existing impulse.',
+  requestBody: {
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', example: 'M60 underpass' },
+            location: { type: 'string', example: 'Manchester' },
+            gpsLat: {
+              type: 'number',
+              example: 53.435212,
+            },
+            gpsLon: {
+              type: 'number',
+              example: -2.316901,
+            },
+            description: {
+              type: 'string',
+              example: 'Long reverb in M60 underpass.',
+            },
+            date: {
+              type: 'string',
+              example: '2005-06-07T00:00:00.000Z',
+            },
+          },
+          required: ['name', 'location', 'description', 'date'],
+        },
+      },
+    },
+  },
+  responses: {
     200: { $ref: '#/components/responses/ImpulseSuccessResponse' },
     // 404: { $ref: '#/components/responses/404Error' },
     // 500: { $ref: '#/components/responses/500Error' },
   },
+  parameters: [
+    {
+      name: 'id',
+      in: 'path',
+      description: 'ID of impulse to use',
+      required: true,
+      schema: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+      style: 'simple',
+    },
+  ],
 });
