@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 process.on('uncaughtException', (err) => {
@@ -8,23 +7,10 @@ process.on('uncaughtException', (err) => {
 });
 
 dotenv.config({ path: '../.env' });
+
+require('./db');
 const app = require('./app');
 
-const mongoURI = process.env.MONGO_URL;
-const options = {
-  keepAlive: true,
-  keepAliveInitialDelay: 300000,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-};
-
-mongoose
-  .connect(mongoURI, options)
-  .then(() => console.log('DB connection successful!'));
-
-// Export express app
 module.exports = { prefix: false, handler: app };
 
 // Start standalone server if directly running
