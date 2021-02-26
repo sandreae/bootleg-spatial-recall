@@ -185,6 +185,151 @@
             }
           }
         }
+      },
+      "/api/impulses/{id}": {
+        "get": {
+          "tags": [
+            "Impulses"
+          ],
+          "summary": "Get one impulse by ID.",
+          "description": "API endpoint that returns impulses from the database by it's id.",
+          "responses": {
+            "200": {
+              "description": "Succesful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "success"
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "impulse": {
+                            "$ref": "#/components/schemas/Impulse"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Failure",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "fail"
+                      },
+                      "error": {
+                        "type": "object",
+                        "properties": {
+                          "statusCode": {
+                            "type": "integer",
+                            "example": 404
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "fail"
+                          },
+                          "isOperational": {
+                            "type": "boolean",
+                            "example": true
+                          }
+                        }
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "No impulse found with that ID"
+                      },
+                      "stack": {
+                        "type": "string",
+                        "example": "Error: long error message"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Failure",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "error"
+                      },
+                      "error": {
+                        "type": "object",
+                        "properties": {
+                          "stringValue": {
+                            "type": "string",
+                            "example": "6035008a676ffc23ca7e408"
+                          },
+                          "kind": {
+                            "type": "string",
+                            "example": "ObjectId"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "6035008a676ffc23ca7e408"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "_id"
+                          },
+                          "reason": {
+                            "type": "object",
+                            "properties": {}
+                          },
+                          "statusCode": {
+                            "type": "integer",
+                            "format": "int32",
+                            "example": "500"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "error"
+                          }
+                        }
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Long error message"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "description": "ID of impulse to use",
+              "style": "simple"
+            }
+          ]
+        }
       }
     },
     "components": {

@@ -96,7 +96,7 @@ exports.getImpulseById = oapi.path({
                 properties: {
                   statusCode: { type: 'integer', example: 404 },
                   status: { type: 'string', example: 'fail' },
-                  isOperational: { type: 'bool', example: true },
+                  isOperational: { type: 'boolean', example: true },
                 },
               },
               message: {
@@ -167,6 +167,21 @@ exports.getImpulseById = oapi.path({
       },
     },
   },
+  parameters: [
+    {
+      name: 'id',
+      in: 'path',
+      description: 'ID of impulse to use',
+      required: true,
+      schema: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+      style: 'simple',
+    },
+  ],
 });
 
 exports.postImpulse = oapi.path({

@@ -19,7 +19,7 @@ router
 
 router
   .route('/:id')
-  .get(impulseController.getImpulse)
+  .get(openApiController.getImpulseById, impulseController.getImpulse)
   .patch(authController.protect, impulseController.updateImpulse)
   .delete(authController.protect, impulseController.deleteImpulse);
 
