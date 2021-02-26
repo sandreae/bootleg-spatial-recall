@@ -80,7 +80,13 @@ app.use(
       fileFilter: uploadHelpers.fileFilter,
     },
     apiSpec: './api/openapi.json',
-    validateResponses: false,
+    validateResponses: {
+      // coerceTypes: true,
+      onError: (error, body) => {
+        console.log(`Response body fails validation: `, error);
+        console.debug(body);
+      },
+    },
     validateRequests: true,
   }),
 );

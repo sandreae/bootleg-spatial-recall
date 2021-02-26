@@ -15,35 +15,7 @@
           "description": "API endpoint that returns all stored impulses from the database.",
           "responses": {
             "200": {
-              "description": "success",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "Success"
-                      },
-                      "results": {
-                        "type": "integer",
-                        "example": 1
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "impulses": {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/components/schemas/Impulse"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+              "$ref": "#/components/responses/ImpulseSuccessResponse"
             }
           }
         },
@@ -106,82 +78,13 @@
           },
           "responses": {
             "200": {
-              "description": "Succesful",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "success"
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "impulse": {
-                            "$ref": "#/components/schemas/Impulse"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+              "$ref": "#/components/responses/ImpulseSuccessResponse"
+            },
+            "404": {
+              "$ref": "#/components/responses/404Error"
             },
             "500": {
-              "description": "Failure",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "error"
-                      },
-                      "error": {
-                        "type": "object",
-                        "properties": {
-                          "stringValue": {
-                            "type": "string",
-                            "example": "6035008a676ffc23ca7e408"
-                          },
-                          "kind": {
-                            "type": "string",
-                            "example": "ObjectId"
-                          },
-                          "value": {
-                            "type": "string",
-                            "example": "6035008a676ffc23ca7e408"
-                          },
-                          "path": {
-                            "type": "string",
-                            "example": "_id"
-                          },
-                          "reason": {
-                            "type": "object",
-                            "properties": {}
-                          },
-                          "statusCode": {
-                            "type": "integer",
-                            "format": "int32",
-                            "example": "500"
-                          },
-                          "status": {
-                            "type": "string",
-                            "example": "error"
-                          }
-                        }
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "Long error message"
-                      }
-                    }
-                  }
-                }
-              }
+              "$ref": "#/components/responses/500Error"
             }
           }
         }
@@ -193,166 +96,9 @@
           ],
           "summary": "Get or modify one impulse by ID.",
           "description": "API endpoint for getting or modifying an imulse by it's id.",
-          "requestBody": {
-            "content": {
-              "multipart/form-data": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "example": "M60 underpass"
-                    },
-                    "location": {
-                      "type": "string",
-                      "example": "Manchester"
-                    },
-                    "gpsLat": {
-                      "type": "number",
-                      "example": 53.435212
-                    },
-                    "gpsLon": {
-                      "type": "number",
-                      "example": -2.316901
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": "Long reverb in M60 underpass."
-                    },
-                    "date": {
-                      "type": "string",
-                      "example": "2005-06-07T00:00:00.000Z"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "location",
-                    "description",
-                    "date"
-                  ]
-                }
-              }
-            }
-          },
           "responses": {
             "200": {
-              "description": "Succesful",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "success"
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "impulse": {
-                            "$ref": "#/components/schemas/Impulse"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Failure",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "fail"
-                      },
-                      "error": {
-                        "type": "object",
-                        "properties": {
-                          "statusCode": {
-                            "type": "integer",
-                            "example": 404
-                          },
-                          "status": {
-                            "type": "string",
-                            "example": "fail"
-                          },
-                          "isOperational": {
-                            "type": "boolean",
-                            "example": true
-                          }
-                        }
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "No impulse found with that ID"
-                      },
-                      "stack": {
-                        "type": "string",
-                        "example": "Error: long error message"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Failure",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "error"
-                      },
-                      "error": {
-                        "type": "object",
-                        "properties": {
-                          "stringValue": {
-                            "type": "string",
-                            "example": "6035008a676ffc23ca7e408"
-                          },
-                          "kind": {
-                            "type": "string",
-                            "example": "ObjectId"
-                          },
-                          "value": {
-                            "type": "string",
-                            "example": "6035008a676ffc23ca7e408"
-                          },
-                          "path": {
-                            "type": "string",
-                            "example": "_id"
-                          },
-                          "reason": {
-                            "type": "object",
-                            "properties": {}
-                          },
-                          "statusCode": {
-                            "type": "integer",
-                            "format": "int32",
-                            "example": "500"
-                          },
-                          "status": {
-                            "type": "string",
-                            "example": "error"
-                          }
-                        }
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "Long error message"
-                      }
-                    }
-                  }
-                }
-              }
+              "$ref": "#/components/responses/ImpulseSuccessResponse"
             }
           },
           "parameters": [
@@ -377,166 +123,36 @@
           ],
           "summary": "Get or modify one impulse by ID.",
           "description": "API endpoint for getting or modifying an imulse by it's id.",
-          "requestBody": {
-            "content": {
-              "multipart/form-data": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "example": "M60 underpass"
-                    },
-                    "location": {
-                      "type": "string",
-                      "example": "Manchester"
-                    },
-                    "gpsLat": {
-                      "type": "number",
-                      "example": 53.435212
-                    },
-                    "gpsLon": {
-                      "type": "number",
-                      "example": -2.316901
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": "Long reverb in M60 underpass."
-                    },
-                    "date": {
-                      "type": "string",
-                      "example": "2005-06-07T00:00:00.000Z"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "location",
-                    "description",
-                    "date"
-                  ]
-                }
-              }
-            }
-          },
           "responses": {
             "200": {
-              "description": "Succesful",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "success"
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "impulse": {
-                            "$ref": "#/components/schemas/Impulse"
-                          }
-                        }
-                      }
-                    }
-                  }
+              "$ref": "#/components/responses/ImpulseSuccessResponse"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
                 }
-              }
-            },
-            "404": {
-              "description": "Failure",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "fail"
-                      },
-                      "error": {
-                        "type": "object",
-                        "properties": {
-                          "statusCode": {
-                            "type": "integer",
-                            "example": 404
-                          },
-                          "status": {
-                            "type": "string",
-                            "example": "fail"
-                          },
-                          "isOperational": {
-                            "type": "boolean",
-                            "example": true
-                          }
-                        }
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "No impulse found with that ID"
-                      },
-                      "stack": {
-                        "type": "string",
-                        "example": "Error: long error message"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Failure",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "error"
-                      },
-                      "error": {
-                        "type": "object",
-                        "properties": {
-                          "stringValue": {
-                            "type": "string",
-                            "example": "6035008a676ffc23ca7e408"
-                          },
-                          "kind": {
-                            "type": "string",
-                            "example": "ObjectId"
-                          },
-                          "value": {
-                            "type": "string",
-                            "example": "6035008a676ffc23ca7e408"
-                          },
-                          "path": {
-                            "type": "string",
-                            "example": "_id"
-                          },
-                          "reason": {
-                            "type": "object",
-                            "properties": {}
-                          },
-                          "statusCode": {
-                            "type": "integer",
-                            "format": "int32",
-                            "example": "500"
-                          },
-                          "status": {
-                            "type": "string",
-                            "example": "error"
-                          }
-                        }
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "Long error message"
-                      }
-                    }
-                  }
-                }
-              }
+              },
+              "description": "ID of impulse to use",
+              "style": "simple"
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Impulses"
+          ],
+          "summary": "Get or modify one impulse by ID.",
+          "description": "API endpoint for getting or modifying an imulse by it's id.",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/ImpulseSuccessResponse"
             }
           },
           "parameters": [
@@ -623,6 +239,134 @@
             "createdAt": "2021-02-23T13:21:24.816Z",
             "updatedAt": "2021-02-23T13:21:24.816Z",
             "slug": "m60-underpass"
+          }
+        }
+      },
+      "responses": {
+        "ImpulseSuccessResponse": {
+          "description": "success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "Success"
+                  },
+                  "results": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "impulses": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Impulse"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500Error": {
+          "description": "Failure",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "error"
+                  },
+                  "error": {
+                    "type": "object",
+                    "properties": {
+                      "stringValue": {
+                        "type": "string",
+                        "example": "6035008a676ffc23ca7e408"
+                      },
+                      "kind": {
+                        "type": "string",
+                        "example": "ObjectId"
+                      },
+                      "value": {
+                        "type": "string",
+                        "example": "6035008a676ffc23ca7e408"
+                      },
+                      "path": {
+                        "type": "string",
+                        "example": "_id"
+                      },
+                      "reason": {
+                        "type": "object",
+                        "properties": {}
+                      },
+                      "statusCode": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": "500"
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "error"
+                      }
+                    }
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Long error message"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404Error": {
+          "description": "Failure",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "fail"
+                  },
+                  "error": {
+                    "type": "object",
+                    "properties": {
+                      "statusCode": {
+                        "type": "integer",
+                        "example": 404
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "fail"
+                      },
+                      "isOperational": {
+                        "type": "boolean",
+                        "example": true
+                      }
+                    }
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "No impulse found with that ID"
+                  },
+                  "stack": {
+                    "type": "string",
+                    "example": "Error: long error message"
+                  }
+                }
+              }
+            }
           }
         }
       }

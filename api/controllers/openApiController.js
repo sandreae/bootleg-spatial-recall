@@ -48,6 +48,89 @@ oapi.component('responses', 'ImpulseSuccessResponse', {
     },
   },
 });
+oapi.component('responses', '500Error', {
+  description: 'Failure',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          status: {
+            type: 'string',
+            example: 'error',
+          },
+          error: {
+            type: 'object',
+            properties: {
+              stringValue: {
+                type: 'string',
+                example: '6035008a676ffc23ca7e408',
+              },
+              kind: {
+                type: 'string',
+                example: 'ObjectId',
+              },
+              value: {
+                type: 'string',
+                example: '6035008a676ffc23ca7e408',
+              },
+              path: {
+                type: 'string',
+                example: '_id',
+              },
+              reason: {
+                type: 'object',
+                properties: {},
+              },
+              statusCode: {
+                type: 'integer',
+                format: 'int32',
+                example: '500',
+              },
+              status: {
+                type: 'string',
+                example: 'error',
+              },
+            },
+          },
+          message: {
+            type: 'string',
+            example: 'Long error message',
+          },
+        },
+      },
+    },
+  },
+});
+oapi.component('responses', '404Error', {
+  description: 'Failure',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'fail' },
+          error: {
+            type: 'object',
+            properties: {
+              statusCode: { type: 'integer', example: 404 },
+              status: { type: 'string', example: 'fail' },
+              isOperational: { type: 'boolean', example: true },
+            },
+          },
+          message: {
+            type: 'string',
+            example: 'No impulse found with that ID',
+          },
+          stack: {
+            type: 'string',
+            example: 'Error: long error message',
+          },
+        },
+      },
+    },
+  },
+});
 
 exports.getAllImpulses = oapi.path({
   tags: ['Impulses'],
@@ -56,6 +139,7 @@ exports.getAllImpulses = oapi.path({
     'API endpoint that returns all stored impulses from the database.',
   responses: {
     200: { $ref: '#/components/responses/ImpulseSuccessResponse' },
+    // 500: { $ref: '#/components/responses/500Error' },
   },
 });
 
@@ -64,145 +148,10 @@ exports.getImpulseById = oapi.path({
   summary: 'Get or modify one impulse by ID.',
   description:
     "API endpoint for getting or modifying an imulse by it's id.",
-  requestBody: {
-    content: {
-      'multipart/form-data': {
-        schema: {
-          type: 'object',
-          properties: {
-            name: {
-              type: 'string',
-              example: 'M60 underpass',
-            },
-            location: {
-              type: 'string',
-              example: 'Manchester',
-            },
-            gpsLat: {
-              type: 'number',
-              example: 53.435212,
-            },
-            gpsLon: {
-              type: 'number',
-              example: -2.316901,
-            },
-            description: {
-              type: 'string',
-              example: 'Long reverb in M60 underpass.',
-            },
-            date: {
-              type: 'string',
-              example: '2005-06-07T00:00:00.000Z',
-            },
-          },
-          required: ['name', 'location', 'description', 'date'],
-        },
-      },
-    },
-  },
   responses: {
-    200: {
-      description: 'Succesful',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              status: { type: 'string', example: 'success' },
-              data: {
-                type: 'object',
-                properties: {
-                  impulse: { $ref: '#/components/schemas/Impulse' },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    404: {
-      description: 'Failure',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              status: { type: 'string', example: 'fail' },
-              error: {
-                type: 'object',
-                properties: {
-                  statusCode: { type: 'integer', example: 404 },
-                  status: { type: 'string', example: 'fail' },
-                  isOperational: { type: 'boolean', example: true },
-                },
-              },
-              message: {
-                type: 'string',
-                example: 'No impulse found with that ID',
-              },
-              stack: {
-                type: 'string',
-                example: 'Error: long error message',
-              },
-            },
-          },
-        },
-      },
-    },
-    500: {
-      description: 'Failure',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              status: {
-                type: 'string',
-                example: 'error',
-              },
-              error: {
-                type: 'object',
-                properties: {
-                  stringValue: {
-                    type: 'string',
-                    example: '6035008a676ffc23ca7e408',
-                  },
-                  kind: {
-                    type: 'string',
-                    example: 'ObjectId',
-                  },
-                  value: {
-                    type: 'string',
-                    example: '6035008a676ffc23ca7e408',
-                  },
-                  path: {
-                    type: 'string',
-                    example: '_id',
-                  },
-                  reason: {
-                    type: 'object',
-                    properties: {},
-                  },
-                  statusCode: {
-                    type: 'integer',
-                    format: 'int32',
-                    example: '500',
-                  },
-                  status: {
-                    type: 'string',
-                    example: 'error',
-                  },
-                },
-              },
-              message: {
-                type: 'string',
-                example: 'Long error message',
-              },
-            },
-          },
-        },
-      },
-    },
+    200: { $ref: '#/components/responses/ImpulseSuccessResponse' },
+    // 404: { $ref: '#/components/responses/404Error' },
+    // 500: { $ref: '#/components/responses/500Error' },
   },
   parameters: [
     {
@@ -271,78 +220,8 @@ exports.postImpulse = oapi.path({
     },
   },
   responses: {
-    200: {
-      description: 'Succesful',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              status: { type: 'string', example: 'success' },
-              data: {
-                type: 'object',
-                properties: {
-                  impulse: { $ref: '#/components/schemas/Impulse' },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    500: {
-      description: 'Failure',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              status: {
-                type: 'string',
-                example: 'error',
-              },
-              error: {
-                type: 'object',
-                properties: {
-                  stringValue: {
-                    type: 'string',
-                    example: '6035008a676ffc23ca7e408',
-                  },
-                  kind: {
-                    type: 'string',
-                    example: 'ObjectId',
-                  },
-                  value: {
-                    type: 'string',
-                    example: '6035008a676ffc23ca7e408',
-                  },
-                  path: {
-                    type: 'string',
-                    example: '_id',
-                  },
-                  reason: {
-                    type: 'object',
-                    properties: {},
-                  },
-                  statusCode: {
-                    type: 'integer',
-                    format: 'int32',
-                    example: '500',
-                  },
-                  status: {
-                    type: 'string',
-                    example: 'error',
-                  },
-                },
-              },
-              message: {
-                type: 'string',
-                example: 'Long error message',
-              },
-            },
-          },
-        },
-      },
-    },
+    200: { $ref: '#/components/responses/ImpulseSuccessResponse' },
+    // 404: { $ref: '#/components/responses/404Error' },
+    // 500: { $ref: '#/components/responses/500Error' },
   },
 });
