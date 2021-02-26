@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const ObjectID = require('mongodb').ObjectID;
 
+mongoose.Schema.ObjectId.get((v) => (v != null ? v.toString() : v));
+
 const impulseSchema = new mongoose.Schema(
   {
     name: {
