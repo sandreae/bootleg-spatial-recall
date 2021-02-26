@@ -1,6 +1,5 @@
 const aws = require('aws-sdk');
 
-const APIFeatures = require('./../utils/apiFeatures');
 const AppError = require('./../utils/appError');
 const uploadHelpers = require('./../utils/uploadHelpers');
 const Impulse = require('./../models/impulseModel');
@@ -52,12 +51,14 @@ exports.processFiles = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllImpulses = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Impulse.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields();
+  // This is how to use the APIfeatures
+  //
+  // const features = new APIFeatures(Impulse.find(), req.query)
+  //   .filter()
+  //   .sort()
+  //   .limitFields();
 
-  const impulses = await features.query;
+  const impulses = await Impulse.find();
 
   res.status(200).json({
     status: 'success',
