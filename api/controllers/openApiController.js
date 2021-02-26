@@ -24,57 +24,9 @@ swaggerImpulseSchema.example = {
   slug: 'm60-underpass',
 };
 
-oapi.component('schema', 'Impulse', swaggerImpulseSchema);
+oapi.component('schemas', 'Impulse', swaggerImpulseSchema);
 
-oapi.component('errors', '500', {
-  title: '500',
-  properties: {
-    status: {
-      type: 'string',
-      example: 'error',
-    },
-    error: {
-      type: 'object',
-      properties: {
-        stringValue: {
-          type: 'string',
-          example: '6035008a676ffc23ca7e408',
-        },
-        kind: {
-          type: 'string',
-          example: 'ObjectId',
-        },
-        value: {
-          type: 'string',
-          example: '6035008a676ffc23ca7e408',
-        },
-        path: {
-          type: 'string',
-          example: '_id',
-        },
-        reason: {
-          type: 'object',
-          properties: {},
-        },
-        statusCode: {
-          type: 'integer',
-          format: 'int32',
-          example: '500',
-        },
-        status: {
-          type: 'string',
-          example: 'error',
-        },
-      },
-    },
-    message: {
-      type: 'string',
-      example: 'Long error message',
-    },
-  },
-});
-
-exports.getAllImpulses = oapi.validPath({
+exports.getAllImpulses = oapi.path({
   tags: ['Impulses'],
   summary: 'Get all impulses.',
   description:
@@ -94,7 +46,7 @@ exports.getAllImpulses = oapi.validPath({
                 properties: {
                   impulses: {
                     type: 'array',
-                    items: { $ref: '#/components/schema/Impulse' },
+                    items: { $ref: '#/components/schemas/Impulse' },
                   },
                 },
               },
@@ -106,7 +58,7 @@ exports.getAllImpulses = oapi.validPath({
   },
 });
 
-exports.getImpulseById = oapi.validPath({
+exports.getImpulseById = oapi.path({
   tags: ['Impulses'],
   summary: 'Get one impulse by ID.',
   description:
@@ -123,7 +75,7 @@ exports.getImpulseById = oapi.validPath({
               data: {
                 type: 'object',
                 properties: {
-                  impulse: { $ref: '#/components/schema/Impulse' },
+                  impulse: { $ref: '#/components/schemas/Impulse' },
                 },
               },
             },
@@ -164,7 +116,53 @@ exports.getImpulseById = oapi.validPath({
       description: 'Failure',
       content: {
         'application/json': {
-          schema: { $ref: '#/components/errors/500' },
+          schema: {
+            type: 'object',
+            properties: {
+              status: {
+                type: 'string',
+                example: 'error',
+              },
+              error: {
+                type: 'object',
+                properties: {
+                  stringValue: {
+                    type: 'string',
+                    example: '6035008a676ffc23ca7e408',
+                  },
+                  kind: {
+                    type: 'string',
+                    example: 'ObjectId',
+                  },
+                  value: {
+                    type: 'string',
+                    example: '6035008a676ffc23ca7e408',
+                  },
+                  path: {
+                    type: 'string',
+                    example: '_id',
+                  },
+                  reason: {
+                    type: 'object',
+                    properties: {},
+                  },
+                  statusCode: {
+                    type: 'integer',
+                    format: 'int32',
+                    example: '500',
+                  },
+                  status: {
+                    type: 'string',
+                    example: 'error',
+                  },
+                },
+              },
+              message: {
+                type: 'string',
+                example: 'Long error message',
+              },
+            },
+          },
         },
       },
     },
@@ -219,18 +217,59 @@ exports.postImpulse = oapi.path({
         },
       },
     },
-    encoding: {
-      imageFile: {
-        contentType: 'image/png, image/jpeg',
-      },
-    },
   },
   responses: {
     500: {
       description: 'Failure',
       content: {
         'application/json': {
-          schema: { $ref: '#/components/errors/500' },
+          schema: {
+            type: 'object',
+            properties: {
+              status: {
+                type: 'string',
+                example: 'error',
+              },
+              error: {
+                type: 'object',
+                properties: {
+                  stringValue: {
+                    type: 'string',
+                    example: '6035008a676ffc23ca7e408',
+                  },
+                  kind: {
+                    type: 'string',
+                    example: 'ObjectId',
+                  },
+                  value: {
+                    type: 'string',
+                    example: '6035008a676ffc23ca7e408',
+                  },
+                  path: {
+                    type: 'string',
+                    example: '_id',
+                  },
+                  reason: {
+                    type: 'object',
+                    properties: {},
+                  },
+                  statusCode: {
+                    type: 'integer',
+                    format: 'int32',
+                    example: '500',
+                  },
+                  status: {
+                    type: 'string',
+                    example: 'error',
+                  },
+                },
+              },
+              message: {
+                type: 'string',
+                example: 'Long error message',
+              },
+            },
+          },
         },
       },
     },

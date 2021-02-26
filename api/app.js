@@ -1,15 +1,20 @@
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const logger = require('morgan');
+const multer = require('multer');
 const helmet = require('helmet');
+const OpenApiValidator = require('express-openapi-validator');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
-const impulsesRouter = require('./routes/impulseRouter');
+const impulseRouter = require('./routes/impulseRouter');
+const uploadHelpers = require('./utils/uploadHelpers');
 const oapi = require('./utils/openAPI');
+const multerMemoryStorage = multer.memoryStorage();
 const app = express();
 
 // view engine setup
@@ -17,8 +22,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.text());
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -60,14 +69,27 @@ app.use(
   }),
 );
 
+app.use(helmet.contentSecurityPolicy(openApiCSP), oapi);
+
+app.use(
+  OpenApiValidator.middleware({
+    fileUploader: {
+      storage: multerMemoryStorage,
+      fileFilter: uploadHelpers.fileFilter,
+    },
+    apiSpec: './api/openapi.json',
+    validateResponses: false,
+    validateRequests: true,
+  }),
+);
+
 app.use(function (req, res, next) {
   res.title = 'Bootleg Spatial Recall';
   next();
 });
 
-app.use('/api/impulses', impulsesRouter);
+app.use('/api/impulses', impulseRouter);
 app.use('/api/users', usersRouter);
-app.use(helmet.contentSecurityPolicy(openApiCSP), oapi);
 app.use('/', indexRouter);
 
 app.all('*', (req, res, next) => {

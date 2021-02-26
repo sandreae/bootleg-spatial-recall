@@ -5,25 +5,21 @@ const openApiController = require('./../controllers/openApiController');
 
 const router = express.Router();
 
-// router.param('id', impulseController.checkID);
-
 router
-  .route('/')
+  .route('')
   .get(
     openApiController.getAllImpulses,
     impulseController.getAllImpulses,
   )
   .post(
     openApiController.postImpulse,
-    impulseController.preUpload,
-    impulseController.resizeImage,
-    impulseController.uploadFiles,
+    impulseController.processFiles,
     impulseController.createImpulse,
   );
 
 router
   .route('/:id')
-  .get(openApiController.getImpulseById, impulseController.getImpulse)
+  .get(impulseController.getImpulse)
   .patch(authController.protect, impulseController.updateImpulse)
   .delete(authController.protect, impulseController.deleteImpulse);
 
