@@ -2,18 +2,6 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const ObjectID = require('mongodb').ObjectID;
 
-const pointSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    enum: ['Point'],
-    required: true,
-  },
-  coordinates: {
-    type: [Number],
-    required: true,
-  },
-});
-
 const impulseSchema = new mongoose.Schema(
   {
     name: {
@@ -37,23 +25,20 @@ const impulseSchema = new mongoose.Schema(
     },
     location: {
       type: String,
-      required: [
-        function () {
-          return this.gpsLocation == null;
-        },
-        'Either location or GPS position must be provided',
-      ],
-      default: null,
+      required: [true, 'An impulse must have a location'],
     },
     gpsLocation: {
-      type: pointSchema,
-      required: [
-        function () {
-          return this.location == null;
+      type: Object,
+      default: {
+        latitude: {
+          type: Number,
+          default: 0,
         },
-        'Either location or GPS position must be provided',
-      ],
-      default: null,
+        longitude: {
+          type: Number,
+          default: 0,
+        },
+      },
     },
     description: {
       type: String,
@@ -88,7 +73,6 @@ impulseSchema.statics.listImpulses = async function () {
 };
 
 impulseSchema.statics.deleteImpulse = async function (_id) {
-  console.log(_id);
   return await this.deleteOne({ _id: ObjectID(_id) });
 };
 
