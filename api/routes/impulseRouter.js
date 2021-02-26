@@ -1,25 +1,34 @@
 const express = require('express');
 const impulseController = require('./../controllers/impulseController');
 const authController = require('./../controllers/authController');
+const openApiController = require('./../controllers/openApiController');
 
 const router = express.Router();
 
-// router.param('id', impulseController.checkID);
-
 router
-  .route('/')
-  .get(impulseController.getAllImpulses)
+  .route('')
+  .get(
+    openApiController.getAllImpulses,
+    impulseController.getAllImpulses,
+  )
   .post(
-    impulseController.preUpload,
-    impulseController.resizeImage,
-    impulseController.uploadFiles,
+    openApiController.postImpulse,
+    impulseController.processFiles,
     impulseController.createImpulse,
   );
 
 router
   .route('/:id')
-  .get(impulseController.getImpulse)
-  .patch(authController.protect, impulseController.updateImpulse)
-  .delete(authController.protect, impulseController.deleteImpulse);
+  .get(openApiController.getImpulse, impulseController.getImpulse)
+  .patch(
+    openApiController.patchImpulse,
+    authController.protect,
+    impulseController.updateImpulse,
+  )
+  .delete(
+    openApiController.deleteImpulse,
+    authController.protect,
+    impulseController.deleteImpulse,
+  );
 
 module.exports = router;

@@ -2,17 +2,7 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const ObjectID = require('mongodb').ObjectID;
 
-const pointSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    enum: ['Point'],
-    required: true,
-  },
-  coordinates: {
-    type: [Number],
-    required: true,
-  },
-});
+mongoose.Schema.ObjectId.get((v) => (v != null ? v.toString() : v));
 
 const impulseSchema = new mongoose.Schema(
   {
@@ -37,34 +27,27 @@ const impulseSchema = new mongoose.Schema(
     },
     location: {
       type: String,
-      required: [
-        function () {
-          return this.gpsLocation == null;
-        },
-        'Either location or GPS position must be provided',
-      ],
+      required: [true, 'An impulse must have a location'],
     },
     gpsLocation: {
-      type: pointSchema,
-      required: [
-        function () {
-          return this.location == null;
-        },
-        'Either location or GPS position must be provided',
-      ],
+      type: Object,
+      default: {
+        latitude: Number,
+        longitude: Number,
+      },
     },
     description: {
       type: String,
       required: true,
     },
-    audioUrl: {
+    audioFile: {
       type: String,
       required: [
         true,
         'An audio sample must be uploaded with each impulse entry',
       ],
     },
-    imageUrl: {
+    imageFile: {
       type: String,
       required: [
         true,
@@ -86,7 +69,6 @@ impulseSchema.statics.listImpulses = async function () {
 };
 
 impulseSchema.statics.deleteImpulse = async function (_id) {
-  console.log(_id);
   return await this.deleteOne({ _id: ObjectID(_id) });
 };
 
