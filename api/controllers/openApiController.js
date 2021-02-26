@@ -10,8 +10,8 @@ swaggerImpulseSchema.example = {
   name: 'M60 underpass',
   location: 'Manchester',
   gpsLocation: {
-    type: 'Point',
-    coordinates: [53.435212, -2.316901],
+    latitidue: 53.435212,
+    longitude: -2.316901,
   },
   description: 'Long reverb in M60 underpass.',
   date: '2005-06-07T00:00:00.000Z',
@@ -219,6 +219,25 @@ exports.postImpulse = oapi.path({
     },
   },
   responses: {
+    200: {
+      description: 'Succesful',
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              status: { type: 'string', example: 'success' },
+              data: {
+                type: 'object',
+                properties: {
+                  impulse: { $ref: '#/components/schemas/Impulse' },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     500: {
       description: 'Failure',
       content: {
