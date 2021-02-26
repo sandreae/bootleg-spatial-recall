@@ -2,10 +2,12 @@
 
 - Express API
 - Nuxt frontend
+- openAPI + validation
+- swaggerUI
+- Ngrok
 - Jest
 - ESlint & Prettier
 - Github Actions
-- Ngrok
 
 ## Build Setup
 
