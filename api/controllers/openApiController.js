@@ -60,9 +60,45 @@ exports.getAllImpulses = oapi.path({
 
 exports.getImpulseById = oapi.path({
   tags: ['Impulses'],
-  summary: 'Get one impulse by ID.',
+  summary: 'Get or modify one impulse by ID.',
   description:
-    "API endpoint that returns impulses from the database by it's id.",
+    "API endpoint for getting or modifying an imulse by it's id.",
+  requestBody: {
+    content: {
+      'multipart/form-data': {
+        schema: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string',
+              example: 'M60 underpass',
+            },
+            location: {
+              type: 'string',
+              example: 'Manchester',
+            },
+            gpsLat: {
+              type: 'number',
+              example: 53.435212,
+            },
+            gpsLon: {
+              type: 'number',
+              example: -2.316901,
+            },
+            description: {
+              type: 'string',
+              example: 'Long reverb in M60 underpass.',
+            },
+            date: {
+              type: 'string',
+              example: '2005-06-07T00:00:00.000Z',
+            },
+          },
+          required: ['name', 'location', 'description', 'date'],
+        },
+      },
+    },
+  },
   responses: {
     200: {
       description: 'Succesful',

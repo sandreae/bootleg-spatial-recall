@@ -20,7 +20,11 @@ router
 router
   .route('/:id')
   .get(openApiController.getImpulseById, impulseController.getImpulse)
-  .patch(authController.protect, impulseController.updateImpulse)
+  .put(
+    openApiController.getImpulseById,
+    authController.protect,
+    impulseController.updateImpulse,
+  )
   .delete(authController.protect, impulseController.deleteImpulse);
 
 module.exports = router;
