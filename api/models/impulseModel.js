@@ -30,14 +30,8 @@ const impulseSchema = new mongoose.Schema(
     gpsLocation: {
       type: Object,
       default: {
-        latitude: {
-          type: Number,
-          default: 0,
-        },
-        longitude: {
-          type: Number,
-          default: 0,
-        },
+        latitude: Number,
+        longitude: Number,
       },
     },
     description: {
