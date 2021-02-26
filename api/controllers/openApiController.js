@@ -281,3 +281,29 @@ exports.patchImpulse = oapi.path({
     },
   ],
 });
+
+exports.deleteImpulse = oapi.path({
+  tags: ['Impulses'],
+  summary: 'Delete one impulse by ID.',
+  description: "API endpoint for deleting an imulse by it's id.",
+  responses: {
+    204: {
+      description: 'The resource was deleted successfully.',
+    },
+  },
+  parameters: [
+    {
+      name: 'id',
+      in: 'path',
+      description: 'ID of impulse to use',
+      required: true,
+      schema: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+      style: 'simple',
+    },
+  ],
+});

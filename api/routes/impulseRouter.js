@@ -25,6 +25,10 @@ router
     authController.protect,
     impulseController.updateImpulse,
   )
-  .delete(authController.protect, impulseController.deleteImpulse);
+  .delete(
+    openApiController.deleteImpulse,
+    authController.protect,
+    impulseController.deleteImpulse,
+  );
 
 module.exports = router;

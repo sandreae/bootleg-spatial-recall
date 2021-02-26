@@ -77,7 +77,7 @@
             }
           },
           "responses": {
-            "200": {
+            "201": {
               "$ref": "#/components/responses/ImpulseSuccessResponse"
             }
           }
@@ -183,11 +183,11 @@
           "tags": [
             "Impulses"
           ],
-          "summary": "Get or modify one impulse by ID.",
-          "description": "API endpoint for getting or modifying an imulse by it's id.",
+          "summary": "Delete one impulse by ID.",
+          "description": "API endpoint for deleting an imulse by it's id.",
           "responses": {
-            "200": {
-              "$ref": "#/components/responses/ImpulseSuccessResponse"
+            "204": {
+              "description": "OK"
             }
           },
           "parameters": [
