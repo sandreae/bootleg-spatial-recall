@@ -25,6 +25,29 @@ swaggerImpulseSchema.example = {
 };
 
 oapi.component('schemas', 'Impulse', swaggerImpulseSchema);
+oapi.component('responses', 'ImpulseSuccessResponse', {
+  description: 'success',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'Success' },
+          results: { type: 'integer', example: 1 },
+          data: {
+            type: 'object',
+            properties: {
+              impulses: {
+                type: 'array',
+                items: { $ref: '#/components/schemas/Impulse' },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+});
 
 exports.getAllImpulses = oapi.path({
   tags: ['Impulses'],
@@ -32,29 +55,7 @@ exports.getAllImpulses = oapi.path({
   description:
     'API endpoint that returns all stored impulses from the database.',
   responses: {
-    200: {
-      description: 'success',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              status: { type: 'string', example: 'Success' },
-              results: { type: 'integer', example: 1 },
-              data: {
-                type: 'object',
-                properties: {
-                  impulses: {
-                    type: 'array',
-                    items: { $ref: '#/components/schemas/Impulse' },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+    200: { $ref: '#/components/responses/ImpulseSuccessResponse' },
   },
 });
 
