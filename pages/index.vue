@@ -9,7 +9,7 @@
         {{ new Date(impulses.data.impulses[0].date).toDateString() }}
       </div>
       <div>
-        <img :src="impulses.data.impulses[0].imageUrl" />
+        <img :src="impulses.data.impulses[0].imageFile" />
       </div>
       <nuxt-link class="button" to="/impulses"> Impulses </nuxt-link>
     </div>

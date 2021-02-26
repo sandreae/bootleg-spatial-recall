@@ -6,7 +6,7 @@
       <h2 class="info">
         {{ impulse.name }}
       </h2>
-      <img :src="impulse.imageUrl" />
+      <img :src="impulse.imageFile" />
       <nuxt-link class="button" to="/impulses"> Impulses </nuxt-link>
     </div>
   </section>

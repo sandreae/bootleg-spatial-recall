@@ -87,7 +87,7 @@
                       "type": "string",
                       "format": "binary"
                     },
-                    "impulseFile": {
+                    "audioFile": {
                       "type": "string",
                       "format": "binary"
                     }
@@ -98,7 +98,7 @@
                     "description",
                     "date",
                     "imageFile",
-                    "impulseFile"
+                    "audioFile"
                   ]
                 }
               }
@@ -172,8 +172,8 @@
             "date",
             "location",
             "description",
-            "audioUrl",
-            "imageUrl"
+            "audioFile",
+            "imageFile"
           ],
           "properties": {
             "name": {
@@ -196,10 +196,10 @@
             "description": {
               "type": "string"
             },
-            "audioUrl": {
+            "audioFile": {
               "type": "string"
             },
-            "imageUrl": {
+            "imageFile": {
               "type": "string"
             },
             "_id": {
@@ -227,8 +227,8 @@
             },
             "description": "Long reverb in M60 underpass.",
             "date": "2005-06-07T00:00:00.000Z",
-            "imageUrl": "https://bootleg-spatial-recall.fra1.digitaloceanspaces.com/1614086483666-impulse-new-impulse-10.jpeg",
-            "audioUrl": "https://bootleg-spatial-recall.fra1.digitaloceanspaces.com/1614086483666-impulse-new-impulse-10.wav",
+            "imageFile": "https://bootleg-spatial-recall.fra1.digitaloceanspaces.com/1614086483666-impulse-new-impulse-10.jpeg",
+            "audioFile": "https://bootleg-spatial-recall.fra1.digitaloceanspaces.com/1614086483666-impulse-new-impulse-10.wav",
             "createdAt": "2021-02-23T13:21:24.816Z",
             "updatedAt": "2021-02-23T13:21:24.816Z",
             "slug": "m60-underpass"

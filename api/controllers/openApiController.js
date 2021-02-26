@@ -15,9 +15,9 @@ swaggerImpulseSchema.example = {
   },
   description: 'Long reverb in M60 underpass.',
   date: '2005-06-07T00:00:00.000Z',
-  imageUrl:
+  imageFile:
     'https://bootleg-spatial-recall.fra1.digitaloceanspaces.com/1614086483666-impulse-new-impulse-10.jpeg',
-  audioUrl:
+  audioFile:
     'https://bootleg-spatial-recall.fra1.digitaloceanspaces.com/1614086483666-impulse-new-impulse-10.wav',
   createdAt: '2021-02-23T13:21:24.816Z',
   updatedAt: '2021-02-23T13:21:24.816Z',
@@ -201,7 +201,7 @@ exports.postImpulse = oapi.path({
               type: 'string',
               format: 'binary',
             },
-            impulseFile: {
+            audioFile: {
               type: 'string',
               format: 'binary',
             },
@@ -212,7 +212,7 @@ exports.postImpulse = oapi.path({
             'description',
             'date',
             'imageFile',
-            'impulseFile',
+            'audioFile',
           ],
         },
       },

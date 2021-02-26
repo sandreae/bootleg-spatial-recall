@@ -44,14 +44,14 @@ const impulseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    audioUrl: {
+    audioFile: {
       type: String,
       required: [
         true,
         'An audio sample must be uploaded with each impulse entry',
       ],
     },
-    imageUrl: {
+    imageFile: {
       type: String,
       required: [
         true,

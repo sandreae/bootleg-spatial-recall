@@ -43,7 +43,7 @@ exports.processFiles = catchAsync(async (req, res, next) => {
     if (file.mimetype.startsWith('image')) {
       req.imageFile = file;
     } else {
-      req.impulseFile = file;
+      req.audioFile = file;
     }
   }
 
@@ -84,16 +84,13 @@ exports.getImpulse = catchAsync(async (req, res, next) => {
 });
 
 exports.createImpulse = catchAsync(async (req, res, next) => {
-  req.body.imageUrl = `https://${process.env.DO_BUCKET}.${spacesEndpoint.host}/${req.imageFile.name}`;
-  req.body.audioUrl = `https://${process.env.DO_BUCKET}.${spacesEndpoint.host}/${req.impulseFile.name}`;
+  req.body.audioFile = `https://${process.env.DO_BUCKET}.${spacesEndpoint.host}/${req.audioFile.name}`;
+  req.body.imageFile = `https://${process.env.DO_BUCKET}.${spacesEndpoint.host}/${req.imageFile.name}`;
 
   const newImpulse = await Impulse.create(req.body);
-  console.log(newImpulse);
   try {
     await Promise.all(
-      [req.imageFile, req.impulseFile].map((file) =>
-        asyncUpload(file),
-      ),
+      [req.imageFile, req.audioFile].map((file) => asyncUpload(file)),
     );
   } catch (error) {
     await Impulse.deleteImpulse(newImpulse._id);
