@@ -160,11 +160,9 @@ exports.getImpulse = oapi.path({
       description: 'ID of impulse to use',
       required: true,
       schema: {
-        type: 'array',
-        items: {
-          type: 'string',
-        },
+        type: 'string',
       },
+      example: '6035008a676ffc23ca7e408',
       style: 'simple',
     },
   ],
@@ -272,11 +270,9 @@ exports.patchImpulse = oapi.path({
       description: 'ID of impulse to use',
       required: true,
       schema: {
-        type: 'array',
-        items: {
-          type: 'string',
-        },
+        type: 'string',
       },
+      example: '6035008a676ffc23ca7e408',
       style: 'simple',
     },
   ],
@@ -298,11 +294,9 @@ exports.deleteImpulse = oapi.path({
       description: 'ID of impulse to use',
       required: true,
       schema: {
-        type: 'array',
-        items: {
-          type: 'string',
-        },
+        type: 'string',
       },
+      example: '6035008a676ffc23ca7e408',
       style: 'simple',
     },
   ],
