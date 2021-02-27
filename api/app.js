@@ -71,8 +71,6 @@ app.use(
 
 app.use(helmet.contentSecurityPolicy(openApiCSP), oapi);
 
-app.use('/api/users', usersRouter);
-
 app.use(
   OpenApiValidator.middleware({
     fileUploader: {
@@ -96,6 +94,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use('/api/users', usersRouter);
 app.use('/api/impulses', impulseRouter);
 app.use('/', indexRouter);
 
