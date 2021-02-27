@@ -25,10 +25,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 exports.updateUser = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(
-      new AppError(
-        'This route is not for password updates. Please use /updateMyPassword.',
-        400,
-      ),
+      new AppError('This route is not for password updates.', 400),
     );
   }
 
@@ -60,19 +57,18 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!',
+exports.getUser = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user,
+    },
   });
-};
+});
+
 exports.createUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!',
-  });
-};
-exports.deleteUser = (req, res) => {
   res.status(500).json({
     status: 'error',
     message: 'This route is not yet defined!',
