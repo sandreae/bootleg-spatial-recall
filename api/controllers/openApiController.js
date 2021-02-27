@@ -387,7 +387,7 @@ exports.getAllUsers = oapi.path({
 });
 
 exports.signup = oapi.path({
-  tags: ['Users'],
+  tags: ['Auth'],
   summary: 'Post an user.',
   description: 'API endpoint to create a new User.',
   requestBody: {
@@ -416,7 +416,7 @@ exports.signup = oapi.path({
 });
 
 exports.login = oapi.path({
-  tags: ['Users'],
+  tags: ['Auth'],
   summary: 'Login.',
   description: 'API endpoint login with your username and password.',
   requestBody: {
@@ -434,7 +434,7 @@ exports.login = oapi.path({
     },
   },
   responses: {
-    200: {
+    201: {
       description: 'success',
       content: {
         'application/json': {
@@ -447,15 +447,7 @@ exports.login = oapi.path({
                 example:
                   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
               },
-              data: {
-                type: 'object',
-                properties: {
-                  impulses: {
-                    type: 'array',
-                    items: { $ref: '#/components/schemas/Impulse' },
-                  },
-                },
-              },
+              data: { $ref: '#/components/schemas/User' },
             },
           },
         },

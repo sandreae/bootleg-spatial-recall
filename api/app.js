@@ -11,6 +11,7 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
+const authRouter = require('./routes/authRouter');
 const impulseRouter = require('./routes/impulseRouter');
 const uploadHelpers = require('./utils/uploadHelpers');
 const oapi = require('./utils/openAPI');
@@ -78,13 +79,14 @@ app.use(
       fileFilter: uploadHelpers.fileFilter,
     },
     apiSpec: './api/openapi.json',
-    validateResponses: {
-      // coerceTypes: true,
-      onError: (error, body) => {
-        console.log(`Response body fails validation: `, error);
-        console.debug(body);
-      },
-    },
+    // validateResponses: {
+    //   // coerceTypes: true,
+    //   onError: (error, body) => {
+    //     console.log(`Response body fails validation: `, error);
+    //     console.debug(body);
+    //   },
+    // },
+    validateResponses: true,
     validateRequests: true,
   }),
 );
@@ -94,6 +96,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/impulses', impulseRouter);
 app.use('/', indexRouter);

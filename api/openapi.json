@@ -6,10 +6,10 @@
     "description": "API endpoints for bootleg-spatial-audio, bootleg convolution reverb."
   },
   "paths": {
-    "/api/users/signup": {
+    "/api/auth/signup": {
       "post": {
         "tags": [
-          "Users"
+          "Auth"
         ],
         "summary": "Post an user.",
         "description": "API endpoint to create a new User.",
@@ -48,10 +48,10 @@
         }
       }
     },
-    "/api/users/login": {
+    "/api/auth/login": {
       "post": {
         "tags": [
-          "Users"
+          "Auth"
         ],
         "summary": "Login.",
         "description": "API endpoint login with your username and password.",
@@ -79,7 +79,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "success",
             "content": {
               "application/json": {
@@ -95,15 +95,7 @@
                       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
                     },
                     "data": {
-                      "type": "object",
-                      "properties": {
-                        "impulses": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Impulse"
-                          }
-                        }
-                      }
+                      "$ref": "#/components/schemas/User"
                     }
                   }
                 }
@@ -323,12 +315,10 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string"
             },
             "description": "ID of impulse to use",
+            "example": "6035008a676ffc23ca7e408",
             "style": "simple"
           }
         ]
@@ -391,12 +381,10 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string"
             },
             "description": "ID of impulse to use",
+            "example": "6035008a676ffc23ca7e408",
             "style": "simple"
           }
         ]
@@ -418,12 +406,10 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string"
             },
             "description": "ID of impulse to use",
+            "example": "6035008a676ffc23ca7e408",
             "style": "simple"
           }
         ]
