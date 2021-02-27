@@ -1,11 +1,17 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const openApiController = require('./../controllers/openApiController');
 
 const router = express.Router();
 
-router.post('/signup', authController.signup);
-router.post('/login', authController.login);
+router
+  .route('/signup')
+  .post(openApiController.signup, authController.signup);
+
+router
+  .route('/login')
+  .post(openApiController.login, authController.login);
 
 // router.post('/forgotPassword', authController.forgotPassword);
 // router.patch('/resetPassword/:token', authController.resetPassword);
@@ -20,14 +26,29 @@ router.post('/login', authController.login);
 // router.delete('/deleteMe', authController.protect, userController.deleteMe);
 
 router
-  .route('/')
-  .get(authController.protect, userController.getAllUsers)
-  .post(authController.protect, userController.createUser);
+  .route('')
+  .get(
+    openApiController.getAllUsers,
+    authController.protect,
+    userController.getAllUsers,
+  );
 
 router
   .route('/:id')
-  .get(authController.protect, userController.getUser)
-  .patch(authController.protect, userController.updateUser)
-  .delete(authController.protect, userController.deleteUser);
+  .get(
+    openApiController.getUser,
+    authController.protect,
+    userController.getUser,
+  )
+  .patch(
+    openApiController.patchUser,
+    authController.protect,
+    userController.updateUser,
+  )
+  .delete(
+    openApiController.deleteUser,
+    authController.protect,
+    userController.deleteUser,
+  );
 
 module.exports = router;
