@@ -21,7 +21,7 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "my_username"
+                    "example": "myemail@address.com"
                   },
                   "password": {
                     "type": "string",
@@ -63,7 +63,7 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "my_username"
+                    "example": "myemail@address.com"
                   },
                   "password": {
                     "type": "string",
@@ -161,7 +161,7 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "M60 underpass"
+                    "example": "myemail@address.com"
                   }
                 },
                 "required": [
@@ -507,6 +507,10 @@
           "_id": {
             "type": "string"
           }
+        },
+        "example": {
+          "_id": "60350154a0e30c25cddab650",
+          "email": "myemail@address.com"
         }
       }
     },
