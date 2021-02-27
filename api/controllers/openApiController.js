@@ -1,9 +1,11 @@
 /* eslint-disable vue/one-component-per-file */
 const m2s = require('mongoose-to-swagger');
 const Impulse = require('./../models/impulseModel');
+const User = require('./../models/userModel');
 const oapi = require('./../utils/openAPI');
 
 const swaggerImpulseSchema = m2s(Impulse);
+const swaggerUserSchema = m2s(User);
 
 swaggerImpulseSchema.example = {
   _id: '60350154a0e30c25cddab650',
@@ -25,6 +27,7 @@ swaggerImpulseSchema.example = {
 };
 
 oapi.component('schemas', 'Impulse', swaggerImpulseSchema);
+oapi.component('schemas', 'User', swaggerUserSchema);
 oapi.component('responses', 'ImpulseSuccessResponse', {
   description: 'success',
   content: {
@@ -41,6 +44,49 @@ oapi.component('responses', 'ImpulseSuccessResponse', {
                 type: 'array',
                 items: { $ref: '#/components/schemas/Impulse' },
               },
+            },
+          },
+        },
+      },
+    },
+  },
+});
+oapi.component('responses', 'UsersSuccessResponse', {
+  description: 'success',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'Success' },
+          results: { type: 'integer', example: 1 },
+          data: {
+            type: 'object',
+            properties: {
+              impulses: {
+                type: 'array',
+                items: { $ref: '#/components/schemas/User' },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+});
+oapi.component('responses', 'SingleUserSuccessResponse', {
+  description: 'success',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'Success' },
+          results: { type: 'integer', example: 1 },
+          data: {
+            type: 'object',
+            properties: {
+              user: { $ref: '#/components/schemas/User' },
             },
           },
         },
@@ -297,6 +343,189 @@ exports.deleteImpulse = oapi.path({
         type: 'string',
       },
       example: '6035008a676ffc23ca7e408',
+      style: 'simple',
+    },
+  ],
+});
+
+exports.getUser = oapi.path({
+  tags: ['Users'],
+  summary: 'Get one user by ID.',
+  description:
+    'API endpoint for getting an existing user by their id.',
+  responses: {
+    200: { $ref: '#/components/responses/SingleUserSuccessResponse' },
+    // 404: { $ref: '#/components/responses/404Error' },
+    // 500: { $ref: '#/components/responses/500Error' },
+  },
+  parameters: [
+    {
+      name: 'id',
+      in: 'path',
+      description: 'ID of user to use',
+      required: true,
+      schema: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+      style: 'simple',
+    },
+  ],
+});
+
+exports.getAllUsers = oapi.path({
+  tags: ['Users'],
+  summary: 'Get all users.',
+  description:
+    'API endpoint that returns all existuing users from the database.',
+  responses: {
+    200: { $ref: '#/components/responses/UsersSuccessResponse' },
+    // 500: { $ref: '#/components/responses/500Error' },
+  },
+});
+
+exports.signup = oapi.path({
+  tags: ['Users'],
+  summary: 'Post an user.',
+  description: 'API endpoint to create a new User.',
+  requestBody: {
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            email: { type: 'string', example: 'my_username' },
+            password: { type: 'string', example: 'badpassword123' },
+            passwordConfirm: {
+              type: 'string',
+              example: 'badpassword123',
+            },
+          },
+          required: ['email', 'password', 'passwordConfirm'],
+        },
+      },
+    },
+  },
+  responses: {
+    201: { $ref: '#/components/responses/SingleUserSuccessResponse' },
+    // 404: { $ref: '#/components/responses/404Error' },
+    // 500: { $ref: '#/components/responses/500Error' },
+  },
+});
+
+exports.login = oapi.path({
+  tags: ['Users'],
+  summary: 'Login.',
+  description: 'API endpoint login with your username and password.',
+  requestBody: {
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            email: { type: 'string', example: 'my_username' },
+            password: { type: 'string', example: 'badpassword123' },
+          },
+          required: ['email', 'password'],
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: 'success',
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              status: { type: 'string', example: 'success' },
+              jwt: {
+                type: 'string',
+                example:
+                  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+              },
+              data: {
+                type: 'object',
+                properties: {
+                  impulses: {
+                    type: 'array',
+                    items: { $ref: '#/components/schemas/Impulse' },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    // 404: { $ref: '#/components/responses/404Error' },
+    // 500: { $ref: '#/components/responses/500Error' },
+  },
+});
+
+exports.deleteUser = oapi.path({
+  tags: ['Users'],
+  summary: 'Delete one User by ID.',
+  description: 'API endpoint for deleting an user by their ID.',
+  responses: {
+    204: {
+      description: 'The resource was deleted successfully.',
+    },
+  },
+  parameters: [
+    {
+      name: 'id',
+      in: 'path',
+      description: 'ID of User to delete',
+      required: true,
+      schema: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+      style: 'simple',
+    },
+  ],
+});
+
+exports.patchUser = oapi.path({
+  tags: ['Users'],
+  summary: 'Update a user.',
+  description: 'API endpoint to update an existing user.',
+  requestBody: {
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            email: { type: 'string', example: 'M60 underpass' },
+          },
+          required: ['email'],
+        },
+      },
+    },
+  },
+  responses: {
+    200: { $ref: '#/components/responses/SingleUserSuccessResponse' },
+    // 404: { $ref: '#/components/responses/404Error' },
+    // 500: { $ref: '#/components/responses/500Error' },
+  },
+  parameters: [
+    {
+      name: 'id',
+      in: 'path',
+      description: 'ID of user to update',
+      required: true,
+      schema: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
       style: 'simple',
     },
   ],
