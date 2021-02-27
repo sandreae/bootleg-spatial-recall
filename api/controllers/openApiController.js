@@ -26,6 +26,11 @@ swaggerImpulseSchema.example = {
   slug: 'm60-underpass',
 };
 
+swaggerUserSchema.example = {
+  _id: '60350154a0e30c25cddab650',
+  email: 'myemail@address.com',
+};
+
 oapi.component('schemas', 'Impulse', swaggerImpulseSchema);
 oapi.component('schemas', 'User', swaggerUserSchema);
 oapi.component('responses', 'ImpulseSuccessResponse', {
@@ -396,7 +401,7 @@ exports.signup = oapi.path({
         schema: {
           type: 'object',
           properties: {
-            email: { type: 'string', example: 'my_username' },
+            email: { type: 'string', example: 'myemail@address.com' },
             password: { type: 'string', example: 'badpassword123' },
             passwordConfirm: {
               type: 'string',
@@ -425,7 +430,7 @@ exports.login = oapi.path({
         schema: {
           type: 'object',
           properties: {
-            email: { type: 'string', example: 'my_username' },
+            email: { type: 'string', example: 'myemail@address.com' },
             password: { type: 'string', example: 'badpassword123' },
           },
           required: ['email', 'password'],
@@ -494,7 +499,7 @@ exports.patchUser = oapi.path({
         schema: {
           type: 'object',
           properties: {
-            email: { type: 'string', example: 'M60 underpass' },
+            email: { type: 'string', example: 'myemail@address.com' },
           },
           required: ['email'],
         },
