@@ -61,19 +61,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "myemail@address.com"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "badpassword123"
+                  "user": {
+                    "$ref": "#/components/schemas/ResponseUser"
                   }
-                },
-                "required": [
-                  "email",
-                  "password"
-                ]
+                }
               }
             }
           }
@@ -95,7 +86,12 @@
                       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/User"
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/ResponseUser"
+                        }
+                      }
                     }
                   }
                 }
@@ -159,14 +155,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "myemail@address.com"
+                  "user": {
+                    "$ref": "#/components/schemas/ResponseUser"
                   }
-                },
-                "required": [
-                  "email"
-                ]
+                }
               }
             }
           }
@@ -512,6 +504,19 @@
           "_id": "60350154a0e30c25cddab650",
           "email": "myemail@address.com"
         }
+      },
+      "ResponseUser": {
+        "title": "ResponseUser",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "myemail@address.com"
+          },
+          "id": {
+            "type": "string",
+            "examle": "60350154a0e30c25cddab650"
+          }
+        }
       }
     },
     "responses": {
@@ -567,7 +572,7 @@
                     "impulses": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/ResponseUser"
                       }
                     }
                   }
@@ -596,7 +601,7 @@
                   "type": "object",
                   "properties": {
                     "user": {
-                      "$ref": "#/components/schemas/User"
+                      "$ref": "#/components/schemas/ResponseUser"
                     }
                   }
                 }

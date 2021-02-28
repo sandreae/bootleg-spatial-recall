@@ -33,6 +33,14 @@ swaggerUserSchema.example = {
 
 oapi.component('schemas', 'Impulse', swaggerImpulseSchema);
 oapi.component('schemas', 'User', swaggerUserSchema);
+oapi.component('schemas', 'ResponseUser', {
+  title: 'ResponseUser',
+  properties: {
+    email: { type: 'string', example: 'myemail@address.com' },
+    id: { type: 'string', examle: '60350154a0e30c25cddab650' },
+  },
+});
+
 oapi.component('responses', 'ImpulseSuccessResponse', {
   description: 'success',
   content: {
@@ -70,7 +78,9 @@ oapi.component('responses', 'UsersSuccessResponse', {
             properties: {
               impulses: {
                 type: 'array',
-                items: { $ref: '#/components/schemas/User' },
+                items: {
+                  $ref: '#/components/schemas/ResponseUser',
+                },
               },
             },
           },
@@ -91,7 +101,7 @@ oapi.component('responses', 'SingleUserSuccessResponse', {
           data: {
             type: 'object',
             properties: {
-              user: { $ref: '#/components/schemas/User' },
+              user: { $ref: '#/components/schemas/ResponseUser' },
             },
           },
         },
@@ -430,10 +440,8 @@ exports.login = oapi.path({
         schema: {
           type: 'object',
           properties: {
-            email: { type: 'string', example: 'myemail@address.com' },
-            password: { type: 'string', example: 'badpassword123' },
+            user: { $ref: '#/components/schemas/ResponseUser' },
           },
-          required: ['email', 'password'],
         },
       },
     },
@@ -452,7 +460,12 @@ exports.login = oapi.path({
                 example:
                   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
               },
-              data: { $ref: '#/components/schemas/User' },
+              data: {
+                type: 'object',
+                properties: {
+                  user: { $ref: '#/components/schemas/ResponseUser' },
+                },
+              },
             },
           },
         },
@@ -499,9 +512,8 @@ exports.patchUser = oapi.path({
         schema: {
           type: 'object',
           properties: {
-            email: { type: 'string', example: 'myemail@address.com' },
+            user: { $ref: '#/components/schemas/ResponseUser' },
           },
-          required: ['email'],
         },
       },
     },
