@@ -111,7 +111,6 @@ app.all('*', (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  // 7. Customize errors
   console.error(err); // dump error to console for debug
   res.status(err.status || 500).json({
     message: err.message,
