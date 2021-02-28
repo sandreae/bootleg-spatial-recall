@@ -39,6 +39,7 @@ oapi.component('schemas', 'ResponseUser', {
     email: { type: 'string', example: 'myemail@address.com' },
     id: { type: 'string', examle: '60350154a0e30c25cddab650' },
   },
+  required: ['email', 'id'],
 });
 
 oapi.component('responses', 'ImpulseSuccessResponse', {
@@ -440,7 +441,8 @@ exports.login = oapi.path({
         schema: {
           type: 'object',
           properties: {
-            user: { $ref: '#/components/schemas/ResponseUser' },
+            email: { type: 'string', example: 'myemail@address.com' },
+            password: { type: 'string', example: 'badpassword123' },
           },
         },
       },
