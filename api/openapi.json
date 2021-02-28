@@ -43,7 +43,7 @@
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/SingleUserSuccessResponse"
+            "$ref": "#/components/responses/User"
           }
         }
       }
@@ -115,7 +115,7 @@
         "description": "API endpoint that returns all existuing users from the database.",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/UsersSuccessResponse"
+            "$ref": "#/components/responses/Users"
           }
         }
       }
@@ -129,7 +129,10 @@
         "description": "API endpoint for getting an existing user by their id.",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/SingleUserSuccessResponse"
+            "$ref": "#/components/responses/User"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
           }
         },
         "parameters": [
@@ -170,7 +173,10 @@
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/SingleUserSuccessResponse"
+            "$ref": "#/components/responses/User"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
           }
         },
         "parameters": [
@@ -198,6 +204,9 @@
         "responses": {
           "204": {
             "description": "The resource was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
           }
         },
         "parameters": [
@@ -226,7 +235,7 @@
         "description": "API endpoint that returns all stored impulses from the database.",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/ImpulseSuccessResponse"
+            "$ref": "#/components/responses/Impulses"
           }
         }
       },
@@ -303,7 +312,10 @@
         "description": "API endpoint for getting or modifying an imulse by it's id.",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/ImpulseSuccessResponse"
+            "$ref": "#/components/responses/Impulse"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
           }
         },
         "parameters": [
@@ -370,6 +382,9 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/ImpulseSuccessResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
           }
         },
         "parameters": [
@@ -395,6 +410,9 @@
         "responses": {
           "204": {
             "description": "The resource was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
           }
         },
         "parameters": [
@@ -519,7 +537,7 @@
           },
           "id": {
             "type": "string",
-            "examle": "60350154a0e30c25cddab650"
+            "example": "60350154a0e30c25cddab650"
           }
         },
         "required": [
@@ -529,8 +547,8 @@
       }
     },
     "responses": {
-      "ImpulseSuccessResponse": {
-        "description": "success",
+      "Impulses": {
+        "description": "Succesfully respond with an array of all impulses.",
         "content": {
           "application/json": {
             "schema": {
@@ -560,8 +578,34 @@
           }
         }
       },
-      "UsersSuccessResponse": {
-        "description": "success",
+      "Impulse": {
+        "description": "Succesfully respond with one impulses.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "results": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "$ref": "#/components/schemas/Impulse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Users": {
+        "description": "Succesfully respond with an array of all users.",
         "content": {
           "application/json": {
             "schema": {
@@ -591,8 +635,8 @@
           }
         }
       },
-      "SingleUserSuccessResponse": {
-        "description": "success",
+      "User": {
+        "description": "Succesfully respond with one user.",
         "content": {
           "application/json": {
             "schema": {
@@ -601,10 +645,6 @@
                 "status": {
                   "type": "string",
                   "example": "Success"
-                },
-                "results": {
-                  "type": "integer",
-                  "example": 1
                 },
                 "data": {
                   "type": "object",
@@ -619,95 +659,16 @@
           }
         }
       },
-      "500Error": {
+      "401Error": {
         "description": "Failure",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "error"
-                },
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "stringValue": {
-                      "type": "string",
-                      "example": "6035008a676ffc23ca7e408"
-                    },
-                    "kind": {
-                      "type": "string",
-                      "example": "ObjectId"
-                    },
-                    "value": {
-                      "type": "string",
-                      "example": "6035008a676ffc23ca7e408"
-                    },
-                    "path": {
-                      "type": "string",
-                      "example": "_id"
-                    },
-                    "reason": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32",
-                      "example": "500"
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "error"
-                    }
-                  }
-                },
                 "message": {
                   "type": "string",
-                  "example": "Long error message"
-                }
-              }
-            }
-          }
-        }
-      },
-      "404Error": {
-        "description": "Failure",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "fail"
-                },
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "fail"
-                    },
-                    "isOperational": {
-                      "type": "boolean",
-                      "example": true
-                    }
-                  }
-                },
-                "message": {
-                  "type": "string",
-                  "example": "No impulse found with that ID"
-                },
-                "stack": {
-                  "type": "string",
-                  "example": "Error: long error message"
+                  "example": "AWESOME DEMO ERROR"
                 }
               }
             }
