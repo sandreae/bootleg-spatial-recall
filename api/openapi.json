@@ -298,7 +298,7 @@
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/ImpulseSuccessResponse"
+            "$ref": "#/components/responses/Impulse"
           }
         }
       }
@@ -381,7 +381,7 @@
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/ImpulseSuccessResponse"
+            "$ref": "#/components/responses/Impulse"
           },
           "401": {
             "$ref": "#/components/responses/401Error"
@@ -596,7 +596,9 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "$ref": "#/components/schemas/Impulse"
+                    "impulse": {
+                      "$ref": "#/components/schemas/Impulse"
+                    }
                   }
                 }
               }

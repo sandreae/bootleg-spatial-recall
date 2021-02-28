@@ -79,7 +79,9 @@ oapi.component('responses', 'Impulse', {
           results: { type: 'integer', example: 1 },
           data: {
             type: 'object',
-            properties: { $ref: '#/components/schemas/Impulse' },
+            properties: {
+              impulse: { $ref: '#/components/schemas/Impulse' },
+            },
           },
         },
       },
@@ -235,7 +237,7 @@ exports.postImpulse = oapi.path({
     },
   },
   responses: {
-    201: { $ref: '#/components/responses/ImpulseSuccessResponse' },
+    201: { $ref: '#/components/responses/Impulse' },
     // 404: { $ref: '#/components/responses/404Error' },
     // 500: { $ref: '#/components/responses/500Error' },
   },
@@ -276,7 +278,7 @@ exports.patchImpulse = oapi.path({
     },
   },
   responses: {
-    200: { $ref: '#/components/responses/ImpulseSuccessResponse' },
+    200: { $ref: '#/components/responses/Impulse' },
     401: { $ref: '#/components/responses/401Error' },
     // 404: { $ref: '#/components/responses/404Error' },
     // 500: { $ref: '#/components/responses/500Error' },
