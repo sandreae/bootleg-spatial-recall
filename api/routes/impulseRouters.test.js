@@ -54,3 +54,10 @@ it('works with async/await', async (done) => {
   expect(response.status).toBe(200);
   done();
 });
+
+it('should throw an error', async (done) => {
+  const response = await request.get('/api/users');
+
+  expect(response.status).toBe(401);
+  done();
+});
