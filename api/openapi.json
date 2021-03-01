@@ -612,6 +612,65 @@
           "_id": "60350154a0e30c25cddab650",
           "email": "myemail@address.com"
         }
+      },
+      "DevError": {
+        "title": "DevError",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "failure."
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "integer",
+                "example": "404"
+              },
+              "status": {
+                "type": "string",
+                "example": "failure."
+              },
+              "isOperational": {
+                "type": "boolean",
+                "example": true
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "Resource not found."
+          },
+          "stack": {
+            "type": "string",
+            "example": "Really long message."
+          }
+        },
+        "required": [
+          "error",
+          "message",
+          "stack",
+          "statusCode",
+          "isOperational"
+        ]
+      },
+      "ProdError": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "failure."
+          },
+          "message": {
+            "type": "string",
+            "example": "Resource not found."
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "responses": {
@@ -769,55 +828,10 @@
             "schema": {
               "oneOf": [
                 {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "statusCode": {
-                          "type": "integer",
-                          "example": "404"
-                        },
-                        "status": {
-                          "type": "string",
-                          "example": "failure."
-                        },
-                        "isOperational": {
-                          "type": "boolean",
-                          "example": true
-                        }
-                      }
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Resource not found."
-                    },
-                    "stack": {
-                      "type": "string",
-                      "example": "Really long message."
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "message"
-                  ]
+                  "$ref": "#/components/schemas/DevError"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "failure."
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Resource not found."
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message"
-                  ]
+                  "$ref": "#/components/schemas/ProdError"
                 }
               ]
             }

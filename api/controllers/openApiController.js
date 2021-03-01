@@ -18,31 +18,6 @@ const responseUser = {
   required: ['email', 'id'],
 };
 
-const prodError = {
-  type: 'object',
-  properties: {
-    status: { type: 'string', example: 'failure.' },
-    message: { type: 'string', example: 'Resource not found.' },
-  },
-  required: ['status', 'message'],
-};
-const devError = {
-  type: 'object',
-  properties: {
-    error: {
-      type: 'object',
-      properties: {
-        statusCode: { type: 'integer', example: '404' },
-        status: { type: 'string', example: 'failure.' },
-        isOperational: { type: 'boolean', example: true },
-      },
-    },
-    message: { type: 'string', example: 'Resource not found.' },
-    stack: { type: 'string', example: 'Really long message.' },
-  },
-  required: ['error', 'message'],
-};
-
 swaggerImpulseSchema.example = {
   _id: '60350154a0e30c25cddab650',
   name: 'M60 underpass',
@@ -71,6 +46,45 @@ swaggerUserSchema.example = {
 // schemas
 oapi.component('schemas', 'Impulse', swaggerImpulseSchema);
 oapi.component('schemas', 'User', swaggerUserSchema);
+oapi.component('schemas', 'DevError', {
+  title: 'DevError',
+  type: 'object',
+  properties: {
+    status: { type: 'string', example: 'failure.' },
+    error: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'integer', example: '404' },
+        status: { type: 'string', example: 'failure.' },
+        isOperational: { type: 'boolean', example: true },
+      },
+    },
+    message: { type: 'string', example: 'Resource not found.' },
+    stack: { type: 'string', example: 'Really long message.' },
+  },
+  required: [
+    'error',
+    'message',
+    'stack',
+    'statusCode',
+    'isOperational',
+  ],
+});
+
+oapi.component('schemas', 'ProdError', {
+  title: 'ProdError',
+  type: 'object',
+  properties: {
+    error: {
+      type: 'object',
+      properties: {
+        status: { type: 'string', example: 'failure.' },
+        message: { type: 'string', example: 'Resource not found.' },
+      },
+    },
+  },
+  required: ['error', 'status', 'message'],
+});
 
 // responses
 oapi.component('responses', 'Impulses', {
@@ -215,7 +229,10 @@ oapi.component('responses', 'Error', {
   content: {
     'application/json': {
       schema: {
-        oneOf: [devError, prodError],
+        oneOf: [
+          { $ref: '#/components/schemas/DevError' },
+          { $ref: '#/components/schemas/ProdError' },
+        ],
       },
     },
   },
