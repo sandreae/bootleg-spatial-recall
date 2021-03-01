@@ -11,7 +11,6 @@ const signToken = (id) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const newUser = await User.create({
     email: req.body.email,
     password: req.body.password,
@@ -24,7 +23,10 @@ exports.signup = catchAsync(async (req, res, next) => {
     status: 'success',
     token,
     data: {
-      user: newUser,
+      user: {
+        id: newUser._id,
+        email: newUser.email,
+      },
     },
   });
 });

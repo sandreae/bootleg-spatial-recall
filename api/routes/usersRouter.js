@@ -5,14 +5,6 @@ const openApiController = require('./../controllers/openApiController');
 
 const router = express.Router();
 
-router
-  .route('/signup')
-  .post(openApiController.signup, authController.signup);
-
-router
-  .route('/login')
-  .post(openApiController.login, authController.login);
-
 // router.post('/forgotPassword', authController.forgotPassword);
 // router.patch('/resetPassword/:token', authController.resetPassword);
 
