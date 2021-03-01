@@ -1,8 +1,8 @@
 const aws = require('aws-sdk');
 
+const Impulse = require('../models/Impulse');
 const AppError = require('./../utils/appError');
 const uploadHelpers = require('./../utils/uploadHelpers');
-const Impulse = require('./../models/impulseModel');
 const catchAsync = require('./../utils/catchAsync');
 
 const spacesEndpoint = new aws.Endpoint(

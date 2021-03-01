@@ -1,7 +1,7 @@
 /* eslint-disable vue/one-component-per-file */
 const m2s = require('mongoose-to-swagger');
-const Impulse = require('./../models/impulseModel');
-const User = require('./../models/userModel');
+const User = require('./../models/User');
+const Impulse = require('./../models/Impulse');
 const oapi = require('./../utils/openAPI');
 
 const swaggerImpulseSchema = m2s(Impulse);
