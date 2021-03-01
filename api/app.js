@@ -83,6 +83,7 @@ app.use(
       removeAdditional: 'failing',
     },
     validateRequests: true,
+    ignorePaths: /.*\/$/,
   }),
 );
 
