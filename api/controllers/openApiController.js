@@ -185,12 +185,12 @@ oapi.component('requestBodies', 'Impulse', {
           name: { type: 'string', example: 'M60 underpass' },
           location: { type: 'string', example: 'Manchester' },
           gpsLat: {
-            type: 'number',
-            example: 53.435212,
+            type: 'string',
+            example: '53.435212',
           },
           gpsLon: {
-            type: 'number',
-            example: -2.316901,
+            type: 'string',
+            example: '-2.316901',
           },
           description: {
             type: 'string',

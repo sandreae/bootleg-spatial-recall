@@ -10,6 +10,7 @@ const oapi = openapi(
         'API endpoints for bootleg-spatial-audio, bootleg convolution reverb.',
       version: '1.0.0',
     },
+    servers: [{ url: 'http://localhost:3000/api' }],
   },
   { htmlui: 'swagger-ui' },
 );
