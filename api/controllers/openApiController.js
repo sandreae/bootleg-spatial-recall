@@ -7,6 +7,42 @@ const oapi = require('./../utils/openAPI');
 const swaggerImpulseSchema = m2s(Impulse);
 const swaggerUserSchema = m2s(User);
 
+// PARTIALS
+
+const responseUser = {
+  type: 'object',
+  properties: {
+    email: { type: 'string', example: 'myemail@address.com' },
+    id: { type: 'string', example: '60350154a0e30c25cddab650' },
+  },
+  required: ['email', 'id'],
+};
+
+const prodError = {
+  type: 'object',
+  properties: {
+    status: { type: 'string', example: 'failure.' },
+    message: { type: 'string', example: 'Resource not found.' },
+  },
+  required: ['status', 'message'],
+};
+const devError = {
+  type: 'object',
+  properties: {
+    error: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'integer', example: '404' },
+        status: { type: 'string', example: 'failure.' },
+        isOperational: { type: 'boolean', example: true },
+      },
+    },
+    message: { type: 'string', example: 'Resource not found.' },
+    stack: { type: 'string', example: 'Really long message.' },
+  },
+  required: ['error', 'message'],
+};
+
 swaggerImpulseSchema.example = {
   _id: '60350154a0e30c25cddab650',
   name: 'M60 underpass',
@@ -35,14 +71,6 @@ swaggerUserSchema.example = {
 // schemas
 oapi.component('schemas', 'Impulse', swaggerImpulseSchema);
 oapi.component('schemas', 'User', swaggerUserSchema);
-oapi.component('schemas', 'ResponseUser', {
-  title: 'ResponseUser',
-  properties: {
-    email: { type: 'string', example: 'myemail@address.com' },
-    id: { type: 'string', example: '60350154a0e30c25cddab650' },
-  },
-  required: ['email', 'id'],
-});
 
 // responses
 oapi.component('responses', 'Impulses', {
@@ -64,6 +92,7 @@ oapi.component('responses', 'Impulses', {
             },
           },
         },
+        required: ['status', 'data', 'results'],
       },
     },
   },
@@ -102,9 +131,7 @@ oapi.component('responses', 'Users', {
             properties: {
               impulses: {
                 type: 'array',
-                items: {
-                  $ref: '#/components/schemas/ResponseUser',
-                },
+                items: responseUser,
               },
             },
           },
@@ -124,7 +151,7 @@ oapi.component('responses', 'User', {
           data: {
             type: 'object',
             properties: {
-              user: { $ref: '#/components/schemas/ResponseUser' },
+              user: responseUser,
             },
           },
         },
@@ -133,32 +160,78 @@ oapi.component('responses', 'User', {
   },
 });
 
-// errors
-oapi.component('responses', '401Error', {
-  description: 'Failure',
+// requestBodies
+oapi.component('requestBodies', 'Impulse', {
+  description: 'Add an Impulse to the database',
   content: {
-    'application/json': {
+    'multipart/form-data': {
       schema: {
         type: 'object',
         properties: {
-          message: {
+          name: { type: 'string', example: 'M60 underpass' },
+          location: { type: 'string', example: 'Manchester' },
+          gpsLat: {
+            type: 'number',
+            example: 53.435212,
+          },
+          gpsLon: {
+            type: 'number',
+            example: -2.316901,
+          },
+          description: {
             type: 'string',
-            example: 'AWESOME DEMO ERROR',
+            example: 'Long reverb in M60 underpass.',
+          },
+          date: {
+            type: 'string',
+            example: '2005-06-07T00:00:00.000Z',
+          },
+          imageFile: {
+            type: 'string',
+            format: 'binary',
+          },
+          audioFile: {
+            type: 'string',
+            format: 'binary',
           },
         },
+        required: [
+          'name',
+          'location',
+          'description',
+          'date',
+          'imageFile',
+          'audioFile',
+        ],
       },
     },
   },
 });
 
-exports.getAllImpulses = oapi.path({
+// errors
+
+oapi.component('responses', 'Error', {
+  description: 'Default error',
+  content: {
+    'application/json': {
+      schema: {
+        oneOf: [devError, prodError],
+      },
+    },
+  },
+});
+
+exports.getAllImpulses = oapi.validPath({
   tags: ['Impulses'],
   summary: 'Get all impulses.',
   description:
     'API endpoint that returns all stored impulses from the database.',
   responses: {
     200: { $ref: '#/components/responses/Impulses' },
-    // 500: { $ref: '#/components/responses/500Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
   },
 });
 
@@ -169,7 +242,10 @@ exports.getImpulse = oapi.path({
     "API endpoint for getting or modifying an imulse by it's id.",
   responses: {
     200: { $ref: '#/components/responses/Impulse' },
-    401: { $ref: '#/components/responses/401Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
     // 500: { $ref: '#/components/responses/500Error' },
   },
   parameters: [
@@ -191,55 +267,13 @@ exports.postImpulse = oapi.path({
   tags: ['Impulses'],
   summary: 'Post an impulse.',
   description: 'API endpoint to upload new impulses.',
-  requestBody: {
-    content: {
-      'multipart/form-data': {
-        schema: {
-          type: 'object',
-          properties: {
-            name: { type: 'string', example: 'M60 underpass' },
-            location: { type: 'string', example: 'Manchester' },
-            gpsLat: {
-              type: 'number',
-              example: 53.435212,
-            },
-            gpsLon: {
-              type: 'number',
-              example: -2.316901,
-            },
-            description: {
-              type: 'string',
-              example: 'Long reverb in M60 underpass.',
-            },
-            date: {
-              type: 'string',
-              example: '2005-06-07T00:00:00.000Z',
-            },
-            imageFile: {
-              type: 'string',
-              format: 'binary',
-            },
-            audioFile: {
-              type: 'string',
-              format: 'binary',
-            },
-          },
-          required: [
-            'name',
-            'location',
-            'description',
-            'date',
-            'imageFile',
-            'audioFile',
-          ],
-        },
-      },
-    },
-  },
+  requestBody: { $ref: '#/components/requestBodies/Impulse' },
   responses: {
     201: { $ref: '#/components/responses/Impulse' },
-    // 404: { $ref: '#/components/responses/404Error' },
-    // 500: { $ref: '#/components/responses/500Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
   },
 });
 
@@ -279,9 +313,10 @@ exports.patchImpulse = oapi.path({
   },
   responses: {
     200: { $ref: '#/components/responses/Impulse' },
-    401: { $ref: '#/components/responses/401Error' },
-    // 404: { $ref: '#/components/responses/404Error' },
-    // 500: { $ref: '#/components/responses/500Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
   },
   parameters: [
     {
@@ -306,7 +341,10 @@ exports.deleteImpulse = oapi.path({
     204: {
       description: 'The resource was deleted successfully.',
     },
-    401: { $ref: '#/components/responses/401Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
   },
   parameters: [
     {
@@ -330,9 +368,10 @@ exports.getUser = oapi.path({
     'API endpoint for getting an existing user by their id.',
   responses: {
     200: { $ref: '#/components/responses/User' },
-    401: { $ref: '#/components/responses/401Error' },
-    // 404: { $ref: '#/components/responses/404Error' },
-    // 500: { $ref: '#/components/responses/500Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
   },
   parameters: [
     {
@@ -358,7 +397,10 @@ exports.getAllUsers = oapi.path({
     'API endpoint that returns all existuing users from the database.',
   responses: {
     200: { $ref: '#/components/responses/Users' },
-    // 500: { $ref: '#/components/responses/500Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
+    500: { $ref: '#/components/responses/Error' },
   },
 });
 
@@ -386,8 +428,10 @@ exports.signup = oapi.path({
   },
   responses: {
     201: { $ref: '#/components/responses/User' },
-    // 404: { $ref: '#/components/responses/404Error' },
-    // 500: { $ref: '#/components/responses/500Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
   },
 });
 
@@ -425,7 +469,7 @@ exports.login = oapi.path({
               data: {
                 type: 'object',
                 properties: {
-                  user: { $ref: '#/components/schemas/ResponseUser' },
+                  user: responseUser,
                 },
               },
             },
@@ -433,8 +477,10 @@ exports.login = oapi.path({
         },
       },
     },
-    // 404: { $ref: '#/components/responses/404Error' },
-    // 500: { $ref: '#/components/responses/500Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
   },
 });
 
@@ -446,7 +492,7 @@ exports.deleteUser = oapi.path({
     204: {
       description: 'The resource was deleted successfully.',
     },
-    401: { $ref: '#/components/responses/401Error' },
+    401: { $ref: '#/components/responses/Error' },
   },
   parameters: [
     {
@@ -475,7 +521,7 @@ exports.patchUser = oapi.path({
         schema: {
           type: 'object',
           properties: {
-            user: { $ref: '#/components/schemas/ResponseUser' },
+            user: responseUser,
           },
         },
       },
@@ -483,9 +529,10 @@ exports.patchUser = oapi.path({
   },
   responses: {
     200: { $ref: '#/components/responses/User' },
-    401: { $ref: '#/components/responses/401Error' },
-    // 404: { $ref: '#/components/responses/404Error' },
-    // 500: { $ref: '#/components/responses/500Error' },
+    400: { $ref: '#/components/responses/Error' },
+    401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
   },
   parameters: [
     {
