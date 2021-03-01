@@ -1,0 +1,20 @@
+version: "3"
+services:
+  bootleg-spatial-recall:
+    container_name: bootleg-spatial-recall
+    image: latest/bootleg-spatial-recall
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+    - .env
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - /srv/docker/mongodb:/var/lib/mongodb
+    ports:
+      - '27017:27017'
