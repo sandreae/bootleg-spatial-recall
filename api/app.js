@@ -79,14 +79,9 @@ app.use(
       fileFilter: uploadHelpers.fileFilter,
     },
     apiSpec: './api/openapi.json',
-    // validateResponses: {
-    //   // coerceTypes: true,
-    //   onError: (error, body) => {
-    //     console.log(`Response body fails validation: `, error);
-    //     console.debug(body);
-    //   },
-    // },
-    validateResponses: true,
+    validateResponses: {
+      removeAdditional: 'failing',
+    },
     validateRequests: true,
   }),
 );
@@ -108,14 +103,6 @@ app.all('*', (req, res, next) => {
       404,
     ),
   );
-});
-
-app.use((err, req, res, next) => {
-  console.error(err); // dump error to console for debug
-  res.status(err.status || 500).json({
-    message: err.message,
-    errors: err.errors,
-  });
 });
 
 app.use(globalErrorHandler);
