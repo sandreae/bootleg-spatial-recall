@@ -6,10 +6,10 @@
     "description": "API endpoints for bootleg-spatial-audio, bootleg convolution reverb."
   },
   "paths": {
-    "/api/users/signup": {
+    "/api/auth/signup": {
       "post": {
         "tags": [
-          "Users"
+          "Auth"
         ],
         "summary": "Post an user.",
         "description": "API endpoint to create a new User.",
@@ -21,7 +21,7 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "my_username"
+                    "example": "myemail@address.com"
                   },
                   "password": {
                     "type": "string",
@@ -43,15 +43,27 @@
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/SingleUserSuccessResponse"
+            "$ref": "#/components/responses/User"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
     },
-    "/api/users/login": {
+    "/api/auth/login": {
       "post": {
         "tags": [
-          "Users"
+          "Auth"
         ],
         "summary": "Login.",
         "description": "API endpoint login with your username and password.",
@@ -63,23 +75,19 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "my_username"
+                    "example": "myemail@address.com"
                   },
                   "password": {
                     "type": "string",
                     "example": "badpassword123"
                   }
-                },
-                "required": [
-                  "email",
-                  "password"
-                ]
+                }
               }
             }
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "success",
             "content": {
               "application/json": {
@@ -97,11 +105,22 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "impulses": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Impulse"
-                          }
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "string",
+                              "example": "myemail@address.com"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "60350154a0e30c25cddab650"
+                            }
+                          },
+                          "required": [
+                            "email",
+                            "id"
+                          ]
                         }
                       }
                     }
@@ -109,6 +128,18 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
@@ -122,7 +153,19 @@
         "description": "API endpoint that returns all existuing users from the database.",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/UsersSuccessResponse"
+            "$ref": "#/components/responses/Users"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
@@ -136,7 +179,19 @@
         "description": "API endpoint for getting an existing user by their id.",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/SingleUserSuccessResponse"
+            "$ref": "#/components/responses/User"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -167,21 +222,43 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "M60 underpass"
+                  "user": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "example": "myemail@address.com"
+                      },
+                      "id": {
+                        "type": "string",
+                        "example": "60350154a0e30c25cddab650"
+                      }
+                    },
+                    "required": [
+                      "email",
+                      "id"
+                    ]
                   }
-                },
-                "required": [
-                  "email"
-                ]
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/SingleUserSuccessResponse"
+            "$ref": "#/components/responses/User"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -209,6 +286,9 @@
         "responses": {
           "204": {
             "description": "The resource was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -237,7 +317,19 @@
         "description": "API endpoint that returns all stored impulses from the database.",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/ImpulseSuccessResponse"
+            "$ref": "#/components/responses/Impulses"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         }
       },
@@ -248,59 +340,23 @@
         "summary": "Post an impulse.",
         "description": "API endpoint to upload new impulses.",
         "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "M60 underpass"
-                  },
-                  "location": {
-                    "type": "string",
-                    "example": "Manchester"
-                  },
-                  "gpsLat": {
-                    "type": "number",
-                    "example": 53.435212
-                  },
-                  "gpsLon": {
-                    "type": "number",
-                    "example": -2.316901
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "Long reverb in M60 underpass."
-                  },
-                  "date": {
-                    "type": "string",
-                    "example": "2005-06-07T00:00:00.000Z"
-                  },
-                  "imageFile": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "audioFile": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                },
-                "required": [
-                  "name",
-                  "location",
-                  "description",
-                  "date",
-                  "imageFile",
-                  "audioFile"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/Impulse"
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/ImpulseSuccessResponse"
+            "$ref": "#/components/responses/Impulse"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
@@ -314,7 +370,19 @@
         "description": "API endpoint for getting or modifying an imulse by it's id.",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/ImpulseSuccessResponse"
+            "$ref": "#/components/responses/Impulse"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -323,12 +391,10 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string"
             },
             "description": "ID of impulse to use",
+            "example": "6035008a676ffc23ca7e408",
             "style": "simple"
           }
         ]
@@ -382,7 +448,19 @@
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/ImpulseSuccessResponse"
+            "$ref": "#/components/responses/Impulse"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -391,12 +469,10 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string"
             },
             "description": "ID of impulse to use",
+            "example": "6035008a676ffc23ca7e408",
             "style": "simple"
           }
         ]
@@ -410,6 +486,18 @@
         "responses": {
           "204": {
             "description": "The resource was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -418,12 +506,10 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string"
             },
             "description": "ID of impulse to use",
+            "example": "6035008a676ffc23ca7e408",
             "style": "simple"
           }
         ]
@@ -521,12 +607,75 @@
           "_id": {
             "type": "string"
           }
+        },
+        "example": {
+          "_id": "60350154a0e30c25cddab650",
+          "email": "myemail@address.com"
         }
+      },
+      "DevError": {
+        "title": "DevError",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "failure."
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "integer",
+                "example": "404"
+              },
+              "status": {
+                "type": "string",
+                "example": "failure."
+              },
+              "isOperational": {
+                "type": "boolean",
+                "example": true
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "Resource not found."
+          },
+          "stack": {
+            "type": "string",
+            "example": "Really long message."
+          }
+        },
+        "required": [
+          "error",
+          "message",
+          "stack",
+          "statusCode",
+          "isOperational"
+        ]
+      },
+      "ProdError": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "failure."
+          },
+          "message": {
+            "type": "string",
+            "example": "Resource not found."
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "responses": {
-      "ImpulseSuccessResponse": {
-        "description": "success",
+      "Impulses": {
+        "description": "Succesfully respond with an array of all impulses.",
         "content": {
           "application/json": {
             "schema": {
@@ -551,13 +700,46 @@
                     }
                   }
                 }
+              },
+              "required": [
+                "status",
+                "data",
+                "results"
+              ]
+            }
+          }
+        }
+      },
+      "Impulse": {
+        "description": "Succesfully respond with one impulses.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "results": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "impulse": {
+                      "$ref": "#/components/schemas/Impulse"
+                    }
+                  }
+                }
               }
             }
           }
         }
       },
-      "UsersSuccessResponse": {
-        "description": "success",
+      "Users": {
+        "description": "Succesfully respond with an array of all users.",
         "content": {
           "application/json": {
             "schema": {
@@ -577,7 +759,21 @@
                     "impulses": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/User"
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string",
+                            "example": "myemail@address.com"
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "60350154a0e30c25cddab650"
+                          }
+                        },
+                        "required": [
+                          "email",
+                          "id"
+                        ]
                       }
                     }
                   }
@@ -587,8 +783,8 @@
           }
         }
       },
-      "SingleUserSuccessResponse": {
-        "description": "success",
+      "User": {
+        "description": "Succesfully respond with one user.",
         "content": {
           "application/json": {
             "schema": {
@@ -598,114 +794,100 @@
                   "type": "string",
                   "example": "Success"
                 },
-                "results": {
-                  "type": "integer",
-                  "example": 1
-                },
                 "data": {
                   "type": "object",
                   "properties": {
                     "user": {
-                      "$ref": "#/components/schemas/User"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "500Error": {
-        "description": "Failure",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "error"
-                },
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "stringValue": {
-                      "type": "string",
-                      "example": "6035008a676ffc23ca7e408"
-                    },
-                    "kind": {
-                      "type": "string",
-                      "example": "ObjectId"
-                    },
-                    "value": {
-                      "type": "string",
-                      "example": "6035008a676ffc23ca7e408"
-                    },
-                    "path": {
-                      "type": "string",
-                      "example": "_id"
-                    },
-                    "reason": {
                       "type": "object",
-                      "properties": {}
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32",
-                      "example": "500"
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "error"
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "myemail@address.com"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "60350154a0e30c25cddab650"
+                        }
+                      },
+                      "required": [
+                        "email",
+                        "id"
+                      ]
                     }
                   }
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Long error message"
                 }
               }
             }
           }
         }
       },
-      "404Error": {
-        "description": "Failure",
+      "Error": {
+        "description": "Default error",
         "content": {
           "application/json": {
             "schema": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/DevError"
+                },
+                {
+                  "$ref": "#/components/schemas/ProdError"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Impulse": {
+        "description": "Add an Impulse to the database",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
               "type": "object",
               "properties": {
-                "status": {
+                "name": {
                   "type": "string",
-                  "example": "fail"
+                  "example": "M60 underpass"
                 },
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "fail"
-                    },
-                    "isOperational": {
-                      "type": "boolean",
-                      "example": true
-                    }
-                  }
-                },
-                "message": {
+                "location": {
                   "type": "string",
-                  "example": "No impulse found with that ID"
+                  "example": "Manchester"
                 },
-                "stack": {
+                "gpsLat": {
+                  "type": "number",
+                  "example": 53.435212
+                },
+                "gpsLon": {
+                  "type": "number",
+                  "example": -2.316901
+                },
+                "description": {
                   "type": "string",
-                  "example": "Error: long error message"
+                  "example": "Long reverb in M60 underpass."
+                },
+                "date": {
+                  "type": "string",
+                  "example": "2005-06-07T00:00:00.000Z"
+                },
+                "imageFile": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "audioFile": {
+                  "type": "string",
+                  "format": "binary"
                 }
-              }
+              },
+              "required": [
+                "name",
+                "location",
+                "description",
+                "date",
+                "imageFile",
+                "audioFile"
+              ]
             }
           }
         }

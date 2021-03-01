@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
+mongoose.Schema.ObjectId.get((v) => (v != null ? v.toString() : v));
+
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
