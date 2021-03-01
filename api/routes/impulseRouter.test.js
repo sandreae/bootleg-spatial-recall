@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Impulse = require(path.resolve(__dirname, '../models/Impulse'));
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-const app = require(path.resolve(__dirname, '../app')); // Link to your server file
+const app = require(path.resolve(__dirname, '../app'));
 
 const request = supertest(app);
 
