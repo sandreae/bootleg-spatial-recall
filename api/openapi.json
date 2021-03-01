@@ -44,6 +44,18 @@
         "responses": {
           "201": {
             "$ref": "#/components/responses/User"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
@@ -94,7 +106,21 @@
                       "type": "object",
                       "properties": {
                         "user": {
-                          "$ref": "#/components/schemas/ResponseUser"
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "string",
+                              "example": "myemail@address.com"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "60350154a0e30c25cddab650"
+                            }
+                          },
+                          "required": [
+                            "email",
+                            "id"
+                          ]
                         }
                       }
                     }
@@ -102,6 +128,18 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
@@ -116,6 +154,18 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/Users"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
@@ -131,8 +181,17 @@
           "200": {
             "$ref": "#/components/responses/User"
           },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
           "401": {
-            "$ref": "#/components/responses/401Error"
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -164,7 +223,21 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "$ref": "#/components/schemas/ResponseUser"
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "example": "myemail@address.com"
+                      },
+                      "id": {
+                        "type": "string",
+                        "example": "60350154a0e30c25cddab650"
+                      }
+                    },
+                    "required": [
+                      "email",
+                      "id"
+                    ]
                   }
                 }
               }
@@ -175,8 +248,17 @@
           "200": {
             "$ref": "#/components/responses/User"
           },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
           "401": {
-            "$ref": "#/components/responses/401Error"
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -206,7 +288,7 @@
             "description": "The resource was deleted successfully."
           },
           "401": {
-            "$ref": "#/components/responses/401Error"
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -236,6 +318,18 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/Impulses"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         }
       },
@@ -246,59 +340,23 @@
         "summary": "Post an impulse.",
         "description": "API endpoint to upload new impulses.",
         "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "M60 underpass"
-                  },
-                  "location": {
-                    "type": "string",
-                    "example": "Manchester"
-                  },
-                  "gpsLat": {
-                    "type": "number",
-                    "example": 53.435212
-                  },
-                  "gpsLon": {
-                    "type": "number",
-                    "example": -2.316901
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "Long reverb in M60 underpass."
-                  },
-                  "date": {
-                    "type": "string",
-                    "example": "2005-06-07T00:00:00.000Z"
-                  },
-                  "imageFile": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "audioFile": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                },
-                "required": [
-                  "name",
-                  "location",
-                  "description",
-                  "date",
-                  "imageFile",
-                  "audioFile"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/Impulse"
         },
         "responses": {
           "201": {
             "$ref": "#/components/responses/Impulse"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
@@ -314,8 +372,17 @@
           "200": {
             "$ref": "#/components/responses/Impulse"
           },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
           "401": {
-            "$ref": "#/components/responses/401Error"
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -383,8 +450,17 @@
           "200": {
             "$ref": "#/components/responses/Impulse"
           },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
           "401": {
-            "$ref": "#/components/responses/401Error"
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -411,8 +487,17 @@
           "204": {
             "description": "The resource was deleted successfully."
           },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
           "401": {
-            "$ref": "#/components/responses/401Error"
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "parameters": [
@@ -527,23 +612,6 @@
           "_id": "60350154a0e30c25cddab650",
           "email": "myemail@address.com"
         }
-      },
-      "ResponseUser": {
-        "title": "ResponseUser",
-        "properties": {
-          "email": {
-            "type": "string",
-            "example": "myemail@address.com"
-          },
-          "id": {
-            "type": "string",
-            "example": "60350154a0e30c25cddab650"
-          }
-        },
-        "required": [
-          "email",
-          "id"
-        ]
       }
     },
     "responses": {
@@ -573,7 +641,12 @@
                     }
                   }
                 }
-              }
+              },
+              "required": [
+                "status",
+                "data",
+                "results"
+              ]
             }
           }
         }
@@ -627,7 +700,21 @@
                     "impulses": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ResponseUser"
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string",
+                            "example": "myemail@address.com"
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "60350154a0e30c25cddab650"
+                          }
+                        },
+                        "required": [
+                          "email",
+                          "id"
+                        ]
                       }
                     }
                   }
@@ -652,7 +739,21 @@
                   "type": "object",
                   "properties": {
                     "user": {
-                      "$ref": "#/components/schemas/ResponseUser"
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "myemail@address.com"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "60350154a0e30c25cddab650"
+                        }
+                      },
+                      "required": [
+                        "email",
+                        "id"
+                      ]
                     }
                   }
                 }
@@ -661,18 +762,118 @@
           }
         }
       },
-      "401Error": {
-        "description": "Failure",
+      "Error": {
+        "description": "Default error",
         "content": {
           "application/json": {
             "schema": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": "404"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "failure."
+                        },
+                        "isOperational": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Resource not found."
+                    },
+                    "stack": {
+                      "type": "string",
+                      "example": "Really long message."
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "message"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "failure."
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Resource not found."
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Impulse": {
+        "description": "Add an Impulse to the database",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
               "type": "object",
               "properties": {
-                "message": {
+                "name": {
                   "type": "string",
-                  "example": "AWESOME DEMO ERROR"
+                  "example": "M60 underpass"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Manchester"
+                },
+                "gpsLat": {
+                  "type": "number",
+                  "example": 53.435212
+                },
+                "gpsLon": {
+                  "type": "number",
+                  "example": -2.316901
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Long reverb in M60 underpass."
+                },
+                "date": {
+                  "type": "string",
+                  "example": "2005-06-07T00:00:00.000Z"
+                },
+                "imageFile": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "audioFile": {
+                  "type": "string",
+                  "format": "binary"
                 }
-              }
+              },
+              "required": [
+                "name",
+                "location",
+                "description",
+                "date",
+                "imageFile",
+                "audioFile"
+              ]
             }
           }
         }
