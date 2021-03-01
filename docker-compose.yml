@@ -8,9 +8,12 @@ services:
     ports:
       - "3000:3000"
     env_file:
-    - .env
+      - .env
+    volumes:
+      - .:/usr/src/app
     links:
       - mongo
+    entrypoint: npm run dev
   mongo:
     container_name: mongo
     image: mongo
