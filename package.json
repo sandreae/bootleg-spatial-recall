@@ -9,7 +9,8 @@
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "npm run lint:js",
-    "test": "jest"
+    "test": "jest",
+    "docker:test": "docker-compose run -e NODE_ENV=test --entrypoint 'npm run test' --service-ports bootleg-spatial-recall"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"
