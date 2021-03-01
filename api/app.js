@@ -7,9 +7,7 @@ const multer = require('multer');
 const helmet = require('helmet');
 const OpenApiValidator = require('express-openapi-validator');
 
-const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
 const authRouter = require('./routes/authRouter');
 const impulseRouter = require('./routes/impulseRouter');
@@ -78,12 +76,12 @@ app.use(
       storage: multerMemoryStorage,
       fileFilter: uploadHelpers.fileFilter,
     },
-    apiSpec: './api/openapi.json',
+    apiSpec: path.join(__dirname, 'public/openapi.json'),
     validateResponses: {
       removeAdditional: 'failing',
     },
     validateRequests: true,
-    ignorePaths: /.*\/$/,
+    ignorePaths: /.*\/openapi*\/$/,
   }),
 );
 
@@ -92,19 +90,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/impulses', impulseRouter);
-app.use('/', indexRouter);
-
-app.all('*', (req, res, next) => {
-  next(
-    new AppError(
-      `Can't find ${req.originalUrl} on this server!`,
-      404,
-    ),
-  );
-});
+app.use('/auth', authRouter);
+app.use('/users', usersRouter);
+app.use('/impulses', impulseRouter);
 
 app.use(globalErrorHandler);
 

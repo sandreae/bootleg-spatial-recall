@@ -1,7 +1,7 @@
 const openapi = require('@wesleytodd/openapi');
 
 const oapi = openapi(
-  '/api/docs',
+  '/api/openapi',
   {
     openapi: '3.0.0',
     info: {

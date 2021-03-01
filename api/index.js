@@ -11,7 +11,7 @@ dotenv.config({ path: '../.env' });
 require('./db');
 const app = require('./app');
 
-module.exports = { prefix: false, handler: app };
+module.exports = { path: '/api', handler: app };
 
 // Start standalone server if directly running
 let server;
