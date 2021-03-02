@@ -48,7 +48,7 @@
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/User"
+            "$ref": "#/components/responses/JwtResponse"
           },
           "400": {
             "$ref": "#/components/responses/Error"
@@ -92,47 +92,8 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "jwt": {
-                      "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "user": {
-                          "type": "object",
-                          "properties": {
-                            "email": {
-                              "type": "string",
-                              "example": "myemail@address.com"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "60350154a0e30c25cddab650"
-                            }
-                          },
-                          "required": [
-                            "email",
-                            "id"
-                          ]
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+          "200": {
+            "$ref": "#/components/responses/JwtResponse"
           },
           "400": {
             "$ref": "#/components/responses/Error"
@@ -292,7 +253,16 @@
           "204": {
             "description": "The resource was deleted successfully."
           },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
           "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
             "$ref": "#/components/responses/Error"
           }
         },
@@ -524,7 +494,7 @@
   "components": {
     "schemas": {
       "Impulse": {
-        "title": "impulse",
+        "title": "Impulse",
         "required": [
           "name",
           "date",
@@ -617,72 +587,6 @@
           "_id": "60350154a0e30c25cddab650",
           "email": "myemail@address.com"
         }
-      },
-      "DevError": {
-        "title": "DevError",
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "failure."
-          },
-          "error": {
-            "type": "object",
-            "properties": {
-              "statusCode": {
-                "type": "integer",
-                "example": "404"
-              },
-              "status": {
-                "type": "string",
-                "example": "failure."
-              },
-              "isOperational": {
-                "type": "boolean",
-                "example": true
-              }
-            }
-          },
-          "message": {
-            "type": "string",
-            "example": "Resource not found."
-          },
-          "stack": {
-            "type": "string",
-            "example": "Really long message."
-          }
-        },
-        "required": [
-          "error",
-          "message",
-          "stack",
-          "statusCode",
-          "isOperational"
-        ]
-      },
-      "ProdError": {
-        "title": "ProdError",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "object",
-            "properties": {
-              "status": {
-                "type": "string",
-                "example": "failure."
-              },
-              "message": {
-                "type": "string",
-                "example": "Resource not found."
-              }
-            }
-          }
-        },
-        "required": [
-          "error",
-          "status",
-          "message"
-        ]
       }
     },
     "responses": {
@@ -701,21 +605,16 @@
                   "type": "integer",
                   "example": 1
                 },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "impulses": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Impulse"
-                      }
-                    }
+                "impulses": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Impulse"
                   }
                 }
               },
               "required": [
                 "status",
-                "data",
+                "impulses",
                 "results"
               ]
             }
@@ -733,19 +632,14 @@
                   "type": "string",
                   "example": "Success"
                 },
-                "results": {
-                  "type": "integer",
-                  "example": 1
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "impulse": {
-                      "$ref": "#/components/schemas/Impulse"
-                    }
-                  }
+                "impulse": {
+                  "$ref": "#/components/schemas/Impulse"
                 }
-              }
+              },
+              "required": [
+                "status",
+                "impulse"
+              ]
             }
           }
         }
@@ -765,32 +659,32 @@
                   "type": "integer",
                   "example": 1
                 },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "impulses": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "email": {
-                            "type": "string",
-                            "example": "myemail@address.com"
-                          },
-                          "id": {
-                            "type": "string",
-                            "example": "60350154a0e30c25cddab650"
-                          }
-                        },
-                        "required": [
-                          "email",
-                          "id"
-                        ]
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "example": "myemail@address.com"
+                      },
+                      "id": {
+                        "type": "string",
+                        "example": "60350154a0e30c25cddab650"
                       }
-                    }
+                    },
+                    "required": [
+                      "email",
+                      "id"
+                    ]
                   }
                 }
-              }
+              },
+              "required": [
+                "status",
+                "users",
+                "results"
+              ]
             }
           }
         }
@@ -806,29 +700,72 @@
                   "type": "string",
                   "example": "Success"
                 },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "object",
-                      "properties": {
-                        "email": {
-                          "type": "string",
-                          "example": "myemail@address.com"
-                        },
-                        "id": {
-                          "type": "string",
-                          "example": "60350154a0e30c25cddab650"
-                        }
+                "properties": {
+                  "user": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "example": "myemail@address.com"
                       },
-                      "required": [
-                        "email",
-                        "id"
-                      ]
-                    }
+                      "id": {
+                        "type": "string",
+                        "example": "60350154a0e30c25cddab650"
+                      }
+                    },
+                    "required": [
+                      "email",
+                      "id"
+                    ]
                   }
                 }
-              }
+              },
+              "required": [
+                "status",
+                "user"
+              ]
+            }
+          }
+        }
+      },
+      "JwtResponse": {
+        "description": "success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "token": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "example": "myemail@address.com"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "60350154a0e30c25cddab650"
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "id"
+                  ]
+                }
+              },
+              "required": [
+                "status",
+                "token",
+                "user"
+              ]
             }
           }
         }
@@ -840,10 +777,70 @@
             "schema": {
               "oneOf": [
                 {
-                  "$ref": "#/components/schemas/DevError"
+                  "title": "DevError",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "failure."
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": "404"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "failure."
+                        },
+                        "isOperational": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Resource not found."
+                    },
+                    "stack": {
+                      "type": "string",
+                      "example": "Really long message."
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "message",
+                    "stack",
+                    "statusCode",
+                    "isOperational"
+                  ]
                 },
                 {
-                  "$ref": "#/components/schemas/ProdError"
+                  "title": "ProdError",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "failure."
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Resource not found."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "status",
+                    "message"
+                  ]
                 }
               ]
             }
