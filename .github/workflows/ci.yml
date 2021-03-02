@@ -21,9 +21,6 @@ jobs:
       - name: Build container 🏗
         run: docker-compose -f docker-compose-tests.yml up -d test-server
           
-      - name: Wait for ready ...
-        run: docker run --network container:bootleg-spatial-recall-test appropriate/curl -s --retry 10 --retry-connrefused http://localhost:3000/
-
       - name: Run linter 👀
         run: docker-compose -f docker-compose-tests.yml exec -e 'NODE_ENV=test' test-server npm run test
 
