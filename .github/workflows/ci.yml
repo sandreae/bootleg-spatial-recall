@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build container 🏗
-        run: docker-compose up -d
+        run: docker-compose up -d test-server
           
       - name: Wait for ready ...
         run: docker run --network container:bootleg-spatial-recall appropriate/curl -s --retry 10 --retry-connrefused http://localhost:3000/
