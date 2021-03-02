@@ -12,7 +12,7 @@ const oapi = openapi(
     },
     servers: [{ url: 'http://localhost:3000/api' }],
   },
-  { htmlui: 'swagger-ui' },
+  { htmlui: 'redoc' },
 );
 
 module.exports = oapi;

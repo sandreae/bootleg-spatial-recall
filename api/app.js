@@ -44,6 +44,7 @@ const openApiCSP = {
       "'unsafe-inline'",
       'blob:',
       'data:',
+      "'unsafe-eval'",
     ],
     'style-src': [
       "'self'",
