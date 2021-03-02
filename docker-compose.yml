@@ -20,12 +20,13 @@ services:
     build: .
     ports:
       - "3000:3000"
-    env_file:
-      - .env
     environment:
-    - MONGO_DB=testing
-    volumes:
-      - .:/usr/src/app
+      - MONGO_URL=mongodb://mongo:27017/
+      - MONGO_DB=testing
+      - JWT_SECRET=notagoodkey
+      - NODE_ENV=development
+      - JWT_EXPIRES_IN=30d
+      - JWT_COOKIE_EXPIRES_IN=30d
     links:
       - db
   db:
