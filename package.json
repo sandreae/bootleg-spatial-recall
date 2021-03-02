@@ -11,8 +11,9 @@
     "lint": "npm run lint:js",
     "test": "jest",
     "docker:dev": "docker-compose up server",
-    "docker:test": "docker-compose exec -e 'NODE_ENV=test' test-server npm run test",
-    "docker:lint": "docker-compose exec -e 'NODE_ENV=test' test-server npm run lint"
+    "docker:test-server": "docker-compose -f docker-compose-tests.yml up test-server",
+    "docker:test": "docker-compose -f docker-compose-tests.yml exec -e 'NODE_ENV=test' test-server npm run test",
+    "docker:lint": "docker-compose -f docker-compose-tests.yml exec -e 'NODE_ENV=test' test-server npm run lint"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"
