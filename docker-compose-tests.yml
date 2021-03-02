@@ -1,0 +1,25 @@
+version: "3"
+services:
+  test-server:
+    container_name: bootleg-spatial-recall-test
+    image: latest/bootleg-spatial-recall
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/
+      - MONGO_DB=testing
+      - JWT_SECRET=notagoodkey
+      - NODE_ENV=development
+      - JWT_EXPIRES_IN=30d
+      - JWT_COOKIE_EXPIRES_IN=30d
+    links:
+      - db
+  db:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - /srv/docker/mongodb:/var/lib/mongodb
+    ports:
+      - '27017:27017'

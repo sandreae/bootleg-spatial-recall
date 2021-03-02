@@ -1,6 +1,6 @@
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
-const User = require('./../models/userModel');
+const User = require('../models/User');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
@@ -22,11 +22,9 @@ exports.signup = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: 'success',
     token,
-    data: {
-      user: {
-        id: newUser._id,
-        email: newUser.email,
-      },
+    user: {
+      id: newUser._id,
+      email: newUser.email,
     },
   });
 });
@@ -49,9 +47,13 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password', 401));
   }
   const token = signToken(user._id);
-  res.status(201).json({
+  res.status(200).json({
     status: 'success',
     token,
+    user: {
+      id: user._id,
+      email: user.email,
+    },
   });
 });
 

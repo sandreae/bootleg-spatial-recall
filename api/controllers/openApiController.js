@@ -1,7 +1,7 @@
 /* eslint-disable vue/one-component-per-file */
 const m2s = require('mongoose-to-swagger');
-const Impulse = require('./../models/impulseModel');
-const User = require('./../models/userModel');
+const User = require('./../models/User');
+const Impulse = require('./../models/Impulse');
 const oapi = require('./../utils/openAPI');
 
 const swaggerImpulseSchema = m2s(Impulse);
@@ -46,7 +46,7 @@ swaggerUserSchema.example = {
 // schemas
 oapi.component('schemas', 'Impulse', swaggerImpulseSchema);
 oapi.component('schemas', 'User', swaggerUserSchema);
-oapi.component('schemas', 'DevError', {
+const devError = {
   title: 'DevError',
   type: 'object',
   properties: {
@@ -69,9 +69,9 @@ oapi.component('schemas', 'DevError', {
     'statusCode',
     'isOperational',
   ],
-});
+};
 
-oapi.component('schemas', 'ProdError', {
+const prodError = {
   title: 'ProdError',
   type: 'object',
   properties: {
@@ -84,7 +84,7 @@ oapi.component('schemas', 'ProdError', {
     },
   },
   required: ['error', 'status', 'message'],
-});
+};
 
 // responses
 oapi.component('responses', 'Impulses', {
@@ -96,17 +96,12 @@ oapi.component('responses', 'Impulses', {
         properties: {
           status: { type: 'string', example: 'Success' },
           results: { type: 'integer', example: 1 },
-          data: {
-            type: 'object',
-            properties: {
-              impulses: {
-                type: 'array',
-                items: { $ref: '#/components/schemas/Impulse' },
-              },
-            },
+          impulses: {
+            type: 'array',
+            items: { $ref: '#/components/schemas/Impulse' },
           },
         },
-        required: ['status', 'data', 'results'],
+        required: ['status', 'impulses', 'results'],
       },
     },
   },
@@ -119,14 +114,9 @@ oapi.component('responses', 'Impulse', {
         type: 'object',
         properties: {
           status: { type: 'string', example: 'Success' },
-          results: { type: 'integer', example: 1 },
-          data: {
-            type: 'object',
-            properties: {
-              impulse: { $ref: '#/components/schemas/Impulse' },
-            },
-          },
+          impulse: { $ref: '#/components/schemas/Impulse' },
         },
+        required: ['status', 'impulse'],
       },
     },
   },
@@ -140,16 +130,12 @@ oapi.component('responses', 'Users', {
         properties: {
           status: { type: 'string', example: 'Success' },
           results: { type: 'integer', example: 1 },
-          data: {
-            type: 'object',
-            properties: {
-              impulses: {
-                type: 'array',
-                items: responseUser,
-              },
-            },
+          users: {
+            type: 'array',
+            items: responseUser,
           },
         },
+        required: ['status', 'users', 'results'],
       },
     },
   },
@@ -162,13 +148,32 @@ oapi.component('responses', 'User', {
         type: 'object',
         properties: {
           status: { type: 'string', example: 'Success' },
-          data: {
-            type: 'object',
-            properties: {
-              user: responseUser,
-            },
+          properties: {
+            user: responseUser,
           },
         },
+        required: ['status', 'user'],
+      },
+    },
+  },
+});
+
+oapi.component('responses', 'JwtResponse', {
+  description: 'success',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'success' },
+          token: {
+            type: 'string',
+            example:
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+          },
+          user: responseUser,
+        },
+        required: ['status', 'token', 'user'],
       },
     },
   },
@@ -185,12 +190,12 @@ oapi.component('requestBodies', 'Impulse', {
           name: { type: 'string', example: 'M60 underpass' },
           location: { type: 'string', example: 'Manchester' },
           gpsLat: {
-            type: 'number',
-            example: 53.435212,
+            type: 'string',
+            example: '53.435212',
           },
           gpsLon: {
-            type: 'number',
-            example: -2.316901,
+            type: 'string',
+            example: '-2.316901',
           },
           description: {
             type: 'string',
@@ -229,10 +234,7 @@ oapi.component('responses', 'Error', {
   content: {
     'application/json': {
       schema: {
-        oneOf: [
-          { $ref: '#/components/schemas/DevError' },
-          { $ref: '#/components/schemas/ProdError' },
-        ],
+        oneOf: [devError, prodError],
       },
     },
   },
@@ -444,7 +446,7 @@ exports.signup = oapi.path({
     },
   },
   responses: {
-    201: { $ref: '#/components/responses/User' },
+    201: { $ref: '#/components/responses/JwtResponse' },
     400: { $ref: '#/components/responses/Error' },
     401: { $ref: '#/components/responses/Error' },
     403: { $ref: '#/components/responses/Error' },
@@ -470,30 +472,7 @@ exports.login = oapi.path({
     },
   },
   responses: {
-    201: {
-      description: 'success',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              status: { type: 'string', example: 'success' },
-              jwt: {
-                type: 'string',
-                example:
-                  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-              },
-              data: {
-                type: 'object',
-                properties: {
-                  user: responseUser,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+    200: { $ref: '#/components/responses/JwtResponse' },
     400: { $ref: '#/components/responses/Error' },
     401: { $ref: '#/components/responses/Error' },
     403: { $ref: '#/components/responses/Error' },
@@ -509,7 +488,10 @@ exports.deleteUser = oapi.path({
     204: {
       description: 'The resource was deleted successfully.',
     },
+    400: { $ref: '#/components/responses/Error' },
     401: { $ref: '#/components/responses/Error' },
+    403: { $ref: '#/components/responses/Error' },
+    404: { $ref: '#/components/responses/Error' },
   },
   parameters: [
     {

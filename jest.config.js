@@ -14,6 +14,6 @@ module.exports = {
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue',
   ],
-  projects: ['<rootDir>'],
+  projects: ['<rootDir>', '<rootDir>/api'],
   testPathIgnorePatterns: ['<rootDir>/api'],
 };

@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const ObjectID = require('mongodb').ObjectID;
 
 mongoose.Schema.ObjectId.get((v) => (v != null ? v.toString() : v));
 
@@ -37,6 +38,20 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+userSchema.statics.addUser = async function (impulse) {
+  const User = new this(impulse);
+  const result = await User.save(impulse);
+  return result;
+};
+
+userSchema.statics.listUsers = async function () {
+  return await this.find();
+};
+
+userSchema.statics.deleteUser = async function (_id) {
+  return await this.deleteOne({ _id: ObjectID(_id) });
+};
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 12);
@@ -64,6 +79,4 @@ userSchema.methods.correctPassword = async function (
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);

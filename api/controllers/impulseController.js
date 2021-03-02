@@ -1,8 +1,8 @@
 const aws = require('aws-sdk');
 
+const Impulse = require('../models/Impulse');
 const AppError = require('./../utils/appError');
 const uploadHelpers = require('./../utils/uploadHelpers');
-const Impulse = require('./../models/impulseModel');
 const catchAsync = require('./../utils/catchAsync');
 
 const spacesEndpoint = new aws.Endpoint(
@@ -63,9 +63,7 @@ exports.getAllImpulses = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     results: impulses.length,
-    data: {
-      impulses,
-    },
+    impulses,
   });
 });
 
@@ -78,9 +76,7 @@ exports.getImpulse = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    data: {
-      impulse,
-    },
+    impulse,
   });
 });
 
@@ -100,14 +96,11 @@ exports.createImpulse = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: 'success',
-    data: {
-      impulse: newImpulse,
-    },
+    impulse: newImpulse,
   });
 });
 
 exports.updateImpulse = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const impulse = await Impulse.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -126,9 +119,7 @@ exports.updateImpulse = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    data: {
-      impulse,
-    },
+    impulse,
   });
 });
 
@@ -141,6 +132,5 @@ exports.deleteImpulse = catchAsync(async (req, res, next) => {
 
   res.status(204).json({
     status: 'success',
-    data: null,
   });
 });
