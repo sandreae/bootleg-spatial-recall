@@ -2,14 +2,15 @@
 
 - Express API
 - Nuxt frontend
+- Docker
 - openAPI + validation
-- swaggerUI
+- redocs UI
 - Ngrok
 - Jest
 - ESlint & Prettier
 - Github Actions
 
-## Build Setup
+## Setup
 
 ```bash
 # install dependencies
@@ -25,11 +26,25 @@ $ npm run start
 # generate static project
 $ npm run generate
 
-# run tests
+# run tests (needs test db to be running)
 $ npm run test
 
 # run linter
 $ npm run lint
+```
+
+## Docker Setup
+
+```bash
+# Build and run container
+$ npm run docker:dev
+
+# run container for testing linting
+$ npm run docker:test-server
+# then...
+$ npm run docker:test
+$ npm run docker:lint
+
 ```
 
 ## API
