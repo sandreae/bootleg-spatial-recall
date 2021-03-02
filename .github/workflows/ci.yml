@@ -22,7 +22,7 @@ jobs:
         run: docker-compose -f docker-compose-tests.yml up -d test-server
           
       - name: Run linter 👀
-        run: docker-compose -f docker-compose-tests.yml exec -e 'NODE_ENV=test' test-server npm run lint
+        run: docker-compose -f docker-compose-tests.yml exec -T -e 'NODE_ENV=test' test-server npm run lint
 
       - name: Run tests 🧪
-        run: docker-compose -f docker-compose-tests.yml exec -e 'NODE_ENV=test' test-server npm run test
+        run: docker-compose -f docker-compose-tests.yml exec -T -e 'NODE_ENV=test' test-server npm run test
