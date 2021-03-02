@@ -1,6 +1,6 @@
 version: "3"
 services:
-  bootleg-spatial-recall:
+  server:
     container_name: bootleg-spatial-recall
     image: latest/bootleg-spatial-recall
     restart: always
@@ -12,9 +12,23 @@ services:
     volumes:
       - .:/usr/src/app
     links:
-      - mongo
-    entrypoint: npm run dev
-  mongo:
+      - db
+  test-server:
+    container_name: bootleg-spatial-recall-test
+    image: latest/bootleg-spatial-recall
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+    - MONGO_DB=testing
+    volumes:
+      - .:/usr/src/app
+    links:
+      - db
+  db:
     container_name: mongo
     image: mongo
     volumes:
