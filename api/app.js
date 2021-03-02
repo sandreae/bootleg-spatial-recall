@@ -77,9 +77,7 @@ app.use(
       fileFilter: uploadHelpers.fileFilter,
     },
     apiSpec: path.join(__dirname, 'public/openapi.json'),
-    validateResponses: {
-      removeAdditional: 'failing',
-    },
+    validateResponses: true,
     validateRequests: true,
     ignorePaths: /.*\/openapi*\/$/,
   }),
