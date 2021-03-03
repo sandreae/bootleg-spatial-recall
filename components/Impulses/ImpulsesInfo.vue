@@ -1,0 +1,17 @@
+<template>
+  <div class="impulse-info-container--flex-column">
+    <div>Name</div>
+    <div>Location</div>
+    <div>Date</div>
+    <div>Description</div>
+  </div>
+</template>
+
+<style scoped>
+.impulse-info-container--flex-column {
+  align-self: stretch;
+  align-items: flex-start;
+  background-color: darkslategray;
+  padding: 0 10px 0 10px;
+}
+</style>

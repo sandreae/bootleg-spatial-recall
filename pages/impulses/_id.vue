@@ -1,53 +1,38 @@
 <template>
-  <section class="container">
-    <div class="content">
-      <Logo />
-      <h1 class="title">User</h1>
-      <h2 class="info">
-        {{ impulse.name }}
-      </h2>
-      <img :src="impulse.imageFile" />
-      <nuxt-link class="button" to="/impulses"> Impulses </nuxt-link>
-    </div>
+  <section class="impulse-page--flex-row-centre">
+    <div class="impulse-single--flex-column-centre"></div>
   </section>
 </template>
 
 <script>
+// CONTENT //
+// <h2 class="info">
+//   {{ impulse.name }}
+// </h2>
+// <img :src="impulse.imageFile" />
+// <nuxt-link class="button" to="/impulses"> Impulses </nuxt-link>
+
 export default {
-  asyncData({ params, error, $axios }) {
-    return $axios
-      .$get('/api/impulses/' + params.id)
-      .then((res) => {
-        return { impulse: res.data.impulse };
-      })
-      .catch((e) => {
-        error({ statusCode: 404, message: 'Impulse not found' });
-      });
-  },
   head() {
     return {
       title: `Impulse: ${this.impulse.name}`,
     };
   },
+  computed: {
+    impulse() {
+      const impulseArray = this.$store.getters.loadedImpulses.filter(
+        (impulse) => impulse._id === this.$route.params.id,
+      );
+      return impulseArray[0];
+    },
+  },
 };
 </script>
 
 <style scoped>
-.container {
+.impulse-page--flex-row-centre {
   margin: 0 auto;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }
 
 .title {
