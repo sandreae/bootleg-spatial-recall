@@ -87,6 +87,19 @@ const prodError = {
 };
 
 // responses
+oapi.component('responses', 'SuccessDelete', {
+  description: 'Succesfully deleted resource.',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'Success' },
+        },
+      },
+    },
+  },
+});
 oapi.component('responses', 'Impulses', {
   description: 'Succesfully respond with an array of all impulses.',
   content: {
@@ -357,9 +370,7 @@ exports.deleteImpulse = oapi.path({
   summary: 'Delete one impulse by ID.',
   description: "API endpoint for deleting an imulse by it's id.",
   responses: {
-    204: {
-      description: 'The resource was deleted successfully.',
-    },
+    204: { $ref: '#/components/responses/SuccessDelete' },
     400: { $ref: '#/components/responses/Error' },
     401: { $ref: '#/components/responses/Error' },
     403: { $ref: '#/components/responses/Error' },
@@ -485,9 +496,7 @@ exports.deleteUser = oapi.path({
   summary: 'Delete one User by ID.',
   description: 'API endpoint for deleting an user by their ID.',
   responses: {
-    204: {
-      description: 'The resource was deleted successfully.',
-    },
+    204: { $ref: '#/components/responses/SuccessDelete' },
     400: { $ref: '#/components/responses/Error' },
     401: { $ref: '#/components/responses/Error' },
     403: { $ref: '#/components/responses/Error' },
