@@ -251,7 +251,7 @@
         "description": "API endpoint for deleting an user by their ID.",
         "responses": {
           "204": {
-            "description": "The resource was deleted successfully."
+            "$ref": "#/components/responses/SuccessDelete"
           },
           "400": {
             "$ref": "#/components/responses/Error"
@@ -460,7 +460,7 @@
         "description": "API endpoint for deleting an imulse by it's id.",
         "responses": {
           "204": {
-            "description": "The resource was deleted successfully."
+            "$ref": "#/components/responses/SuccessDelete"
           },
           "400": {
             "$ref": "#/components/responses/Error"
@@ -590,6 +590,22 @@
       }
     },
     "responses": {
+      "SuccessDelete": {
+        "description": "Succesfully deleted resource.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "Success"
+                }
+              }
+            }
+          }
+        }
+      },
       "Impulses": {
         "description": "Succesfully respond with an array of all impulses.",
         "content": {
