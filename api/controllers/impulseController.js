@@ -47,6 +47,7 @@ exports.processFiles = catchAsync(async (req, res, next) => {
   }
 
   req.imageFile = await uploadHelpers.resizeImage(req.imageFile);
+  req.audioFile = await uploadHelpers.compressAudio(req.audioFile);
   next();
 });
 
@@ -113,9 +114,6 @@ exports.updateImpulse = catchAsync(async (req, res, next) => {
   if (!impulse) {
     return next(new AppError('No impulse found with that ID', 404));
   }
-
-  console.log('Updated Impulse');
-  console.log(impulse);
 
   res.status(200).json({
     status: 'success',

@@ -1,5 +1,6 @@
 const slugify = require('slugify');
 const sharp = require('sharp');
+const Lame = require('node-lame').Lame;
 const AppError = require('./appError');
 
 const renameFile = (fileObject, name) => {
@@ -31,5 +32,19 @@ exports.resizeImage = async (file) => {
 
   file.buffer = buffer;
   file.name = file.name.split('.')[0] + '.jpeg';
+  return file;
+};
+
+exports.compressAudio = async (file) => {
+  const encoder = new Lame({
+    output: 'buffer',
+    bitrate: 192,
+  }).setBuffer(file.buffer);
+
+  console.log('Encoding starting');
+  await encoder.encode();
+  console.log('Encoding finished');
+  file.buffer = encoder.getBuffer();
+  file.name = file.name.split('.')[0] + '.mp3';
   return file;
 };
