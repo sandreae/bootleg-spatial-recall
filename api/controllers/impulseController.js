@@ -28,6 +28,16 @@ const asyncUpload = (file) => {
     .promise();
 };
 
+const asyncDelete = (url) => {
+  const fileName = url.split('/').pop();
+  return s3
+    .deleteObject({
+      Bucket: process.env.DO_BUCKET,
+      Key: fileName,
+    })
+    .promise();
+};
+
 exports.processFiles = catchAsync(async (req, res, next) => {
   if (!req.files[0] || !req.files[1]) {
     return next(
@@ -127,6 +137,9 @@ exports.deleteImpulse = catchAsync(async (req, res, next) => {
   if (!impulse) {
     return next(new AppError('No impulse found with that ID', 404));
   }
+
+  asyncDelete(impulse.audioFile);
+  asyncDelete(impulse.imageFile);
 
   res.status(204).json({
     status: 'success',
