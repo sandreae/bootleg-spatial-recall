@@ -138,8 +138,8 @@ exports.deleteImpulse = catchAsync(async (req, res, next) => {
     return next(new AppError('No impulse found with that ID', 404));
   }
 
-  asyncDelete(impulse.audioFile);
-  asyncDelete(impulse.imageFile);
+  await asyncDelete(impulse.audioFile);
+  await asyncDelete(impulse.imageFile);
 
   res.status(204).json({
     status: 'success',
