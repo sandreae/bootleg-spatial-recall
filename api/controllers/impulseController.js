@@ -141,7 +141,5 @@ exports.deleteImpulse = catchAsync(async (req, res, next) => {
   await asyncDelete(impulse.audioFile);
   await asyncDelete(impulse.imageFile);
 
-  res.status(204).json({
-    status: 'success',
-  });
+  res.status(204).json({});
 });

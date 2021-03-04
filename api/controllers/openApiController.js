@@ -90,14 +90,7 @@ const prodError = {
 oapi.component('responses', 'SuccessDelete', {
   description: 'Succesfully deleted resource.',
   content: {
-    'application/json': {
-      schema: {
-        type: 'object',
-        properties: {
-          status: { type: 'string', example: 'Success' },
-        },
-      },
-    },
+    'application/json': {},
   },
 });
 oapi.component('responses', 'Impulses', {
@@ -161,9 +154,7 @@ oapi.component('responses', 'User', {
         type: 'object',
         properties: {
           status: { type: 'string', example: 'Success' },
-          properties: {
-            user: responseUser,
-          },
+          user: responseUser,
         },
         required: ['status', 'user'],
       },
@@ -172,7 +163,7 @@ oapi.component('responses', 'User', {
 });
 
 oapi.component('responses', 'JwtResponse', {
-  description: 'success',
+  description: 'Succesfully authenticated user, returns jwt token.',
   content: {
     'application/json': {
       schema: {
@@ -242,8 +233,41 @@ oapi.component('requestBodies', 'Impulse', {
 
 // errors
 
-oapi.component('responses', 'Error', {
-  description: 'Default error',
+oapi.component('responses', '404Error', {
+  description: 'Not Found',
+  content: {
+    'application/json': {
+      schema: {
+        oneOf: [devError, prodError],
+      },
+    },
+  },
+});
+
+oapi.component('responses', '400Error', {
+  description: 'Bad Request',
+  content: {
+    'application/json': {
+      schema: {
+        oneOf: [devError, prodError],
+      },
+    },
+  },
+});
+
+oapi.component('responses', '401Error', {
+  description: 'Unauthorized',
+  content: {
+    'application/json': {
+      schema: {
+        oneOf: [devError, prodError],
+      },
+    },
+  },
+});
+
+oapi.component('responses', '403Error', {
+  description: 'Forbidden',
   content: {
     'application/json': {
       schema: {
@@ -260,24 +284,23 @@ exports.getAllImpulses = oapi.validPath({
     'API endpoint that returns all stored impulses from the database.',
   responses: {
     200: { $ref: '#/components/responses/Impulses' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
   },
 });
 
 exports.getImpulse = oapi.path({
   tags: ['Impulses'],
   summary: 'Get or modify one impulse by ID.',
-  description:
-    "API endpoint for getting or modifying an imulse by it's id.",
+  description: "API endpoint for getting one imulse by it's id.",
   responses: {
     200: { $ref: '#/components/responses/Impulse' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
     // 500: { $ref: '#/components/responses/500Error' },
   },
   parameters: [
@@ -302,10 +325,10 @@ exports.postImpulse = oapi.path({
   requestBody: { $ref: '#/components/requestBodies/Impulse' },
   responses: {
     201: { $ref: '#/components/responses/Impulse' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
   },
 });
 
@@ -345,10 +368,10 @@ exports.patchImpulse = oapi.path({
   },
   responses: {
     200: { $ref: '#/components/responses/Impulse' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
   },
   parameters: [
     {
@@ -371,10 +394,10 @@ exports.deleteImpulse = oapi.path({
   description: "API endpoint for deleting an imulse by it's id.",
   responses: {
     204: { $ref: '#/components/responses/SuccessDelete' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
   },
   parameters: [
     {
@@ -398,10 +421,10 @@ exports.getUser = oapi.path({
     'API endpoint for getting an existing user by their id.',
   responses: {
     200: { $ref: '#/components/responses/User' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
   },
   parameters: [
     {
@@ -427,10 +450,10 @@ exports.getAllUsers = oapi.path({
     'API endpoint that returns all existuing users from the database.',
   responses: {
     200: { $ref: '#/components/responses/Users' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
-    500: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    404: { $ref: '#/components/responses/403Error' },
+    500: { $ref: '#/components/responses/404Error' },
   },
 });
 
@@ -458,10 +481,10 @@ exports.signup = oapi.path({
   },
   responses: {
     201: { $ref: '#/components/responses/JwtResponse' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
   },
 });
 
@@ -484,23 +507,23 @@ exports.login = oapi.path({
   },
   responses: {
     200: { $ref: '#/components/responses/JwtResponse' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
   },
 });
 
 exports.deleteUser = oapi.path({
   tags: ['Users'],
   summary: 'Delete one User by ID.',
-  description: 'API endpoint for deleting an user by their ID.',
+  description: 'API endpoint for deleting a user by their ID.',
   responses: {
     204: { $ref: '#/components/responses/SuccessDelete' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
   },
   parameters: [
     {
@@ -537,10 +560,10 @@ exports.patchUser = oapi.path({
   },
   responses: {
     200: { $ref: '#/components/responses/User' },
-    400: { $ref: '#/components/responses/Error' },
-    401: { $ref: '#/components/responses/Error' },
-    403: { $ref: '#/components/responses/Error' },
-    404: { $ref: '#/components/responses/Error' },
+    400: { $ref: '#/components/responses/400Error' },
+    401: { $ref: '#/components/responses/401Error' },
+    403: { $ref: '#/components/responses/403Error' },
+    404: { $ref: '#/components/responses/404Error' },
   },
   parameters: [
     {
