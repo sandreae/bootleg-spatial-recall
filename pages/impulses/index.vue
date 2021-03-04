@@ -50,12 +50,14 @@ export default {
 <style scoped>
 .impulses-page--flex-row-centre {
   height: 100vh;
+  width: 100vw;
   align-items: stretch;
-  padding: 40px 10px 40px 10px;
 }
 
 .impulses-page_content--flex-column-centre {
-  flex: 0 1 auto;
+  flex: 0 1 80vw;
+  align-items: stretch;
+  justify-content: space-evenly;
 }
 
 .impulses-info_padding {
@@ -67,21 +69,36 @@ export default {
 }
 
 .impulses-page_details--flex-column {
-  flex: 0 1 auto;
+  flex: 1 0 auto;
+  max-width: 80vw;
+  max-height: 80vw;
   justify-content: flex-end;
-  height: 80vw;
-  width: 80vw;
-  max-height: 80vh;
-  max-width: 80vh;
   background-color: darkred;
 }
 
 .impulses-page_picker--flex-column {
-  flex: 1 0 auto;
-  padding-top: 30px;
-  height: 10vh;
-  width: 80vw;
-  max-width: 80vh;
+  flex: 1 1 auto;
+  max-height: 30vh;
   align-items: stretch;
+}
+
+@media only screen and (min-width: 800px) {
+  .impulses-page_content--flex-column-centre {
+    flex: 1 1 100vw;
+    align-items: center;
+    background-color: lightblue;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+  }
+  .impulses-page_details--flex-column {
+    flex: 0 0 80vh;
+    min-height: 80vh;
+    background-color: dimgrey;
+  }
+
+  .impulses-page_picker--flex-column {
+    flex: 0 1 30vw;
+    max-height: 80vh;
+  }
 }
 </style>
