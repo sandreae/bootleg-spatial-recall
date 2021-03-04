@@ -51,16 +51,16 @@
             "$ref": "#/components/responses/JwtResponse"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         }
       }
@@ -96,16 +96,16 @@
             "$ref": "#/components/responses/JwtResponse"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         }
       }
@@ -122,16 +122,16 @@
             "$ref": "#/components/responses/Users"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "500": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         }
       }
@@ -148,16 +148,16 @@
             "$ref": "#/components/responses/User"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         },
         "parameters": [
@@ -215,16 +215,16 @@
             "$ref": "#/components/responses/User"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         },
         "parameters": [
@@ -248,22 +248,22 @@
           "Users"
         ],
         "summary": "Delete one User by ID.",
-        "description": "API endpoint for deleting an user by their ID.",
+        "description": "API endpoint for deleting a user by their ID.",
         "responses": {
           "204": {
             "$ref": "#/components/responses/SuccessDelete"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         },
         "parameters": [
@@ -295,16 +295,16 @@
             "$ref": "#/components/responses/Impulses"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         }
       },
@@ -322,16 +322,16 @@
             "$ref": "#/components/responses/Impulse"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         }
       }
@@ -342,22 +342,22 @@
           "Impulses"
         ],
         "summary": "Get or modify one impulse by ID.",
-        "description": "API endpoint for getting or modifying an imulse by it's id.",
+        "description": "API endpoint for getting one imulse by it's id.",
         "responses": {
           "200": {
             "$ref": "#/components/responses/Impulse"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         },
         "parameters": [
@@ -426,16 +426,16 @@
             "$ref": "#/components/responses/Impulse"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         },
         "parameters": [
@@ -463,16 +463,16 @@
             "$ref": "#/components/responses/SuccessDelete"
           },
           "400": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/400Error"
           },
           "401": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/401Error"
           },
           "403": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/403Error"
           },
           "404": {
-            "$ref": "#/components/responses/Error"
+            "$ref": "#/components/responses/404Error"
           }
         },
         "parameters": [
@@ -593,17 +593,7 @@
       "SuccessDelete": {
         "description": "Succesfully deleted resource.",
         "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "Success"
-                }
-              }
-            }
-          }
+          "application/json": {}
         }
       },
       "Impulses": {
@@ -716,24 +706,22 @@
                   "type": "string",
                   "example": "Success"
                 },
-                "properties": {
-                  "user": {
-                    "type": "object",
-                    "properties": {
-                      "email": {
-                        "type": "string",
-                        "example": "myemail@address.com"
-                      },
-                      "id": {
-                        "type": "string",
-                        "example": "60350154a0e30c25cddab650"
-                      }
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "example": "myemail@address.com"
                     },
-                    "required": [
-                      "email",
-                      "id"
-                    ]
-                  }
+                    "id": {
+                      "type": "string",
+                      "example": "60350154a0e30c25cddab650"
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "id"
+                  ]
                 }
               },
               "required": [
@@ -745,7 +733,7 @@
         }
       },
       "JwtResponse": {
-        "description": "success",
+        "description": "Succesfully authenticated user, returns jwt token.",
         "content": {
           "application/json": {
             "schema": {
@@ -786,8 +774,239 @@
           }
         }
       },
-      "Error": {
-        "description": "Default error",
+      "404Error": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "oneOf": [
+                {
+                  "title": "DevError",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "failure."
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": "404"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "failure."
+                        },
+                        "isOperational": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Resource not found."
+                    },
+                    "stack": {
+                      "type": "string",
+                      "example": "Really long message."
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "message",
+                    "stack",
+                    "statusCode",
+                    "isOperational"
+                  ]
+                },
+                {
+                  "title": "ProdError",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "failure."
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Resource not found."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "status",
+                    "message"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "400Error": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "oneOf": [
+                {
+                  "title": "DevError",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "failure."
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": "404"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "failure."
+                        },
+                        "isOperational": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Resource not found."
+                    },
+                    "stack": {
+                      "type": "string",
+                      "example": "Really long message."
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "message",
+                    "stack",
+                    "statusCode",
+                    "isOperational"
+                  ]
+                },
+                {
+                  "title": "ProdError",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "failure."
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Resource not found."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "status",
+                    "message"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "401Error": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "oneOf": [
+                {
+                  "title": "DevError",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "failure."
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": "404"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "failure."
+                        },
+                        "isOperational": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Resource not found."
+                    },
+                    "stack": {
+                      "type": "string",
+                      "example": "Really long message."
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "message",
+                    "stack",
+                    "statusCode",
+                    "isOperational"
+                  ]
+                },
+                {
+                  "title": "ProdError",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "failure."
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Resource not found."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "status",
+                    "message"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "403Error": {
+        "description": "Forbidden",
         "content": {
           "application/json": {
             "schema": {
