@@ -49,19 +49,19 @@ export default {
 
 <style scoped>
 .impulses-page--flex-row-centre {
-  background-color: orange;
   height: 100vh;
   align-items: stretch;
-  padding: 10px;
+  padding: 40px 10px 40px 10px;
 }
+
 .impulses-page_content--flex-column-centre {
   flex: 0 1 auto;
-  background-color: darkorange;
 }
 
 .impulses-info_padding {
   flex: 10 1 auto;
 }
+
 .impulses-info_content {
   flex: 1 1 auto;
 }
@@ -78,10 +78,10 @@ export default {
 
 .impulses-page_picker--flex-column {
   flex: 1 0 auto;
+  padding-top: 30px;
   height: 10vh;
   width: 80vw;
   max-width: 80vh;
-  background-color: darksalmon;
   align-items: stretch;
 }
 </style>
