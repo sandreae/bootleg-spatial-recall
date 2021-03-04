@@ -1,7 +1,9 @@
 <template>
   <section class="impulses-page--flex-row-centre">
     <div class="impulses-page_content--flex-column-centre">
+      <p v-if="$fetchState.pending">Fetching implses...</p>
       <div
+        v-else
         class="impulses-page_details--flex-column"
         :style="{
           backgroundImage: 'url(' + selectedImpulse.imageFile + ')',
@@ -21,6 +23,22 @@
 
 <script>
 export default {
+  async fetch() {
+    const promises = await this.$store.getters.loadedImpulses.map(
+      (impulse) => {
+        return new Promise(function (resolve, reject) {
+          const img = new Image();
+
+          img.src = impulse.imageFile;
+          img.onload = resolve();
+          img.onerror = reject(new Error('Image did not load'));
+        });
+      },
+    );
+    await Promise.all(promises);
+    console.log('images loaded');
+  },
+  fetchOnServer: false,
   head() {
     return {
       title: 'Impulses',
