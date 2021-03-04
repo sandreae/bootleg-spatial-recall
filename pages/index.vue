@@ -9,7 +9,9 @@
           backgroundImage: 'url(' + selectedImpulse.imageFile + ')',
         }"
       >
-        <div class="impulses-info_padding"></div>
+        <div class="impulses-info_padding" @click="togglePlay">
+          {{ !playing ? 'PLAY' : 'STOP' }}
+        </div>
         <div class="impulses-info_content">
           <ImpulsesInfo />
         </div>
@@ -22,7 +24,16 @@
 </template>
 
 <script>
+import { ImpulsePlayer } from '@/assets/js/audioUtils.js';
+import sample from '@/assets/audio/arnold_circus_demo.mp3';
+
 export default {
+  data() {
+    return {
+      impulsePlayer: null,
+      playing: false,
+    };
+  },
   async fetch() {
     const promises = await this.$store.getters.loadedImpulses.map(
       (impulse) => {
@@ -36,7 +47,15 @@ export default {
       },
     );
     await Promise.all(promises);
-    console.log('images loaded');
+    const sampleFile = await fetch(sample);
+    this.impulsePlayer = new ImpulsePlayer();
+    await this.impulsePlayer.setSampleBuffer(sampleFile);
+    await this.impulsePlayer.setSampleNode();
+    if (this.selectedImpulse.audioFile) {
+      const impulseFile = await fetch(this.selectedImpulse.audioFile);
+      await this.impulsePlayer.setConvolverNode(impulseFile);
+    }
+    this.impulsePlayer.makeConnections();
   },
   fetchOnServer: false,
   head() {
@@ -48,8 +67,35 @@ export default {
     impulses() {
       return this.$store.getters.loadedImpulses;
     },
-    selectedImpulse(impulse) {
+    selectedImpulse() {
       return this.$store.getters.selectedImpulse;
+    },
+  },
+  watch: {
+    selectedImpulse(newImpulse, oldCount) {
+      fetch(newImpulse.audioFile)
+        .then((impulseFile) => {
+          this.impulsePlayer.convolverNode.disconnect();
+          return this.impulsePlayer.setConvolverNode(impulseFile);
+        })
+        .then(() => {
+          this.impulsePlayer.makeConnections();
+        });
+      console.log(`New impulse called ${newImpulse.name}, yay!`);
+    },
+  },
+  methods: {
+    togglePlay() {
+      if (this.playing) {
+        this.impulsePlayer.stop();
+        this.impulsePlayer.setSampleNode(this.sampleFile).then(() => {
+          this.playing = false;
+          console.log('New buffer created');
+        });
+      } else {
+        this.impulsePlayer.play();
+        this.playing = true;
+      }
     },
   },
 };
