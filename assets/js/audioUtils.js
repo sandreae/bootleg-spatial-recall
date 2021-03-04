@@ -12,6 +12,15 @@ export class ImpulsePlayer {
     this.analyserNode.fftSize = 2048;
   }
 
+  async init(sampleFile, impulseFile) {
+    await this.setSampleBuffer(sampleFile);
+    await this.setSampleNode();
+    if (impulseFile) {
+      await this.setConvolverNode(impulseFile);
+    }
+    this.makeConnections();
+  }
+
   async setSampleNode() {
     // Set sample node from buffer
     this.sampleNode = this.audioCtx.createBufferSource();
@@ -27,6 +36,9 @@ export class ImpulsePlayer {
 
   async setConvolverNode(impulse) {
     // Create and set new convolver node
+    if (this.convolverNode) {
+      this.convolverNode.disconnect();
+    }
     this.convolverNode = this.audioCtx.createConvolver();
     const arraybuffer = await impulse.arrayBuffer();
     this.convolverNode.buffer = await this.audioCtx.decodeAudioData(

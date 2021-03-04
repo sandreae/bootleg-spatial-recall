@@ -47,15 +47,13 @@ export default {
       },
     );
     await Promise.all(promises);
+    let impulseFile;
     const sampleFile = await fetch(sample);
-    this.impulsePlayer = new ImpulsePlayer();
-    await this.impulsePlayer.setSampleBuffer(sampleFile);
-    await this.impulsePlayer.setSampleNode();
     if (this.selectedImpulse.audioFile) {
-      const impulseFile = await fetch(this.selectedImpulse.audioFile);
-      await this.impulsePlayer.setConvolverNode(impulseFile);
+      impulseFile = await fetch(this.selectedImpulse.audioFile);
     }
-    this.impulsePlayer.makeConnections();
+    this.impulsePlayer = new ImpulsePlayer();
+    this.impulsePlayer.init(sampleFile, impulseFile);
   },
   fetchOnServer: false,
   head() {
@@ -75,7 +73,6 @@ export default {
     selectedImpulse(newImpulse, oldCount) {
       fetch(newImpulse.audioFile)
         .then((impulseFile) => {
-          this.impulsePlayer.convolverNode.disconnect();
           return this.impulsePlayer.setConvolverNode(impulseFile);
         })
         .then(() => {
