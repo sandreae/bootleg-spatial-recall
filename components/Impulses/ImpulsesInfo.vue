@@ -1,9 +1,11 @@
 <template>
   <div class="impulse-info-container--flex-column">
-    <div>{{ impulse.name }}</div>
-    <div>{{ impulse.location }}</div>
-    <div>{{ impulse.date }}</div>
-    <div>{{ impulse.description }}</div>
+    <!-- <div class="name">{{ impulse.name }}</div> -->
+    <div class="location">{{ impulse.location }}</div>
+    <div class="date">
+      {{ new Date(impulse.date).toDateString() }}
+    </div>
+    <div class="description">{{ impulse.description }}</div>
   </div>
 </template>
 
@@ -21,7 +23,20 @@ export default {
 .impulse-info-container--flex-column {
   align-self: stretch;
   align-items: flex-start;
-  background-color: darkslategray;
+  color: aliceblue;
   padding: 0 10px 0 10px;
+}
+
+.name {
+  font-weight: bold;
+}
+.location {
+  font-weight: bold;
+}
+.date {
+  font-style: italic;
+}
+.description {
+  font-size: 0.8em;
 }
 </style>

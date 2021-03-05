@@ -1,8 +1,9 @@
 <template>
-  <div class="impulse-info-container--flex-column">
+  <div class="picker--flex-column">
     <div
       v-for="impulse in loadedImpulses"
       :key="impulse.name"
+      class="picker_item click"
       @click="setSelectedImpulse(impulse)"
     >
       {{ impulse.name }}
@@ -32,15 +33,27 @@ export default {
 </script>
 
 <style scoped>
-.impulse-info-container--flex-column {
+.picker--flex-column {
+  position: relative;
   align-items: stretch;
-  overflow: scroll;
+  overflow: hidden;
+  justify-content: space-around;
+  padding: 10px;
 }
 
-.impulse-info-container--flex-column div:nth-child(1n) {
-  flex: 1 0 50px;
-  border: solid violet;
-  margin: 2px;
+.picker--flex-column::before {
+  content: '';
+  background-color: var(--main-bg-color);
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  position: absolute;
+  filter: blur(6px);
+}
+
+.picker_item {
+  cursor: pointer;
+  flex: 0 1 20px;
   text-align: center;
+  z-index: 1;
 }
 </style>
