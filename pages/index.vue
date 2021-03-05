@@ -1,24 +1,13 @@
 <template>
-  <section class="impulses-page--flex-row-centre">
-    <div class="impulses-page_content--flex-column-centre">
-      <p v-if="$fetchState.pending">Fetching implses...</p>
-      <div
-        v-else
-        class="impulses-page_details--flex-column"
-        :style="{
-          backgroundImage: 'url(' + selectedImpulse.imageFile + ')',
-        }"
-      >
-        <div class="impulses-info_padding" @click="togglePlay">
-          {{ !playing ? 'PLAY' : 'STOP' }}
-        </div>
-        <div class="impulses-info_content">
-          <ImpulsesInfo />
-        </div>
-      </div>
-      <div class="impulses-page_picker--flex-column">
-        <ImpulsesPicker />
-      </div>
+  <p v-if="$fetchState.pending">Fetching impulses...</p>
+  <p v-else-if="$fetchState.error">Error loading impulses...</p>
+  <section v-else class="impulses-page--flex-column">
+    <div class="impulses-page_impulse--flex-column-centre">
+      <ImpulsesDetails />
+      <ImpulsesMix />
+    </div>
+    <div class="impulses-page_picker--flex-column">
+      <ImpulsesPicker />
     </div>
   </section>
 </template>
@@ -31,7 +20,6 @@ export default {
   data() {
     return {
       impulsePlayer: null,
-      playing: false,
     };
   },
   async fetch() {
@@ -68,6 +56,12 @@ export default {
     selectedImpulse() {
       return this.$store.getters.selectedImpulse;
     },
+    mixLevel() {
+      return this.$store.getters.mixLevel;
+    },
+    playing() {
+      return this.$store.getters.playing;
+    },
   },
   watch: {
     selectedImpulse(newImpulse, oldCount) {
@@ -78,20 +72,20 @@ export default {
         .then(() => {
           this.impulsePlayer.makeConnections();
         });
-      console.log(`New impulse called ${newImpulse.name}, yay!`);
     },
-  },
-  methods: {
-    togglePlay() {
-      if (this.playing) {
-        this.impulsePlayer.stop();
-        this.impulsePlayer.setSampleNode(this.sampleFile).then(() => {
-          this.playing = false;
-          console.log('New buffer created');
-        });
-      } else {
+    mixLevel(newLevel, oldCount) {
+      this.impulsePlayer.mixLevel(newLevel);
+    },
+    playing(isPlaying, wasPlaying) {
+      if (isPlaying === wasPlaying) {
+        return;
+      }
+      if (isPlaying) {
         this.impulsePlayer.play();
-        this.playing = true;
+      } else {
+        this.impulsePlayer.stop();
+        this.impulsePlayer.setSampleNode(this.sampleFile);
+        this.impulsePlayer.makeConnections();
       }
     },
   },
@@ -99,57 +93,38 @@ export default {
 </script>
 
 <style scoped>
-.impulses-page--flex-row-centre {
-  height: 100vh;
-  width: 100vw;
-  align-items: stretch;
-}
-
-.impulses-page_content--flex-column-centre {
-  flex: 0 1 80vw;
-  align-items: stretch;
-  justify-content: space-evenly;
-}
-
-.impulses-info_padding {
-  flex: 10 1 auto;
-}
-
-.impulses-info_content {
+.impulses-page--flex-column {
   flex: 1 1 auto;
+  max-width: 70vw;
+  padding-top: 30px;
+  justify-content: space-around;
 }
-
-.impulses-page_details--flex-column {
-  flex: 1 0 auto;
-  max-width: 80vw;
-  max-height: 80vw;
-  justify-content: flex-end;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+.impulses-page_impulse--flex-column-centre {
+  flex: 1 1 auto;
+  max-height: 60vh;
 }
-
 .impulses-page_picker--flex-column {
   flex: 1 1 auto;
-  max-height: 30vh;
+  max-height: 20vh;
   align-items: stretch;
 }
 
 @media only screen and (min-width: 800px) {
-  .impulses-page_content--flex-column-centre {
-    flex: 1 1 100vw;
+  .impulses-page--flex-column {
+    max-width: 100vw;
     align-items: center;
-    background-color: lightblue;
     flex-direction: row-reverse;
     justify-content: space-around;
   }
-  .impulses-page_details--flex-column {
-    flex: 0 0 80vh;
-    min-height: 80vh;
+  .impulses-page_impulse--flex-column-centre {
+    flex: 0 1 auto;
+    justify-content: space-around;
+    max-width: 60vw;
   }
-
   .impulses-page_picker--flex-column {
-    flex: 0 1 30vw;
+    flex: 1 1 auto;
     max-height: 80vh;
+    max-width: 30vw;
   }
 }
 </style>
