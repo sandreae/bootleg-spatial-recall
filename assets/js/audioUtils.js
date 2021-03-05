@@ -8,6 +8,8 @@ export class ImpulsePlayer {
     this.sampleBuffer = null;
     this.convolverNode = null;
     this.sampleNode = null;
+    this.cleanVolume = 0.5;
+    this.wetVolume = 0.5;
 
     this.analyserNode.fftSize = 2048;
   }
@@ -53,7 +55,7 @@ export class ImpulsePlayer {
       this.sampleNode.connect(this.convolverNode);
 
       this.convolverGain.gain.setValueAtTime(
-        0.5,
+        this.wetVolume,
         this.audioCtx.currentTime,
       );
       this.convolverGain.connect(this.audioCtx.destination);
@@ -61,7 +63,7 @@ export class ImpulsePlayer {
     }
 
     this.sampleGain.gain.setValueAtTime(
-      0.5,
+      this.cleanVolume,
       this.audioCtx.currentTime,
     );
     this.sampleGain.connect(this.audioCtx.destination);
@@ -79,13 +81,18 @@ export class ImpulsePlayer {
     this.sampleNode.stop();
   }
 
-  setWetDryMix(val) {
+  mixLevel(val) {
+    val -= 1;
+    val = val < 0 ? 0 : val;
+    val = val > 20 ? 20 : val;
+    this.cleanVolume = 1 - val / 20;
+    this.wetVolume = val / 20;
     this.sampleGain.gain.setValueAtTime(
-      1 - val / 10,
+      this.cleanVolume,
       this.audioCtx.currentTime,
     );
     this.convolverGain.gain.setValueAtTime(
-      val / 10,
+      this.wetVolume,
       this.audioCtx.currentTime,
     );
   }
