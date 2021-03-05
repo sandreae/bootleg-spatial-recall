@@ -6,6 +6,8 @@ const createStore = () => {
     state: {
       loadedImpulses: [],
       selectedImpulse: {},
+      mixLevel: 10,
+      playing: false,
     },
     mutations: {
       setImpulses(state, impulses) {
@@ -13,6 +15,12 @@ const createStore = () => {
       },
       setSelectedImpulse(state, impulse) {
         state.selectedImpulse = impulse;
+      },
+      setMixLevel(state, level) {
+        state.mixLevel = level;
+      },
+      setPlaying(state, playing) {
+        state.playing = playing;
       },
     },
     actions: {
@@ -34,6 +42,16 @@ const createStore = () => {
       setSelectedImpulse(vuexContext, impulse) {
         vuexContext.commit('setSelectedImpulse', impulse);
       },
+      setMixLevel(vuexContext, level) {
+        vuexContext.commit('setMixLevel', level);
+      },
+      togglePlay(vuexContext) {
+        if (vuexContext.state.playing) {
+          vuexContext.commit('setPlaying', false);
+        } else {
+          vuexContext.commit('setPlaying', true);
+        }
+      },
     },
     getters: {
       loadedImpulses(state) {
@@ -41,6 +59,12 @@ const createStore = () => {
       },
       selectedImpulse(state) {
         return state.selectedImpulse;
+      },
+      mixLevel(state) {
+        return state.mixLevel;
+      },
+      playing(state) {
+        return state.playing;
       },
     },
   });
