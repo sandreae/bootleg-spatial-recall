@@ -55,7 +55,8 @@ export default {
 }
 
 .active {
-  filter: sepia(30%);
+  border: solid var(--main-bg-color) 8px;
+  background-color: var(--main-bg-color);
 }
 
 @media only screen and (min-width: 800px) {

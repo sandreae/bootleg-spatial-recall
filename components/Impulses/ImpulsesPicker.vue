@@ -1,9 +1,10 @@
 <template>
-  <div class="picker--flex-column">
+  <div class="picker--flex-column fuzzy">
     <div
       v-for="impulse in loadedImpulses"
       :key="impulse.name"
       class="picker_item click"
+      :class="selectedImpulse.name === impulse.name ? 'selected' : ''"
       @click="setSelectedImpulse(impulse)"
     >
       {{ impulse.name }}
@@ -23,6 +24,9 @@ export default {
     loadedImpulses() {
       return this.$store.getters.loadedImpulses;
     },
+    selectedImpulse() {
+      return this.$store.getters.selectedImpulse;
+    },
   },
   methods: {
     setSelectedImpulse(impulse) {
@@ -34,20 +38,15 @@ export default {
 
 <style scoped>
 .picker--flex-column {
-  position: relative;
   align-items: stretch;
   overflow: hidden;
   justify-content: space-around;
-  padding: 10px;
 }
 
-.picker--flex-column::before {
-  content: '';
-  background-color: var(--main-bg-color);
-  width: calc(100% - 20px);
-  height: calc(100% - 20px);
-  position: absolute;
-  filter: blur(6px);
+.selected {
+  filter: sepia(50%);
+  text-decoration: solid;
+  color: burlywood;
 }
 
 .picker_item {

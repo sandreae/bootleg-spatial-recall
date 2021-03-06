@@ -92,7 +92,16 @@ html {
   color: burlywood;
 }
 
-.click:active {
-  filter: blur(1px) sepia(50%);
-  color: burlywood;
+.fuzzy::before {
+  content: '';
+  background-color: var(--main-bg-color);
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  position: absolute;
+  filter: blur(6px);
+}
+
+.fuzzy {
+  padding: 10px;
+  position: relative;
 }

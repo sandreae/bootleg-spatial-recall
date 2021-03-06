@@ -1,12 +1,20 @@
 <template>
-  <p v-if="$fetchState.pending">Fetching impulses...</p>
-  <p v-else-if="$fetchState.error">Error loading impulses...</p>
+  <div v-if="$fetchState.pending" class="impulses-page--flex-column">
+    Fetching impulses...
+  </div>
+  <div
+    v-else-if="$fetchState.error"
+    class="impulses-page--flex-column"
+  >
+    Error loading impulses...
+  </div>
   <section v-else class="impulses-page--flex-column">
     <div class="impulses-page_impulse--flex-column-centre">
       <ImpulsesDetails />
       <ImpulsesMix />
     </div>
     <div class="impulses-page_picker--flex-column">
+      <h2>Impulses</h2>
       <ImpulsesPicker />
     </div>
   </section>
@@ -106,7 +114,7 @@ export default {
 .impulses-page_picker--flex-column {
   flex: 1 1 auto;
   max-height: 20vh;
-  align-items: stretch;
+  align-items: center;
 }
 
 @media only screen and (min-width: 800px) {
@@ -123,6 +131,7 @@ export default {
   }
   .impulses-page_picker--flex-column {
     flex: 1 1 auto;
+    justify-content: center;
     max-height: 80vh;
     max-width: 30vw;
   }

@@ -30,8 +30,8 @@ export default {
       playing: false,
       sliderInactive: '&#x2504',
       sliderActive: '&#x2505',
-      arrowLeft: '&#5176',
-      arrowRight: '&#5171',
+      arrowLeft: '&#128066',
+      arrowRight: '&#128066',
       length: 20,
       level: 10,
     };
@@ -55,6 +55,7 @@ export default {
 
 <style scoped>
 .impulse-mix-container--flex-row {
+  padding-top: 10px;
   flex: 0 0 30px;
   align-self: stretch;
   align-items: flex-start;
