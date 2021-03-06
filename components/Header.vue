@@ -1,5 +1,5 @@
 <template>
-  <div>Bootleg Spatial Recall</div>
+  <div><h1>Bootleg Spatial Recall</h1></div>
 </template>
 
 <style scoped>
