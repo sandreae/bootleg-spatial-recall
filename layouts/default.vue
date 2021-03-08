@@ -1,27 +1,23 @@
 <template>
   <div>
-    <Header />
-    <Nav />
-    <div class="container--flex-column">
+    <div class="container--flex-column-centre">
+      <Nav />
       <Nuxt keep-alive />
     </div>
   </div>
 </template>
 
-<style>
-.container--flex-column {
-  padding-top: 30px;
+<style scoped>
+.container--flex-column-centre {
   width: 100%;
-  height: 100vh;
-  overflow: auto;
-  align-items: center;
-  background-color: chocolate;
+  min-height: 100vh;
 }
 
-@media only screen and (min-width: 800px) {
-  .container--flex-column {
-    align-items: stretch;
-    justify-content: space-around;
-  }
+.container--flex-column-centre div:nth-child(1) {
+  flex: 0 1 20px;
+}
+
+.container--flex-column-centre div:nth-child(2) {
+  flex: 10 1 auto;
 }
 </style>

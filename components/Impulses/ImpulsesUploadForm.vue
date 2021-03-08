@@ -41,6 +41,7 @@ export default {
     impulse: {
       type: Object,
       required: false,
+      default: () => {},
     },
   },
   data() {
@@ -65,10 +66,8 @@ export default {
     fileChange(file) {
       // Save the post
       if (file.type.split('/')[0] === 'audio') {
-        console.log('audio');
         this.editedImpulse.audioFile = file;
       } else {
-        console.log('image');
         this.editedImpulse.imageFile = file;
       }
     },
@@ -77,7 +76,7 @@ export default {
 </script>
 <style scoped>
 .form--flex-column {
-  flex: 1 1 auto;
+  flex: 1;
   align-items: stretch;
   padding: 20px;
 }

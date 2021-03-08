@@ -54,7 +54,7 @@ export default {
 
 <style scoped>
 .input-control {
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .input-control label {
@@ -68,13 +68,14 @@ export default {
   width: 100%;
   box-sizing: border-box;
   font: inherit;
-  border: 1px solid #ccc;
-  padding: 5px;
+  border: 1px solid white;
+  background-color: var(--secondary-bg-color);
+  padding: 3px;
 }
 
 .input-control input:focus,
 .input-control textarea:focus {
-  background-color: #eee;
+  background-color: white;
   outline: none;
 }
 </style>

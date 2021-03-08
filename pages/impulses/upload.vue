@@ -1,9 +1,9 @@
 <template>
-  <div class="form-container--flex-column-centre">
-    <div class="upload-info-container--flex-column fuzzy">
-      <ImpulsesUploadInfo />
+  <div class="page-container--flex-column-centre">
+    <div class="info-container--flex-column fuzzy">
+      <ImpulsesUploadInfo :howto="howto" />
     </div>
-    <div class="upload-form-container--flex-column fuzzy">
+    <div class="form-container--flex-column fuzzy">
       <ImpulsesUploadForm @submit="onSubmitted" />
       <div v-if="errors.length" class="error">
         <b>Please correct the following error(s):</b>
@@ -15,6 +15,13 @@
 
 <script>
 export default {
+  async asyncData({ $content }) {
+    const howto = await $content('howto').fetch();
+
+    return {
+      howto,
+    };
+  },
   data: () => {
     return {
       errors: [],
@@ -23,6 +30,9 @@ export default {
   methods: {
     onSubmitted(postData) {
       this.checkForm(postData);
+      if (this.errors.length > 0) {
+        return;
+      }
       const formData = new FormData();
       Object.keys(postData).forEach((key) => {
         formData.append(key, postData[key]);
@@ -73,18 +83,11 @@ export default {
 </script>
 
 <style scoped>
-.form-container--flex-column-centre {
+.page-container--flex-column-centre {
   justify-content: space-around;
-  align-items: flex-start;
+  align-items: center;
 }
 
-.upload-info-container--flex-column {
-  flex: 1 1 auto;
-}
-
-.upload-form-container--flex-column {
-  flex: 1 1 auto;
-}
 .error {
   border: solid 2px red;
   z-index: 1;
@@ -92,18 +95,13 @@ export default {
 }
 
 @media only screen and (min-width: 800px) {
-  .form-container--flex-column-centre {
+  .page-container--flex-column-centre {
     flex-flow: row-reverse;
-    align-items: flex-start;
-    max-height: 90vh;
-    justify-content: fill;
   }
-  .upload-info-container--flex-column {
-    flex: 1 1 auto;
-    max-width: 40vw;
+  .info-container--flex-column {
+    max-width: 50vw;
   }
-  .upload-form-container--flex-column {
-    flex: 1 1 auto;
+  .form-container--flex-column {
     max-width: 40vw;
   }
 }

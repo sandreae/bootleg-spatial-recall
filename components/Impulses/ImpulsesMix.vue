@@ -1,5 +1,5 @@
 <template>
-  <div class="impulse-mix-container--flex-row">
+  <div class="impulse-mix--flex-row">
     <div
       class="item"
       @click="decreaseLevel()"
@@ -54,29 +54,44 @@ export default {
 </script>
 
 <style scoped>
-.impulse-mix-container--flex-row {
-  padding-top: 10px;
+.impulse-mix--flex-row {
+  padding-top: 15px;
   flex: 0 0 30px;
   align-self: stretch;
   align-items: flex-start;
-  justify-content: stretch;
+  justify-content: center;
 }
 .item {
+  position: relative;
   -webkit-user-select: none;
   user-select: none;
   flex: 1 1 10px;
   font-size: 1em;
   cursor: pointer;
+  z-index: 2;
 }
 
-.item:hover {
-  font-weight: bold;
+/* .item:hover { */
+/* margin: 0px !important;
+  border: var(--secondary-bg-color) 2px solid;
+  background-color: var(--secondary-bg-color);
+  border-radius: 15px; */
+/* } */
+
+.item:hover::before {
+  z-index: -1;
+  content: '';
+  background-color: var(--secondary-bg-color);
+  width: calc(100% - 3px);
+  height: calc(100% - 3px);
+  position: absolute;
+  filter: blur(5px);
 }
 
 @media only screen and (min-width: 800px) {
   .item {
     font-size: 1.5em;
-    flex: 1 1 10px;
+    flex: 1 1 15px;
     cursor: pointer;
   }
 }

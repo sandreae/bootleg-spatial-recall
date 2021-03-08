@@ -1,20 +1,20 @@
 <template>
-  <div v-if="$fetchState.pending" class="impulses-page--flex-column">
+  <div v-if="$fetchState.pending" class="page-container--flex-column">
     Fetching impulses...
   </div>
   <div
     v-else-if="$fetchState.error"
-    class="impulses-page--flex-column"
+    class="page-container--flex-column"
   >
     Error loading impulses...
   </div>
-  <section v-else class="impulses-page--flex-column">
-    <div class="impulses-page_impulse--flex-column-centre">
+  <section v-else class="page-container--flex-column">
+    <div class="impulse-container--flex-column-centre">
       <ImpulsesDetails />
       <ImpulsesMix />
     </div>
-    <div class="impulses-page_picker--flex-column">
-      <h2>Impulses</h2>
+    <div class="picker-container--flex-column-centre">
+      <nuxt-content :document="home" />
       <ImpulsesPicker />
     </div>
   </section>
@@ -25,6 +25,13 @@ import { ImpulsePlayer } from '@/assets/js/audioUtils.js';
 import sample from '@/assets/audio/arnold_circus_demo.mp3';
 
 export default {
+  async asyncData({ $content }) {
+    const home = await $content('home').fetch();
+    console.log('HOME CONTENT LOADED');
+    return {
+      home,
+    };
+  },
   data() {
     return {
       impulsePlayer: null,
@@ -101,38 +108,34 @@ export default {
 </script>
 
 <style scoped>
-.impulses-page--flex-column {
-  flex: 1 1 auto;
+.page-container--flex-column {
+  flex: 0 1 auto;
   max-width: 70vw;
-  padding-top: 30px;
-  justify-content: space-around;
+  justify-content: flex-start;
 }
-.impulses-page_impulse--flex-column-centre {
-  flex: 1 1 auto;
-  max-height: 60vh;
+.impulse-container--flex-column-centre {
+  flex: 1;
 }
-.impulses-page_picker--flex-column {
-  flex: 1 1 auto;
-  max-height: 20vh;
-  align-items: center;
+.picker-container--flex-column-centre {
+  flex: 1;
 }
 
 @media only screen and (min-width: 800px) {
-  .impulses-page--flex-column {
-    max-width: 100vw;
+  .page-container--flex-column {
+    flex: 1;
+    min-width: 100vw;
     align-items: center;
     flex-direction: row-reverse;
     justify-content: space-around;
   }
-  .impulses-page_impulse--flex-column-centre {
+  .impulse-container--flex-column-centre {
     flex: 0 1 auto;
     justify-content: space-around;
     max-width: 60vw;
   }
-  .impulses-page_picker--flex-column {
-    flex: 1 1 auto;
+  .picker-container--flex-column-centre {
+    flex: 1;
     justify-content: center;
-    max-height: 80vh;
     max-width: 30vw;
   }
 }

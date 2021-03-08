@@ -1,5 +1,5 @@
 <template>
-  <div class="impulse-info-container--flex-column">
+  <div class="info--flex-column">
     <!-- <div class="name">{{ impulse.name }}</div> -->
     <div class="location">{{ impulse.location }}</div>
     <div class="date">
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-.impulse-info-container--flex-column {
+.info--flex-column {
   align-self: stretch;
   align-items: flex-start;
   color: aliceblue;

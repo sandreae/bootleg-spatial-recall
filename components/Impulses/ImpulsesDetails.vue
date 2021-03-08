@@ -1,16 +1,16 @@
 <template>
   <div
-    class="impulse_image--flex-column click"
+    class="details--flex-column click"
     :style="{
       backgroundImage: 'url(' + selectedImpulse.imageFile + ')',
     }"
     :class="playing ? 'active' : ''"
     @click="togglePlay"
   >
-    <div class="impulses_padding">
+    <div class="padding">
       <!-- <img src="../assets/images/clay-1.png" /> -->
     </div>
-    <div class="impulses_info">
+    <div class="info">
       <ImpulsesInfo />
     </div>
   </div>
@@ -35,15 +35,17 @@ export default {
 </script>
 
 <style scoped>
-.impulses_padding {
+.padding {
   flex: 10 1 auto;
 }
 
-.impulses_info {
-  flex: 1 1 auto;
+.info {
+  flex: 1;
 }
 
-.impulse_image--flex-column {
+.details--flex-column {
+  border-radius: 25px;
+  padding: 8px;
   display: flex;
   max-width: 70vw;
   min-width: 70vw;
@@ -55,12 +57,13 @@ export default {
 }
 
 .active {
-  border: solid var(--main-bg-color) 8px;
-  background-color: var(--main-bg-color);
+  padding: 0px i !important;
+  border: solid var(--secondary-bg-color) 8px;
+  background-color: var(--secondary-bg-color);
 }
 
 @media only screen and (min-width: 800px) {
-  .impulse_image--flex-column {
+  .details--flex-column {
     max-width: 70vh;
     min-width: 70vh;
     max-height: 70vh;
