@@ -1,5 +1,8 @@
 <template>
-  <div class="page-container--flex-column-centre">
+  <div
+    class="page-container--flex-column-centre"
+    :class="disabled ? 'disabled' : ''"
+  >
     <div class="wrapper--flex-column">
       <div class="picker-container--flex-column-centre">
         <ImpulsesPicker />
@@ -103,6 +106,11 @@ export default {
 
 .message-container--flex-column-centre {
   max-width: 50vw;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 @media only screen and (min-width: 800px) {
