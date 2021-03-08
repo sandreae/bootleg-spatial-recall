@@ -15,9 +15,10 @@
 
 .container--flex-column-centre div:nth-child(1) {
   flex: 0 1 20px;
+  justify-self: flex-start;
 }
 
 .container--flex-column-centre div:nth-child(2) {
-  flex: 10 1 auto;
+  flex: 1;
 }
 </style>
