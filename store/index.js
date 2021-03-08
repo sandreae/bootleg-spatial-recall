@@ -1,5 +1,4 @@
 import Vuex from 'vuex';
-import axios from 'axios';
 
 const createStore = () => {
   return new Vuex.Store({
@@ -25,14 +24,11 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
-        return axios
-          .get('http://localhost:3000/api/impulses')
+        return this.$axios
+          .$get('/api/impulses')
           .then((res) => {
-            vuexContext.commit('setImpulses', res.data.impulses);
-            vuexContext.commit(
-              'setSelectedImpulse',
-              res.data.impulses[0],
-            );
+            vuexContext.commit('setImpulses', res.impulses);
+            vuexContext.commit('setSelectedImpulse', res.impulses[0]);
           })
           .catch((e) => context.error(e));
       },
@@ -40,7 +36,7 @@ const createStore = () => {
         return this.$axios
           .$get('/api/impulses')
           .then((res) => {
-            vuexContext.commit('setImpulses', res.data.impulses);
+            vuexContext.commit('setImpulses', res.impulses);
           })
           .catch((e) => this.context.error(e));
       },

@@ -46,44 +46,14 @@ swaggerUserSchema.example = {
 // schemas
 oapi.component('schemas', 'Impulse', swaggerImpulseSchema);
 oapi.component('schemas', 'User', swaggerUserSchema);
-const devError = {
-  title: 'DevError',
-  type: 'object',
-  properties: {
-    status: { type: 'string', example: 'failure.' },
-    error: {
-      type: 'object',
-      properties: {
-        statusCode: { type: 'integer', example: '404' },
-        status: { type: 'string', example: 'failure.' },
-        isOperational: { type: 'boolean', example: true },
-      },
-    },
-    message: { type: 'string', example: 'Resource not found.' },
-    stack: { type: 'string', example: 'Really long message.' },
-  },
-  required: [
-    'error',
-    'message',
-    'stack',
-    'statusCode',
-    'isOperational',
-  ],
-};
-
-const prodError = {
+const error = {
   title: 'ProdError',
   type: 'object',
   properties: {
-    error: {
-      type: 'object',
-      properties: {
-        status: { type: 'string', example: 'failure.' },
-        message: { type: 'string', example: 'Resource not found.' },
-      },
-    },
+    status: { type: 'string', example: 'failure.' },
+    message: { type: 'string', example: 'Resource not found.' },
   },
-  required: ['error', 'status', 'message'],
+  required: ['status', 'message'],
 };
 
 // responses
@@ -237,9 +207,7 @@ oapi.component('responses', '404Error', {
   description: 'Not Found',
   content: {
     'application/json': {
-      schema: {
-        oneOf: [devError, prodError],
-      },
+      schema: error,
     },
   },
 });
@@ -248,9 +216,7 @@ oapi.component('responses', '400Error', {
   description: 'Bad Request',
   content: {
     'application/json': {
-      schema: {
-        oneOf: [devError, prodError],
-      },
+      schema: error,
     },
   },
 });
@@ -259,9 +225,7 @@ oapi.component('responses', '401Error', {
   description: 'Unauthorized',
   content: {
     'application/json': {
-      schema: {
-        oneOf: [devError, prodError],
-      },
+      schema: error,
     },
   },
 });
@@ -270,9 +234,7 @@ oapi.component('responses', '403Error', {
   description: 'Forbidden',
   content: {
     'application/json': {
-      schema: {
-        oneOf: [devError, prodError],
-      },
+      schema: error,
     },
   },
 });

@@ -779,73 +779,21 @@
         "content": {
           "application/json": {
             "schema": {
-              "oneOf": [
-                {
-                  "title": "DevError",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "failure."
-                    },
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "statusCode": {
-                          "type": "integer",
-                          "example": "404"
-                        },
-                        "status": {
-                          "type": "string",
-                          "example": "failure."
-                        },
-                        "isOperational": {
-                          "type": "boolean",
-                          "example": true
-                        }
-                      }
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Resource not found."
-                    },
-                    "stack": {
-                      "type": "string",
-                      "example": "Really long message."
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "message",
-                    "stack",
-                    "statusCode",
-                    "isOperational"
-                  ]
+              "title": "ProdError",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failure."
                 },
-                {
-                  "title": "ProdError",
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "example": "failure."
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Resource not found."
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "status",
-                    "message"
-                  ]
+                "message": {
+                  "type": "string",
+                  "example": "Resource not found."
                 }
+              },
+              "required": [
+                "status",
+                "message"
               ]
             }
           }
@@ -856,73 +804,21 @@
         "content": {
           "application/json": {
             "schema": {
-              "oneOf": [
-                {
-                  "title": "DevError",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "failure."
-                    },
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "statusCode": {
-                          "type": "integer",
-                          "example": "404"
-                        },
-                        "status": {
-                          "type": "string",
-                          "example": "failure."
-                        },
-                        "isOperational": {
-                          "type": "boolean",
-                          "example": true
-                        }
-                      }
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Resource not found."
-                    },
-                    "stack": {
-                      "type": "string",
-                      "example": "Really long message."
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "message",
-                    "stack",
-                    "statusCode",
-                    "isOperational"
-                  ]
+              "title": "ProdError",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failure."
                 },
-                {
-                  "title": "ProdError",
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "example": "failure."
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Resource not found."
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "status",
-                    "message"
-                  ]
+                "message": {
+                  "type": "string",
+                  "example": "Resource not found."
                 }
+              },
+              "required": [
+                "status",
+                "message"
               ]
             }
           }
@@ -933,73 +829,21 @@
         "content": {
           "application/json": {
             "schema": {
-              "oneOf": [
-                {
-                  "title": "DevError",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "failure."
-                    },
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "statusCode": {
-                          "type": "integer",
-                          "example": "404"
-                        },
-                        "status": {
-                          "type": "string",
-                          "example": "failure."
-                        },
-                        "isOperational": {
-                          "type": "boolean",
-                          "example": true
-                        }
-                      }
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Resource not found."
-                    },
-                    "stack": {
-                      "type": "string",
-                      "example": "Really long message."
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "message",
-                    "stack",
-                    "statusCode",
-                    "isOperational"
-                  ]
+              "title": "ProdError",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failure."
                 },
-                {
-                  "title": "ProdError",
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "example": "failure."
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Resource not found."
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "status",
-                    "message"
-                  ]
+                "message": {
+                  "type": "string",
+                  "example": "Resource not found."
                 }
+              },
+              "required": [
+                "status",
+                "message"
               ]
             }
           }
@@ -1010,73 +854,21 @@
         "content": {
           "application/json": {
             "schema": {
-              "oneOf": [
-                {
-                  "title": "DevError",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "failure."
-                    },
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "statusCode": {
-                          "type": "integer",
-                          "example": "404"
-                        },
-                        "status": {
-                          "type": "string",
-                          "example": "failure."
-                        },
-                        "isOperational": {
-                          "type": "boolean",
-                          "example": true
-                        }
-                      }
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Resource not found."
-                    },
-                    "stack": {
-                      "type": "string",
-                      "example": "Really long message."
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "message",
-                    "stack",
-                    "statusCode",
-                    "isOperational"
-                  ]
+              "title": "ProdError",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failure."
                 },
-                {
-                  "title": "ProdError",
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "example": "failure."
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Resource not found."
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "status",
-                    "message"
-                  ]
+                "message": {
+                  "type": "string",
+                  "example": "Resource not found."
                 }
+              },
+              "required": [
+                "status",
+                "message"
               ]
             }
           }
