@@ -1,3 +1,5 @@
 move files to "archieve" from DO space when impulse deleted
-implement Docker environment with corresponding github actions
-
+Download impulse button
+Listen to impulse only button
+Prod error validation on server
+Axios config
