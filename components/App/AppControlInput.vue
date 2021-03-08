@@ -8,6 +8,13 @@
       @input="$emit('input', $event.target.value)"
     />
     <input
+      v-if="controlType === 'passord'"
+      v-bind="$attrs"
+      :value="value"
+      type="password"
+      @input="$emit('input', $event.target.value)"
+    />
+    <input
       v-if="controlType === 'date'"
       :value="value"
       type="date"
