@@ -16,8 +16,6 @@ services:
       - JWT_COOKIE_EXPIRES_IN=30d
     links:
       - db
-    volumes:
-      - .:/usr/src/app
     entrypoint: ["npm", "run", "start"]
   db:
     container_name: mongo
