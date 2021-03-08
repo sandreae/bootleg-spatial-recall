@@ -27,7 +27,6 @@ import sample from '@/assets/audio/arnold_circus_demo.mp3';
 export default {
   async asyncData({ $content }) {
     const home = await $content('home').fetch();
-    console.log('HOME CONTENT LOADED');
     return {
       home,
     };
