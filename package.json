@@ -24,6 +24,7 @@
     }
   },
   "dependencies": {
+    "@nuxt/content": "^1.14.0",
     "@nuxtjs/axios": "^5.12.5",
     "@wesleytodd/openapi": "^0.1.0",
     "aws-sdk": "^2.834.0",

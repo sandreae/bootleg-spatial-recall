@@ -40,7 +40,12 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '~/modules/api',
+    '@nuxt/content',
   ],
+
+  content: {
+    // Options
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
