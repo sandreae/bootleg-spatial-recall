@@ -30,33 +30,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Temporary fix until this PR which updates old packages causing this problem is merged https://github.com/wesleytodd/express-openapi/pull/21
-const openApiCSP = {
-  directives: {
-    'default-src': [
-      "'self'",
-      'bootleg-spatial-recall.fra1.digitaloceanspaces.com',
-    ],
-    'script-src': [
-      "'self'",
-      'bootleg-spatial-recall.fra1.digitaloceanspaces.com',
-      'https://stackpath.bootstrapcdn.com/',
-      "'unsafe-inline'",
-      'blob:',
-      'data:',
-      "'unsafe-eval'",
-    ],
-    'style-src': [
-      "'self'",
-      'bootleg-spatial-recall.fra1.digitaloceanspaces.com',
-      'https://stackpath.bootstrapcdn.com/',
-      "'unsafe-inline'",
-    ],
-    'object-src': ["'none'"],
-    'img-src': ['data:'],
-    'upgrade-insecure-requests': [],
-  },
-};
+app.use(oapi);
 
 app.use(
   helmet.contentSecurityPolicy({
@@ -65,11 +39,10 @@ app.use(
         "'self'",
         'bootleg-spatial-recall.fra1.digitaloceanspaces.com',
       ],
+      permittedPolicies: 'all',
     },
   }),
 );
-
-app.use(helmet.contentSecurityPolicy(openApiCSP), oapi);
 
 app.use(
   OpenApiValidator.middleware({
