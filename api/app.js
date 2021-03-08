@@ -52,7 +52,7 @@ app.use(
     },
     apiSpec: path.join(__dirname, 'public/openapi.json'),
     validateResponses: true,
-    validateRequests: true,
+    validateRequests: false,
     ignorePaths: /.*\/openapi*\/$/,
   }),
 );
