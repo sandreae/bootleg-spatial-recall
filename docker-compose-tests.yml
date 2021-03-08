@@ -11,15 +11,16 @@ services:
       - MONGO_URL=mongodb://mongo:27017/
       - MONGO_DB=testing
       - JWT_SECRET=notagoodkey
-      - NODE_ENV=development
+      - NODE_ENV=test
       - JWT_EXPIRES_IN=30d
       - JWT_COOKIE_EXPIRES_IN=30d
     links:
       - db
+    volumes:
+      - .:/usr/src/app
+    entrypoint: ["npm", "run", "start"]
   db:
     container_name: mongo
     image: mongo
-    volumes:
-      - /srv/docker/mongodb:/var/lib/mongodb
     ports:
       - '27017:27017'
