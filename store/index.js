@@ -36,6 +36,14 @@ const createStore = () => {
           })
           .catch((e) => context.error(e));
       },
+      updateImpulses(vuexContext) {
+        return this.$axios
+          .$get('/api/impulses')
+          .then((res) => {
+            vuexContext.commit('setImpulses', res.data.impulses);
+          })
+          .catch((e) => this.context.error(e));
+      },
       setImpulses(vuexContext, impulses) {
         vuexContext.commit('setImpulses', impulses);
       },
