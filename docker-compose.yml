@@ -13,22 +13,7 @@ services:
       - .:/usr/src/app
     links:
       - db
-  test-server:
-    container_name: bootleg-spatial-recall-test
-    image: latest/bootleg-spatial-recall
-    restart: always
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      - MONGO_URL=mongodb://mongo:27017/
-      - MONGO_DB=testing
-      - JWT_SECRET=notagoodkey
-      - NODE_ENV=development
-      - JWT_EXPIRES_IN=30d
-      - JWT_COOKIE_EXPIRES_IN=30d
-    links:
-      - db
+    entrypoint: ["npm", "run", "dev"]
   db:
     container_name: mongo
     image: mongo
