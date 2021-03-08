@@ -9,11 +9,9 @@ services:
       - "3000:3000"
     env_file:
       - .env
-    volumes:
-      - .:/usr/src/app
     links:
       - db
-    entrypoint: ["npm", "run", "dev"]
+    entrypoint: ["npm", "run", "start"]
   db:
     container_name: mongo
     image: mongo

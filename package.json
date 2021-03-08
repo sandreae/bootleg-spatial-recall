@@ -10,7 +10,7 @@
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "npm run lint:js",
     "test": "jest",
-    "docker:dev": "docker-compose up server",
+    "docker:prod": "docker-compose up",
     "docker:test-server": "docker-compose -f docker-compose-tests.yml up test-server",
     "docker:test": "docker-compose -f docker-compose-tests.yml exec -e 'NODE_ENV=test' test-server npm run test",
     "docker:lint": "docker-compose -f docker-compose-tests.yml exec -e 'NODE_ENV=test' test-server npm run lint"
