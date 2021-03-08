@@ -19,6 +19,7 @@ exports.fileFilter = (req, file, cb) => {
       false,
     );
   }
+  // need to move this somewhere after validation happens
   file.name = renameFile(file, req.body.name);
   return cb(null, true);
 };

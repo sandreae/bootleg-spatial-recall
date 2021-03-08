@@ -1,62 +1,141 @@
 <template>
-  <div class="container">
-    <div class="content">
-      <Logo />
-      <div>
-        {{ impulses.data.impulses[0].name }}
-      </div>
-      <div>
-        {{ new Date(impulses.data.impulses[0].date).toDateString() }}
-      </div>
-      <div>
-        <img :src="impulses.data.impulses[0].imageFile" />
-      </div>
-      <nuxt-link class="button" to="/impulses"> Impulses </nuxt-link>
-    </div>
+  <div v-if="$fetchState.pending" class="page-container--flex-column">
+    Fetching impulses...
   </div>
+  <div
+    v-else-if="$fetchState.error"
+    class="page-container--flex-column"
+  >
+    Error loading impulses...
+  </div>
+  <section v-else class="page-container--flex-column">
+    <div class="impulse-container--flex-column-centre">
+      <ImpulsesDetails />
+      <ImpulsesMix />
+    </div>
+    <div class="picker-container--flex-column-centre">
+      <nuxt-content :document="home" />
+      <ImpulsesPicker />
+    </div>
+  </section>
 </template>
 
 <script>
+import { ImpulsePlayer } from '@/assets/js/audioUtils.js';
+import sample from '@/assets/audio/arnold_circus_demo.mp3';
+
 export default {
-  async asyncData({ $axios }) {
-    const impulses = await $axios.$get('/api/impulses');
+  async asyncData({ $content }) {
+    const home = await $content('home').fetch();
     return {
-      impulses,
+      home,
     };
+  },
+  data() {
+    return {
+      impulsePlayer: null,
+    };
+  },
+  async fetch() {
+    const promises = await this.$store.getters.loadedImpulses.map(
+      (impulse) => {
+        return new Promise(function (resolve, reject) {
+          const img = new Image();
+
+          img.src = impulse.imageFile;
+          img.onload = resolve();
+          img.onerror = reject(new Error('Image did not load'));
+        });
+      },
+    );
+    await Promise.all(promises);
+    let impulseFile;
+    const sampleFile = await fetch(sample);
+    if (this.selectedImpulse.audioFile) {
+      impulseFile = await fetch(this.selectedImpulse.audioFile);
+    }
+    this.impulsePlayer = new ImpulsePlayer();
+    this.impulsePlayer.init(sampleFile, impulseFile);
+  },
+  fetchOnServer: false,
+  head() {
+    return {
+      title: 'Impulses',
+    };
+  },
+  computed: {
+    impulses() {
+      return this.$store.getters.loadedImpulses;
+    },
+    selectedImpulse() {
+      return this.$store.getters.selectedImpulse;
+    },
+    mixLevel() {
+      return this.$store.getters.mixLevel;
+    },
+    playing() {
+      return this.$store.getters.playing;
+    },
+  },
+  watch: {
+    selectedImpulse(newImpulse, oldCount) {
+      fetch(newImpulse.audioFile)
+        .then((impulseFile) => {
+          return this.impulsePlayer.setConvolverNode(impulseFile);
+        })
+        .then(() => {
+          this.impulsePlayer.makeConnections();
+        });
+    },
+    mixLevel(newLevel, oldCount) {
+      this.impulsePlayer.mixLevel(newLevel);
+    },
+    playing(isPlaying, wasPlaying) {
+      if (isPlaying === wasPlaying) {
+        return;
+      }
+      if (isPlaying) {
+        this.impulsePlayer.play();
+      } else {
+        this.impulsePlayer.stop();
+        this.impulsePlayer.setSampleNode(this.sampleFile);
+        this.impulsePlayer.makeConnections();
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.page-container--flex-column {
+  flex: 0 1 auto;
+  max-width: 70vw;
+  justify-content: flex-start;
+}
+.impulse-container--flex-column-centre {
+  flex: 1;
+}
+.picker-container--flex-column-centre {
+  flex: 1;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+@media only screen and (min-width: 800px) {
+  .page-container--flex-column {
+    flex: 1;
+    min-width: 100vw;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+  }
+  .impulse-container--flex-column-centre {
+    flex: 0 1 auto;
+    justify-content: space-around;
+    max-width: 60vw;
+  }
+  .picker-container--flex-column-centre {
+    flex: 1;
+    justify-content: center;
+    max-width: 30vw;
+  }
 }
 </style>

@@ -1,0 +1,134 @@
+:root {
+  --main-bg-color: rgb(200, 166, 82);
+  --secondary-bg-color: rgb(255, 251, 129);
+  --break-point: 800px;
+}
+
+:focus {
+  outline: none !important;
+}
+
+@font-face {
+  font-family: 'JenrivTitling';
+  src: url('~assets/fonts/JenrivTitling-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JenrivTitling';
+  src: url('~assets/fonts/JenrivTitling-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JenrivTitling';
+  src: url('~assets/fonts/JenrivTitling-Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'JenrivTitling';
+  src: url('~assets/fonts/JenrivTitling-BoldItalic.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Roman';
+  src: url('~assets/fonts/Roman_SD.ttf') format('truetype');
+}
+
+html,
+body {
+  background-color: var(--main-bg-color);
+  font-family: 'JenrivTitling';
+  font-size: 1rem;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media only screen and (min-width: 800px) {
+  body {
+    font-size: 1.1rem;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+
+[class*="--flex-column"] {
+  display: flex;
+  flex-direction: column;
+}
+
+[class*="--flex-row"] {
+  display: flex;
+  flex-direction: row;
+}
+
+[class*="--flex-item"] {
+  flex: 1 1 200px;
+}
+
+[class*="-centre"] {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-decoration-line: underline;
+}
+
+.click {
+  cursor: pointer;
+}
+
+.click:hover {
+  filter: sepia(30%);
+  text-decoration-line: underline;
+}
+
+.fuzzy::before {
+  content: '';
+  background-color: var(--secondary-bg-color);
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  position: absolute;
+  filter: blur(12px);
+  background-image:
+    radial-gradient(circle, var(--secondary-bg-color) 50%, #e406f0 100%);
+}
+
+.fuzzy {
+  padding: 10px;
+  position: relative;
+}
+
+.nav-item {
+  font-size: 1.2em;
+  color: black;
+  text-decoration-line: none;
+}
+
+.nav-item:hover {
+  text-decoration: solid;
+  color: var(--secondary-bg-color);
+}
