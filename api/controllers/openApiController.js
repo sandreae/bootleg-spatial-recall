@@ -239,7 +239,7 @@ oapi.component('responses', '403Error', {
   },
 });
 
-exports.getAllImpulses = oapi.validPath({
+exports.getAllImpulses = oapi.path({
   tags: ['Impulses'],
   summary: 'Get all impulses.',
   description:
