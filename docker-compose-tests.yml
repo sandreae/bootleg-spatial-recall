@@ -9,13 +9,13 @@ services:
       - "3000:3000"
     environment:
       - MONGO_URL=mongodb://mongo:27017/
-      - MONGO_DB=testing
+      - MONGO_DB=bootleg-spatial-recall
+      - TEST_MONGO_DB=testing
       - JWT_SECRET=notagoodkey
       - NODE_ENV=test
       - JWT_EXPIRES_IN=30d
       - JWT_COOKIE_EXPIRES_IN=30d
-      - NODE_ENV=production
-      - BROWSER_BASE_URL=blblbl
+      - NODE_ENV=test
     links:
       - db
     entrypoint: ["npm", "run", "start"]

@@ -38,14 +38,11 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
     '~/modules/api',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
     '@nuxt/content',
   ],
-
-  content: {
-    // Options
-  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -63,6 +60,13 @@ export default {
       baseURL: process.env.BASE_URL,
     },
   },
+
+  auth: {},
+
+  content: {
+    // Options
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extend(config, ctx) {
