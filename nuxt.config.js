@@ -61,7 +61,26 @@ export default {
     },
   },
 
-  auth: {},
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: 'user',
+          autoFetch: false,
+        },
+        endpoints: {
+          login: { url: '/api/auth/login', method: 'post' },
+          logout: { url: null },
+          user: { url: null },
+        },
+      },
+    },
+  },
 
   content: {
     // Options

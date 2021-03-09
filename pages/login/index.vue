@@ -24,24 +24,26 @@ export default {
     };
   },
   methods: {
-    onLogin(user) {
+    async onLogin(user) {
       if (this.errors.length > 0) {
         return;
       }
       this.messages = [];
       this.disabled = true;
-      this.$axios
-        .$post(`/api/auth/login`, user)
-        .then((data) => {
-          this.$axios.setToken(data.token, 'Bearer');
-          this.disabled = false;
-          this.messages.push('Logged in succesfully');
-          this.$router.push({ path: '/impulses/edit' });
-        })
-        .catch((err) => {
-          this.disabled = false;
-          this.errors.push(err.response.data.message);
+      try {
+        const response = await this.$auth.loginWith('local', {
+          data: user,
         });
+        console.log(response);
+        this.messages.push('Logged in succesfully');
+        this.$router.push({ path: '/impulses/edit' });
+      } catch (err) {
+        console.log(err);
+        this.disabled = false;
+        this.errors.push(err.response.data.message);
+      } finally {
+        this.disabled = false;
+      }
     },
     onValidation(errors) {
       this.errors = errors;
