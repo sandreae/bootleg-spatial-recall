@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const connectDB = async () => {
-  const mongoURI = process.env.MONGO_URL + process.env.MONGO_DB;
+  const mongoURI = process.env.MONGO_URL + process.env.TEST_MONGO_DB;
   const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,

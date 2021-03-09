@@ -27,6 +27,7 @@ $ npm run start
 $ npm run generate
 
 # run tests (needs test db to be running)
+$ npm run test:server
 $ npm run test
 
 # run linter
@@ -37,13 +38,17 @@ $ npm run lint
 
 ```bash
 # Build and run container
-$ npm run docker:dev
+$ npm run docker:start
 
-# run container for testing linting
+# Build and run container for testing linting
 $ npm run docker:test-server
 # then...
 $ npm run docker:test
 $ npm run docker:lint
+
+# Run just the db
+$ npm run docker:db
+
 
 ```
 
