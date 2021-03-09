@@ -17,19 +17,18 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 export default {
   computed: {
-    selectedImpulse() {
-      return this.$store.getters.selectedImpulse;
-    },
-    playing() {
-      return this.$store.getters.playing;
-    },
+    ...mapState({
+      selectedImpulse: (state) => state.selectedImpulse,
+      playing: (state) => state.playing,
+    }),
   },
   methods: {
-    togglePlay() {
-      this.$store.dispatch('togglePlay');
-    },
+    ...mapMutations({
+      togglePlay: 'state/togglePlay',
+    }),
   },
 };
 </script>

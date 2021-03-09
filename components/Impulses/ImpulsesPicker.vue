@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   props: {
     isAdmin: {
@@ -25,23 +27,21 @@ export default {
     },
   },
   computed: {
-    loadedImpulses() {
-      return this.$store.getters.loadedImpulses;
-    },
-    selectedImpulse() {
-      return this.$store.getters.selectedImpulse;
-    },
+    ...mapState({
+      loadedImpulses: (state) => state.loadedImpulses,
+      selectedImpulse: (state) => state.selectedImpulse,
+    }),
   },
   methods: {
+    ...mapMutations({
+      setSelectedImpulse: 'state/setSelectedImpulse',
+    }),
     onScroll(el) {
       if (el.target.scrollTop >= el.target.scrollTopMax - 20) {
         let impulseLoop = this.impulses;
         impulseLoop = impulseLoop.concat(this.loadedImpulses);
         this.impulses = impulseLoop;
       }
-    },
-    setSelectedImpulse(impulse) {
-      this.$store.commit('setSelectedImpulse', impulse);
     },
   },
 };

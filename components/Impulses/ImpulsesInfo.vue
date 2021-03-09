@@ -10,11 +10,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   computed: {
-    impulse() {
-      return this.$store.state.selectedImpulse;
-    },
+    ...mapState({
+      impulse: (state) => state.selectedImpulse,
+    }),
   },
 };
 </script>

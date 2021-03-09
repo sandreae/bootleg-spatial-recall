@@ -2,27 +2,29 @@
   <div class="impulse-mix--flex-row">
     <div
       class="item"
-      @click="decreaseLevel()"
+      @click="decreaseMixLevel()"
       v-html="arrowLeft"
     ></div>
     <div
       v-for="n in length"
       :key="n"
       class="item"
-      @click="setLevel(n)"
+      @click="setMixLevel(n)"
     >
       <span v-if="n !== level" v-html="sliderInactive"></span>
       <span v-else v-html="sliderActive"></span>
     </div>
     <div
       class="item"
-      @click="increaseLevel()"
+      @click="increaseMixLevel()"
       v-html="arrowRight"
     ></div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   data() {
     return {
@@ -36,19 +38,17 @@ export default {
       level: 10,
     };
   },
+  computed: {
+    ...mapState({
+      level: (state) => state.mixLevel,
+    }),
+  },
   methods: {
-    setLevel(n) {
-      this.level = n;
-      this.$store.commit('setMixLevel', n);
-    },
-    increaseLevel() {
-      this.level = this.level += 1;
-      this.$store.commit('setMixLevel', this.level);
-    },
-    decreaseLevel() {
-      this.level = this.level -= 1;
-      this.$store.commit('setMixLevel', this.level);
-    },
+    ...mapMutations({
+      setMixLevel: 'state/setMixLevel',
+      decreaseMixLevel: 'state/decreaseMixLevel',
+      increaseMixLevel: 'state/increaseMixLevel',
+    }),
   },
 };
 </script>

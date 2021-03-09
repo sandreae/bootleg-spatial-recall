@@ -21,8 +21,9 @@
 </template>
 
 <script>
-import { ImpulsePlayer } from '@/assets/js/audioUtils.js';
-import sample from '@/assets/audio/arnold_circus_demo.mp3';
+// import { ImpulsePlayer } from '@/assets/js/audioUtils.js';
+import { mapState } from 'vuex';
+// import sample from '@/assets/audio/arnold_circus_demo.mp3';
 
 export default {
   async asyncData({ $content }) {
@@ -37,25 +38,22 @@ export default {
     };
   },
   async fetch() {
-    const promises = await this.$store.getters.loadedImpulses.map(
-      (impulse) => {
-        return new Promise(function (resolve, reject) {
-          const img = new Image();
-
-          img.src = impulse.imageFile;
-          img.onload = resolve();
-          img.onerror = reject(new Error('Image did not load'));
-        });
-      },
-    );
-    await Promise.all(promises);
-    let impulseFile;
-    const sampleFile = await fetch(sample);
-    if (this.selectedImpulse.audioFile) {
-      impulseFile = await fetch(this.selectedImpulse.audioFile);
-    }
-    this.impulsePlayer = new ImpulsePlayer();
-    this.impulsePlayer.init(sampleFile, impulseFile);
+    // const promises = await this.impulses.map((impulse) => {
+    //   return new Promise(function (resolve, reject) {
+    //     const img = new Image();
+    //     img.src = impulse.imageFile;
+    //     img.onload = resolve();
+    //     img.onerror = reject(new Error('Image did not load'));
+    //   });
+    // });
+    // await Promise.all(promises);
+    // let impulseFile;
+    // const sampleFile = await fetch(sample);
+    // if (this.selectedImpulse.audioFile) {
+    //   impulseFile = await fetch(this.selectedImpulse.audioFile);
+    // }
+    // this.impulsePlayer = new ImpulsePlayer();
+    // this.impulsePlayer.init(sampleFile, impulseFile);
   },
   fetchOnServer: false,
   head() {
@@ -64,18 +62,12 @@ export default {
     };
   },
   computed: {
-    impulses() {
-      return this.$store.getters.loadedImpulses;
-    },
-    selectedImpulse() {
-      return this.$store.getters.selectedImpulse;
-    },
-    mixLevel() {
-      return this.$store.getters.mixLevel;
-    },
-    playing() {
-      return this.$store.getters.playing;
-    },
+    ...mapState({
+      impulses: (state) => state.loadedImpulses,
+      selectedImpulse: (state) => state.selectedImpulse,
+      mixLevel: (state) => state.mixLevel,
+      playing: (state) => state.playing,
+    }),
   },
   watch: {
     selectedImpulse(newImpulse, oldCount) {

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   props: {
     isAdmin: {
@@ -15,9 +16,9 @@ export default {
     },
   },
   computed: {
-    loadedImpulses() {
-      return this.$store.getters.loadedImpulses;
-    },
+    ...mapState({
+      loadedImpulses: (state) => state.loadedImpulses,
+    }),
   },
 };
 </script>

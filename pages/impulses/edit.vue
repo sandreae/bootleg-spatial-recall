@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   middleware: 'auth',
   data: () => {
@@ -35,9 +37,9 @@ export default {
     };
   },
   computed: {
-    selectedImpulse() {
-      return this.$store.getters.selectedImpulse;
-    },
+    ...mapState({
+      selectedImpulse: (state) => state.selectedImpulse,
+    }),
   },
   // watch: {
   //   selectedImpulse(a, b) {
