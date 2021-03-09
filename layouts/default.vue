@@ -11,14 +11,11 @@
 .container--flex-column-centre {
   width: 100%;
   min-height: 100vh;
-}
-
-.container--flex-column-centre div:nth-child(1) {
-  flex: 0 1 20px;
-  justify-self: flex-start;
+  justify-content: flex-start;
 }
 
 .container--flex-column-centre div:nth-child(2) {
+  justify-self: stretch;
   flex: 1;
 }
 </style>

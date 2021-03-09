@@ -102,7 +102,6 @@ export default {
 
 <style scoped>
 .page-container--flex-column {
-  flex: 0 1 auto;
   max-width: 70vw;
   justify-content: flex-start;
 }

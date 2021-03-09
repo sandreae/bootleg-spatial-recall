@@ -13,7 +13,8 @@
 <style scoped>
 .header-container--flex-column {
   align-items: center;
-  flex: 0 1 20px;
+  justify-content: center;
+  flex: 0 1 50px;
 }
 .nav--flex-row {
   flex: 0 1 auto;
