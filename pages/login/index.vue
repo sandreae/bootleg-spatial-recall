@@ -32,9 +32,11 @@ export default {
       this.disabled = true;
       this.$axios
         .$post(`/api/auth/login`, user)
-        .then(() => {
+        .then((data) => {
+          this.$axios.setToken(data.token, 'Bearer');
           this.disabled = false;
           this.messages.push('Logged in succesfully');
+          this.$router.push({ path: '/impulses/edit' });
         })
         .catch((err) => {
           this.disabled = false;
