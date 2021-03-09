@@ -7,7 +7,7 @@
       <ImpulsesUploadInfo :howto="howto" />
     </div>
     <div class="wrapper--flex-column-centre">
-      <div class="form-container--flex-column fuzzy">
+      <div :key="key" class="form-container--flex-column fuzzy">
         <ImpulsesForm
           v-model="errors"
           @submit="onSubmitted"
@@ -35,32 +35,32 @@ export default {
       errors: [],
       messages: [],
       disabled: false,
+      key: 0,
     };
   },
   methods: {
-    onSubmitted(postData) {
+    async onSubmitted(postData) {
       if (this.errors.length > 0) {
         return;
       }
       this.messages.push('Uploading');
       this.disabled = true;
       const formData = new FormData();
-      Object.keys(postData).forEach((key) => {
+      Object.keys(postData).forEach(function (key) {
         formData.append(key, postData[key]);
       });
-      this.$axios
-        .$post('/api/impulses', formData)
-        .then((result) => {
-          this.disabled = false;
-          this.messages = [];
-          this.$store.dispatch('updateImpulses');
-          this.$router.push({ path: '/' });
-        })
-        .catch((e) => {
-          this.disabled = false;
-          this.messages = [];
-          this.errors.push(e.message);
-        });
+      try {
+        await this.$axios.$post('/api/impulses', formData);
+        this.messages = [];
+        this.$store.dispatch('updateImpulses');
+        this.key += 1;
+        this.$router.push({ path: '/' });
+      } catch (error) {
+        this.messages = [];
+        this.errors.push(error.result.data.message);
+      } finally {
+        this.disabled = false;
+      }
     },
     onValidation(errors) {
       this.errors = errors;

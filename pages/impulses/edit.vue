@@ -41,56 +41,47 @@ export default {
       selectedImpulse: (state) => state.selectedImpulse,
     }),
   },
-  // watch: {
-  //   selectedImpulse(a, b) {
-  //     this.impulse = this.$store.getters.selectedImpulse;
-  //   },
-  // },
   methods: {
-    // initImpulse() {
-    //   return this.$store.getters.selectedImpulse;
-    // },
-    onSubmitted(postData, id) {
+    async onSubmitted(postData, id) {
       if (this.errors.length > 0) {
         return;
       }
       this.messages.push('Updating');
       this.disabled = true;
-      this.$axios
-        .$patch(`/api/impulses/${id}`, postData)
-        .then(() => {
-          this.disabled = false;
-          this.$store.dispatch('updateImpulses');
-          this.messages = [];
-          this.messages.push('Impulses updated succesfully');
-        })
-        .catch((e) => {
-          this.disabled = false;
-          this.messages = [];
-          this.errors.push(e.message);
-        });
+
+      try {
+        await this.$axios.$patch(`/api/impulses/${id}`, postData);
+        this.messages = [];
+        this.messages.push('Impulses updated succesfully');
+        this.$store.dispatch('updateImpulses');
+      } catch (error) {
+        this.messages = [];
+        this.errors.push(error.result.data.message);
+      } finally {
+        this.disabled = false;
+      }
     },
-    onDelete(id) {
+    async onDelete(id) {
       if (
         !window.confirm('Do you really want to delete this impulse?')
       ) {
         return;
       }
+
       this.messages.push('Deleting');
       this.disabled = true;
 
-      this.$axios
-        .$delete(`/api/impulses/${id}`)
-        .then(() => {
-          this.disabled = false;
-          this.$store.dispatch('updateImpulses');
-          this.messages = [];
-          this.messages.push('Impulses deleted!');
-        })
-        .catch((e) => {
-          this.messages = [];
-          this.errors.push(e.message);
-        });
+      try {
+        await this.$axios.$delete(`/api/impulses/${id}`);
+        this.messages = [];
+        this.messages.push('Impulses deleted!');
+        this.$store.dispatch('updateImpulses');
+      } catch (error) {
+        this.messages = [];
+        this.errors.push(error.result.data.message);
+      } finally {
+        this.disabled = false;
+      }
     },
     onValidation(errors) {
       this.errors = errors;

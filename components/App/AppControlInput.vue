@@ -29,6 +29,7 @@
     <input
       v-if="controlType === 'audio-file'"
       type="file"
+      :value="value"
       accept="audio/*"
       class="input-file"
       @change="$emit('fileChange', $event.target.files[0])"
@@ -36,6 +37,7 @@
     <input
       v-if="controlType === 'image-file'"
       type="file"
+      :value="value"
       accept="image/*"
       class="input-file"
       @change="$emit('fileChange', $event.target.files[0])"

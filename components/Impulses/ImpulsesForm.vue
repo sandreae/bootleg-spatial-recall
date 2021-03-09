@@ -50,18 +50,16 @@ export default {
       required: false,
       default: () => 'upload',
     },
+    sent: {
+      type: Boolean,
+      default: () => false,
+    },
   },
   data() {
     return { errors: [] };
   },
   computed: {
     editedImpulse() {
-      const baseImpulse = {
-        name: '',
-        date: '',
-        location: '',
-        description: '',
-      };
       if (this.type === 'edit') {
         let impulse;
         if (this.impulse) {
@@ -69,9 +67,22 @@ export default {
           impulse.date = new Date(
             this.impulse.date,
           ).toLocaleDateString('en-CA');
-          console.log(impulse);
           return impulse;
         }
+      }
+      return this.baseImpulse();
+    },
+  },
+  methods: {
+    baseImpulse() {
+      const baseImpulse = {
+        name: '',
+        date: '',
+        location: '',
+        description: '',
+      };
+
+      if (this.type === 'edit') {
         return baseImpulse;
       }
       return {
@@ -80,8 +91,6 @@ export default {
         imageFile: '',
       };
     },
-  },
-  methods: {
     onSave() {
       this.checkForm();
       this.$emit('validation', this.errors);
