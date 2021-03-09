@@ -62,12 +62,16 @@ export default {
   },
 
   auth: {
+    redirect: {
+      login: '/impulses/edit',
+      logout: '/',
+      callback: '/login',
+      home: '/',
+    },
     strategies: {
       local: {
         token: {
           property: 'token',
-          // required: true,
-          // type: 'Bearer'
         },
         user: {
           property: 'user',

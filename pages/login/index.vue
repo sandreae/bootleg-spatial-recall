@@ -5,7 +5,12 @@
   >
     <div class="wrapper--flex-column">
       <div class="form-container--flex-column fuzzy">
-        <AppLoginForm @login="onLogin" @validation="onValidation" />
+        <AppLoginForm
+          v-if="!this.$auth.loggedIn"
+          @login="onLogin"
+          @validation="onValidation"
+        />
+        <AppLogout v-else @logout="onLogout" />
       </div>
     </div>
     <div class="message-container--flex-column-centre">
@@ -31,19 +36,18 @@ export default {
       this.messages = [];
       this.disabled = true;
       try {
-        const response = await this.$auth.loginWith('local', {
+        await this.$auth.loginWith('local', {
           data: user,
         });
-        console.log(response);
-        this.messages.push('Logged in succesfully');
-        this.$router.push({ path: '/impulses/edit' });
       } catch (err) {
-        console.log(err);
         this.disabled = false;
         this.errors.push(err.response.data.message);
       } finally {
         this.disabled = false;
       }
+    },
+    async onLogout() {
+      await this.$auth.logout();
     },
     onValidation(errors) {
       this.errors = errors;
