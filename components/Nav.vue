@@ -6,6 +6,12 @@
       <NuxtLink class="nav-item" to="/impulses/upload"
         >upload</NuxtLink
       >
+      <NuxtLink
+        v-if="this.$auth.loggedIn"
+        class="nav-item"
+        to="/impulses/edit"
+        >edit</NuxtLink
+      >
     </div>
   </div>
 </template>

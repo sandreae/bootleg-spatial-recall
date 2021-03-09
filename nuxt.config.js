@@ -38,9 +38,9 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
+    '@nuxtjs/auth-next',
     '~/modules/api',
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next',
     '@nuxt/content',
   ],
 
@@ -63,10 +63,10 @@ export default {
 
   auth: {
     redirect: {
-      login: '/impulses/edit',
-      logout: '/',
-      callback: '/login',
-      home: '/',
+      login: 'impulses/edit',
+      logout: false,
+      callback: false,
+      home: false,
     },
     strategies: {
       local: {
@@ -82,6 +82,13 @@ export default {
           logout: false,
           user: false,
         },
+      },
+    },
+    cookie: {
+      prefix: 'auth.',
+      options: {
+        path: '/',
+        sameSite: 'lax',
       },
     },
   },

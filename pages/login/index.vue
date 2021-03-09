@@ -30,20 +30,24 @@ export default {
   },
   methods: {
     async onLogin(user) {
+      console.log(this.$auth.strategy.token.get());
+
       if (this.errors.length > 0) {
         return;
       }
       this.messages = [];
       this.disabled = true;
       try {
-        await this.$auth.loginWith('local', {
+        await this.$auth.login({
           data: user,
         });
+        this.$router.push({ path: '/impulses/edit' });
       } catch (err) {
         this.disabled = false;
         this.errors.push(err.response.data.message);
       } finally {
         this.disabled = false;
+        console.log(this.$auth.strategy.token.get());
       }
     },
     async onLogout() {

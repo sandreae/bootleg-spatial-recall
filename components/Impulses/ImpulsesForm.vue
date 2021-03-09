@@ -63,7 +63,16 @@ export default {
         description: '',
       };
       if (this.type === 'edit') {
-        return this.impulse ? { ...this.impulse } : baseImpulse;
+        let impulse;
+        if (this.impulse) {
+          impulse = { ...this.impulse };
+          impulse.date = new Date(
+            this.impulse.date,
+          ).toLocaleDateString('en-CA');
+          console.log(impulse);
+          return impulse;
+        }
+        return baseImpulse;
       }
       return {
         ...baseImpulse,
