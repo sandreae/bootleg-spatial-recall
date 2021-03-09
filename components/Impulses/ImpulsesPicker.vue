@@ -2,7 +2,7 @@
   <div class="picker-container--flex-column fuzzy">
     <div class="picker--flex-column" @scroll="onScroll">
       <div
-        v-for="(impulse, i) in impulses"
+        v-for="(impulse, i) in loadedImpulses"
         :key="i"
         class="picker_item click"
         :class="
@@ -24,12 +24,6 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      loops: 1,
-      impulses: this.LoopArray(this.$store.getters.loadedImpulses, 3),
-    };
-  },
   computed: {
     loadedImpulses() {
       return this.$store.getters.loadedImpulses;
@@ -48,14 +42,6 @@ export default {
     },
     setSelectedImpulse(impulse) {
       this.$store.commit('setSelectedImpulse', impulse);
-    },
-    LoopArray(array, num) {
-      const dupArray = array;
-      let loopedArray = [];
-      for (let i = 0; i < num; i++) {
-        loopedArray = array.concat(dupArray);
-      }
-      return loopedArray;
     },
   },
 };

@@ -11,7 +11,7 @@
         <ImpulsesForm
           v-model="errors"
           :type="'edit'"
-          :impulse="impulse"
+          :impulse="selectedImpulse"
           @submit="onSubmitted"
           @delete="onDelete"
           @validation="onValidation"
@@ -30,7 +30,6 @@ export default {
     return {
       errors: [],
       messages: [],
-      impulse: null,
       disabled: false,
     };
   },
@@ -39,12 +38,15 @@ export default {
       return this.$store.getters.selectedImpulse;
     },
   },
-  watch: {
-    selectedImpulse(a, b) {
-      this.impulse = this.$store.getters.selectedImpulse;
-    },
-  },
+  // watch: {
+  //   selectedImpulse(a, b) {
+  //     this.impulse = this.$store.getters.selectedImpulse;
+  //   },
+  // },
   methods: {
+    // initImpulse() {
+    //   return this.$store.getters.selectedImpulse;
+    // },
     onSubmitted(postData, id) {
       if (this.errors.length > 0) {
         return;
