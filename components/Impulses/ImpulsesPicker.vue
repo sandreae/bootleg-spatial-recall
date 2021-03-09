@@ -2,7 +2,7 @@
   <div class="picker-container--flex-column fuzzy">
     <div class="picker--flex-column" @scroll="onScroll">
       <div
-        v-for="(impulse, i) in loadedImpulses"
+        v-for="(impulse, i) in loopedImpulses"
         :key="i"
         class="picker_item click"
         :class="
@@ -26,10 +26,21 @@ export default {
       default: false,
     },
   },
+  data() {
+    return { loops: 10 };
+  },
   computed: {
     ...mapState({
       loadedImpulses: (state) => state.loadedImpulses,
       selectedImpulse: (state) => state.selectedImpulse,
+      loopedImpulses() {
+        let impulses = this.loadedImpulses;
+        for (let i = 0; i < this.loops; i++) {
+          impulses = impulses.concat(this.loadedImpulses);
+          console.log(impulses);
+        }
+        return impulses;
+      },
     }),
   },
   methods: {
@@ -37,10 +48,8 @@ export default {
       setSelectedImpulse: 'setSelectedImpulse',
     }),
     onScroll(el) {
-      if (el.target.scrollTop >= el.target.scrollTopMax - 20) {
-        let impulseLoop = this.impulses;
-        impulseLoop = impulseLoop.concat(this.loadedImpulses);
-        this.impulses = impulseLoop;
+      if (el.target.scrollTop >= el.target.scrollTopMax - 50) {
+        this.loops += 10;
       }
     },
   },
