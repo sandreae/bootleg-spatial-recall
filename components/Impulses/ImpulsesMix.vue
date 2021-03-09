@@ -35,7 +35,6 @@ export default {
       arrowLeft: '&#128066',
       arrowRight: '&#128066',
       length: 20,
-      level: 10,
     };
   },
   computed: {
@@ -45,9 +44,9 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setMixLevel: 'state/setMixLevel',
-      decreaseMixLevel: 'state/decreaseMixLevel',
-      increaseMixLevel: 'state/increaseMixLevel',
+      setMixLevel: 'setMixLevel',
+      decreaseMixLevel: 'decreaseMixLevel',
+      increaseMixLevel: 'increaseMixLevel',
     }),
   },
 };

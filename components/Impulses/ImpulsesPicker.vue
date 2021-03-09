@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setSelectedImpulse: 'state/setSelectedImpulse',
+      setSelectedImpulse: 'setSelectedImpulse',
     }),
     onScroll(el) {
       if (el.target.scrollTop >= el.target.scrollTopMax - 20) {

@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      togglePlay: 'state/togglePlay',
+      togglePlay: 'togglePlay',
     }),
   },
 };

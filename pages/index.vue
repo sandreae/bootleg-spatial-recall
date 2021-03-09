@@ -21,9 +21,9 @@
 </template>
 
 <script>
-// import { ImpulsePlayer } from '@/assets/js/audioUtils.js';
+import { ImpulsePlayer } from '@/assets/js/audioUtils.js';
 import { mapState } from 'vuex';
-// import sample from '@/assets/audio/arnold_circus_demo.mp3';
+import sample from '@/assets/audio/arnold_circus_demo.mp3';
 
 export default {
   async asyncData({ $content }) {
@@ -38,22 +38,24 @@ export default {
     };
   },
   async fetch() {
-    // const promises = await this.impulses.map((impulse) => {
-    //   return new Promise(function (resolve, reject) {
-    //     const img = new Image();
-    //     img.src = impulse.imageFile;
-    //     img.onload = resolve();
-    //     img.onerror = reject(new Error('Image did not load'));
-    //   });
-    // });
-    // await Promise.all(promises);
-    // let impulseFile;
-    // const sampleFile = await fetch(sample);
-    // if (this.selectedImpulse.audioFile) {
-    //   impulseFile = await fetch(this.selectedImpulse.audioFile);
-    // }
-    // this.impulsePlayer = new ImpulsePlayer();
-    // this.impulsePlayer.init(sampleFile, impulseFile);
+    if (this.impulses.length > 0) {
+      const promises = this.impulses.map((impulse) => {
+        return new Promise(function (resolve, reject) {
+          const img = new Image();
+          img.src = impulse.imageFile;
+          img.onload = resolve();
+          img.onerror = reject(new Error('Image did not load'));
+        });
+      });
+      await Promise.all(promises);
+    }
+    let impulseFile;
+    const sampleFile = await fetch(sample);
+    if (this.selectedImpulse.audioFile) {
+      impulseFile = await fetch(this.selectedImpulse.audioFile);
+    }
+    this.impulsePlayer = new ImpulsePlayer();
+    this.impulsePlayer.init(sampleFile, impulseFile);
   },
   fetchOnServer: false,
   head() {
