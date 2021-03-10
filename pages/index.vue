@@ -11,11 +11,12 @@
   <section v-else class="page-container--flex-column">
     <div class="impulse-container--flex-column-centre">
       <ImpulsesDetails />
+      <ImpulsesControls />
       <ImpulsesMix />
     </div>
     <div class="picker-container--flex-column-centre">
-      <nuxt-content :document="home" />
       <ImpulsesPicker />
+      <nuxt-content :document="home" />
     </div>
   </section>
 </template>
@@ -49,13 +50,6 @@ export default {
       });
       await Promise.all(promises);
     }
-    let impulseFile;
-    const sampleFile = await fetch(sample);
-    if (this.selectedImpulse.audioFile) {
-      impulseFile = await fetch(this.selectedImpulse.audioFile);
-    }
-    this.impulsePlayer = new ImpulsePlayer();
-    this.impulsePlayer.init(sampleFile, impulseFile);
   },
   fetchOnServer: false,
   head() {
@@ -69,17 +63,14 @@ export default {
       selectedImpulse: (state) => state.selectedImpulse,
       mixLevel: (state) => state.mixLevel,
       playing: (state) => state.playing,
+      playImpulse: (state) => state.playImpulse,
     }),
   },
   watch: {
     selectedImpulse(newImpulse, oldCount) {
-      fetch(newImpulse.audioFile)
-        .then((impulseFile) => {
-          return this.impulsePlayer.setConvolverNode(impulseFile);
-        })
-        .then(() => {
-          this.impulsePlayer.makeConnections();
-        });
+      fetch(newImpulse.audioFile).then((impulseFile) => {
+        return this.impulsePlayer.setNewImpulse(impulseFile);
+      });
     },
     mixLevel(newLevel, oldCount) {
       this.impulsePlayer.mixLevel(newLevel);
@@ -88,14 +79,21 @@ export default {
       if (isPlaying === wasPlaying) {
         return;
       }
-      if (isPlaying) {
-        this.impulsePlayer.play();
-      } else {
-        this.impulsePlayer.stop();
-        this.impulsePlayer.setSampleNode(this.sampleFile);
-        this.impulsePlayer.makeConnections();
-      }
+      this.impulsePlayer.togglePlay();
     },
+    playImpulse() {
+      this.impulsePlayer.impulseNode.onended = () => {};
+      this.impulsePlayer.playImpulse();
+    },
+  },
+  async mounted() {
+    let impulseFile;
+    const sampleFile = await fetch(sample);
+    if (this.selectedImpulse.audioFile) {
+      impulseFile = await fetch(this.selectedImpulse.audioFile);
+    }
+    this.impulsePlayer = new ImpulsePlayer();
+    this.impulsePlayer.init(sampleFile, impulseFile);
   },
 };
 </script>
@@ -104,12 +102,6 @@ export default {
 .page-container--flex-column {
   max-width: 70vw;
   justify-content: flex-start;
-}
-.impulse-container--flex-column-centre {
-  flex: 1;
-}
-.picker-container--flex-column-centre {
-  flex: 1;
 }
 
 @media only screen and (min-width: 800px) {
@@ -121,13 +113,9 @@ export default {
     justify-content: space-around;
   }
   .impulse-container--flex-column-centre {
-    flex: 0 1 auto;
-    justify-content: space-around;
-    max-width: 60vw;
+    align-items: stretch;
   }
   .picker-container--flex-column-centre {
-    flex: 1;
-    justify-content: center;
     max-width: 30vw;
   }
 }

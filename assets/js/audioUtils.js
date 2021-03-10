@@ -4,12 +4,16 @@ export class ImpulsePlayer {
     this.analyserNode = this.audioCtx.createAnalyser();
     this.convolverGain = this.audioCtx.createGain();
     this.sampleGain = this.audioCtx.createGain();
+    this.impulseGain = this.audioCtx.createGain();
     this.sample = null;
     this.sampleBuffer = null;
+    this.impulseBuffer = null;
     this.convolverNode = null;
     this.sampleNode = null;
+    this.impulseNode = null;
     this.cleanVolume = 0.5;
     this.wetVolume = 0.5;
+    this.playing = false;
 
     this.analyserNode.fftSize = 2048;
   }
@@ -18,8 +22,14 @@ export class ImpulsePlayer {
     await this.setSampleBuffer(sampleFile);
     await this.setSampleNode();
     if (impulseFile) {
-      await this.setConvolverNode(impulseFile);
+      await this.setImpulseBuffer(impulseFile);
+      await this.setImpulseNode();
+      await this.setConvolverNode();
     }
+    this.impulseGain.gain.setValueAtTime(
+      0.7,
+      this.audioCtx.currentTime,
+    );
     this.makeConnections();
   }
 
@@ -36,15 +46,34 @@ export class ImpulsePlayer {
     this.sampleBuffer = await sample.arrayBuffer();
   }
 
-  async setConvolverNode(impulse) {
+  async setImpulseNode() {
+    // Set sample node from buffer
+    this.impulseNode = this.audioCtx.createBufferSource();
+    this.impulseNode.buffer = await this.audioCtx.decodeAudioData(
+      this.impulseBuffer.slice(0),
+    );
+  }
+
+  async setImpulseBuffer(impulse) {
+    // Set impulse buffer from file
+    this.impulseBuffer = await impulse.arrayBuffer();
+  }
+
+  async setNewImpulse(impulse) {
+    await this.setImpulseBuffer(impulse);
+    await this.setImpulseNode();
+    await this.setConvolverNode();
+    this.makeConnections();
+  }
+
+  async setConvolverNode() {
     // Create and set new convolver node
     if (this.convolverNode) {
       this.convolverNode.disconnect();
     }
     this.convolverNode = this.audioCtx.createConvolver();
-    const arraybuffer = await impulse.arrayBuffer();
     this.convolverNode.buffer = await this.audioCtx.decodeAudioData(
-      arraybuffer,
+      this.impulseBuffer.slice(0),
     );
   }
 
@@ -70,15 +99,24 @@ export class ImpulsePlayer {
     this.sampleGain.connect(this.analyserNode);
   }
 
-  play() {
-    // connect the sampleNode and play
-    this.sampleNode.connect(this.sampleGain);
-    this.sampleNode.start();
+  togglePlay() {
+    if (!this.playing) {
+      this.sampleNode.connect(this.sampleGain);
+      this.sampleNode.start();
+      this.playing = !this.playing;
+    } else {
+      this.sampleNode.stop();
+      this.playing = !this.playing;
+      this.setSampleNode();
+      this.makeConnections();
+    }
   }
 
-  stop() {
-    // Stop the sample node playing, which also destroys it
-    this.sampleNode.stop();
+  async playImpulse() {
+    // connect the sampleNode and play
+    this.impulseNode.connect(this.audioCtx.destination);
+    this.impulseNode.start();
+    await this.setImpulseNode();
   }
 
   mixLevel(val) {

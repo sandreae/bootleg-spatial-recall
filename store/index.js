@@ -3,6 +3,7 @@ export const state = () => ({
   selectedImpulse: {},
   mixLevel: 10,
   playing: false,
+  playImpulse: 0,
 });
 
 export const mutations = {
@@ -25,6 +26,9 @@ export const mutations = {
   },
   togglePlay(state) {
     state.playing = !state.playing;
+  },
+  playImpulse(state) {
+    state.playImpulse = state.playImpulse += 1;
   },
 };
 
