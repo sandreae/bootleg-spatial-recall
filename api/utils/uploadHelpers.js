@@ -42,9 +42,11 @@ exports.compressAudio = async (file) => {
     bitrate: 192,
   }).setBuffer(file.buffer);
 
-  console.log('Encoding starting');
-  await encoder.encode();
-  console.log('Encoding finished');
+  try {
+    await encoder.encode();
+  } catch (error) {
+    return new AppError('Error occured when encoding audio.', 400);
+  }
   file.buffer = encoder.getBuffer();
   file.name = file.name.split('.')[0] + '.mp3';
   return file;
