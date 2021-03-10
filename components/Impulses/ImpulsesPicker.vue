@@ -1,6 +1,11 @@
 <template>
   <div class="picker-container--flex-column fuzzy">
-    <div class="picker--flex-column" @scroll="onScroll">
+    <div
+      class="picker--flex-column"
+      @scroll="onScroll"
+      @touchstart="onScroll"
+      @touchend="onScroll"
+    >
       <ImpulsesPickerItem
         v-for="(impulse, i) in loopedImpulses"
         :key="i"
@@ -35,8 +40,8 @@ export default {
         el.target.scrollTop = el.target.scrollHeight / 2;
       }
       if (
-        el.target.scrollTop >=
-        el.target.scrollHeight - el.target.scrollHeight / 10
+        el.target.scrollTop >
+        el.target.scrollHeight - el.target.scrollHeight / this.loops
       ) {
         el.target.scrollTop = 1;
       }

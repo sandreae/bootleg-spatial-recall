@@ -47,7 +47,8 @@ export default {
 
 .picker-item-wrapper--flex-column {
   flex: 0 0 30px;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: stretch;
   cursor: pointer;
   text-align: center;
   z-index: 1;
