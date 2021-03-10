@@ -1,8 +1,10 @@
 <template>
   <div class="controls-wrapper--flex-row">
-    <div class="button-fuzzy" @click="playImpulse">play impulse</div>
+    <div class="item button-fuzzy" @click="playImpulse">
+      play impulse
+    </div>
     <!-- <div class="button-fuzzy" @click="togglePlay">convolve</div> -->
-    <div class="button-fuzzy" @click.prevent="downloadItem">
+    <div class="item button-fuzzy" @click.prevent="downloadItem">
       download
     </div>
   </div>
@@ -44,6 +46,10 @@ export default {
 </script>
 
 <style scoped>
+.item {
+  -webkit-user-select: none;
+  user-select: none;
+}
 .controls-wrapper--flex-row {
   padding: 6px;
   align-self: stretch;
