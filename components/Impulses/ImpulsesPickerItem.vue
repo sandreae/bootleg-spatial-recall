@@ -1,22 +1,10 @@
 <template>
   <div
-    class="picker-item-wrapper--flex-row"
+    class="picker-item-wrapper--flex-column"
     :class="selected ? 'selected' : ''"
     @click="setSelectedImpulse(impulse)"
   >
-    <div>
-      <!-- <a
-        target="_blank"
-        :download="impulse.slug"
-        :href="impulse.audioFile"
-        :class="selected ? '' : 'hidden'"
-        >&#9660;</a
-      > -->
-    </div>
     <div class="click">{{ impulse.name }}</div>
-    <div>
-      <!-- <span :class="selected ? 'click' : 'hidden'">&#9656;</span> -->
-    </div>
   </div>
 </template>
 
@@ -57,14 +45,14 @@ export default {
   margin: 0px !important;
 }
 
-.picker-item-wrapper--flex-row {
-  margin: 2px;
+.picker-item-wrapper--flex-column {
+  flex: 0 0 30px;
   justify-content: space-between;
-  padding: 4px;
   cursor: pointer;
   text-align: center;
   z-index: 1;
 }
+
 .hidden {
   display: none;
 }

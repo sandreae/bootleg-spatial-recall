@@ -14,12 +14,6 @@
 import { mapState } from 'vuex';
 
 export default {
-  props: {
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return { loops: 10 };
   },
@@ -47,7 +41,7 @@ export default {
 
 <style scoped>
 .picker--flex-column {
-  flex: 1 0 auto;
+  flex: 1 0 200px;
   min-width: 50vw;
   align-items: stretch;
   justify-content: flex-start;
