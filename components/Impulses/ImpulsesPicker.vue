@@ -37,7 +37,6 @@ export default {
         let impulses = this.loadedImpulses;
         for (let i = 0; i < this.loops; i++) {
           impulses = impulses.concat(this.loadedImpulses);
-          console.log(impulses);
         }
         return impulses;
       },
@@ -48,7 +47,7 @@ export default {
       setSelectedImpulse: 'setSelectedImpulse',
     }),
     onScroll(el) {
-      if (el.target.scrollTop >= el.target.scrollTopMax - 50) {
+      if (el.target.scrollTop >= el.target.scrollTopMax / 2) {
         this.loops += 10;
       }
     },

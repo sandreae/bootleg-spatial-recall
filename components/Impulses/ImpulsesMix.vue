@@ -1,7 +1,7 @@
 <template>
   <div class="impulse-mix--flex-row">
     <div
-      class="item"
+      class="item ear"
       @click="decreaseMixLevel()"
       v-html="arrowLeft"
     ></div>
@@ -15,9 +15,9 @@
       <span v-else v-html="sliderActive"></span>
     </div>
     <div
-      class="item"
+      class="item ear"
       @click="increaseMixLevel()"
-      v-html="arrowRight"
+      v-html="speaker"
     ></div>
   </div>
 </template>
@@ -34,6 +34,7 @@ export default {
       sliderActive: '&#x2505',
       arrowLeft: '&#128066',
       arrowRight: '&#128066',
+      speaker: '&#128266',
       length: 20,
     };
   },
@@ -57,17 +58,21 @@ export default {
   padding-top: 15px;
   flex: 0 0 30px;
   align-self: stretch;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 }
 .item {
   position: relative;
   -webkit-user-select: none;
   user-select: none;
-  flex: 1 1 10px;
-  font-size: 1em;
+  flex: 1 1 15px;
+  font-size: 0.8em;
   cursor: pointer;
   z-index: 2;
+}
+
+.ear {
+  font-size: 2em;
 }
 
 /* .item:hover { */
@@ -92,6 +97,9 @@ export default {
     font-size: 1.5em;
     flex: 1 1 15px;
     cursor: pointer;
+  }
+  .ear {
+    font-size: 2em;
   }
 }
 </style>

@@ -16,10 +16,12 @@ export const mutations = {
     state.mixLevel = level;
   },
   increaseMixLevel(state) {
-    state.mixLevel = state.mixLevel += 1;
+    state.mixLevel =
+      state.mixLevel >= 20 ? state.mixLevel : (state.mixLevel += 1);
   },
   decreaseMixLevel(state, level) {
-    state.mixLevel = state.mixLevel -= 1;
+    state.mixLevel =
+      state.mixLevel <= 1 ? state.mixLevel : (state.mixLevel -= 1);
   },
   togglePlay(state) {
     state.playing = !state.playing;
