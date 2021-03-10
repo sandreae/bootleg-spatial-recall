@@ -12,7 +12,6 @@ services:
       - MONGO_DB=bootleg-spatial-recall
       - TEST_MONGO_DB=testing
       - JWT_SECRET=notagoodkey
-      - NODE_ENV=test
       - JWT_EXPIRES_IN=30d
       - JWT_COOKIE_EXPIRES_IN=30d
       - NODE_ENV=test
