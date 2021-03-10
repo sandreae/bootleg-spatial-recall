@@ -31,8 +31,14 @@ export default {
   },
   methods: {
     onScroll(el) {
-      if (el.target.scrollTop >= el.target.scrollTopMax / 2) {
-        this.loops += 10;
+      if (el.target.scrollTop === 0) {
+        el.target.scrollTop = el.target.scrollHeight / 2;
+      }
+      if (
+        el.target.scrollTop >=
+        el.target.scrollHeight - el.target.scrollHeight / 10
+      ) {
+        el.target.scrollTop = 1;
       }
     },
   },
@@ -47,7 +53,6 @@ export default {
   justify-content: flex-start;
   max-height: 200px;
   overflow: auto;
-  scroll-behavior: smooth;
 }
 
 .picker--flex-column::-webkit-scrollbar {
