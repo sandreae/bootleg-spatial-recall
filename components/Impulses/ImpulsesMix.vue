@@ -1,21 +1,21 @@
 <template>
   <div class="impulse-mix--flex-row">
     <div
-      class="item ear"
+      class="item button-fuzzy ear"
       @click="decreaseMixLevel()"
       v-html="arrowLeft"
     ></div>
     <div
       v-for="n in length"
       :key="n"
-      class="item"
+      class="item button-fuzzy"
       @click="setMixLevel(n)"
     >
       <span v-if="n !== level" v-html="sliderInactive"></span>
       <span v-else v-html="sliderActive"></span>
     </div>
     <div
-      class="item ear"
+      class="item button-fuzzy ear"
       @click="increaseMixLevel()"
       v-html="speaker"
     ></div>
@@ -55,41 +55,19 @@ export default {
 
 <style scoped>
 .impulse-mix--flex-row {
-  padding-top: 15px;
-  flex: 0 0 30px;
   align-self: stretch;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 .item {
-  position: relative;
   -webkit-user-select: none;
   user-select: none;
   flex: 1 1 15px;
   font-size: 0.8em;
-  cursor: pointer;
-  z-index: 2;
 }
 
 .ear {
   font-size: 2em;
-}
-
-/* .item:hover { */
-/* margin: 0px !important;
-  border: var(--secondary-bg-color) 2px solid;
-  background-color: var(--secondary-bg-color);
-  border-radius: 15px; */
-/* } */
-
-.item:hover::before {
-  z-index: -1;
-  content: '';
-  background-color: var(--secondary-bg-color);
-  width: calc(100% - 3px);
-  height: calc(100% - 3px);
-  position: absolute;
-  filter: blur(5px);
 }
 
 @media only screen and (min-width: 800px) {

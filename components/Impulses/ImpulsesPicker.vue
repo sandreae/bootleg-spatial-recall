@@ -1,23 +1,17 @@
 <template>
   <div class="picker-container--flex-column fuzzy">
     <div class="picker--flex-column" @scroll="onScroll">
-      <div
+      <ImpulsesPickerItem
         v-for="(impulse, i) in loopedImpulses"
         :key="i"
-        class="picker_item click"
-        :class="
-          selectedImpulse.name === impulse.name ? 'selected' : ''
-        "
-        @click="setSelectedImpulse(impulse)"
-      >
-        {{ impulse.name }}
-      </div>
+        :impulse="impulse"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   props: {
@@ -32,7 +26,6 @@ export default {
   computed: {
     ...mapState({
       loadedImpulses: (state) => state.loadedImpulses,
-      selectedImpulse: (state) => state.selectedImpulse,
       loopedImpulses() {
         let impulses = this.loadedImpulses;
         for (let i = 0; i < this.loops; i++) {
@@ -43,9 +36,6 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations({
-      setSelectedImpulse: 'setSelectedImpulse',
-    }),
     onScroll(el) {
       if (el.target.scrollTop >= el.target.scrollTopMax / 2) {
         this.loops += 10;
