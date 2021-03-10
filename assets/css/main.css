@@ -9,6 +9,20 @@
 }
 
 @font-face {
+  font-family: 'johnston-underground';
+  src: url('~assets/fonts/johnston-underground-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: 'johnston-underground';
+  src: url('~assets/fonts/johnston-underground-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+} */
+
+/* @font-face {
   font-family: 'JenrivTitling';
   src: url('~assets/fonts/JenrivTitling-Regular.otf') format('opentype');
   font-weight: normal;
@@ -39,12 +53,12 @@
 @font-face {
   font-family: 'Roman';
   src: url('~assets/fonts/Roman_SD.ttf') format('truetype');
-}
+} */
 
 html,
 body {
   background-color: var(--main-bg-color);
-  font-family: 'JenrivTitling';
+  font-family: 'johnston-underground';
   font-size: 1rem;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -52,13 +66,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-  text-transform: uppercase;
   -webkit-tap-highlight-color: transparent;
 }
 
 @media only screen and (min-width: 800px) {
   body {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
 }
 
