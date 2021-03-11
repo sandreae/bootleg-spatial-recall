@@ -24,7 +24,7 @@
 <script>
 import { ImpulsePlayer } from '@/assets/js/audioUtils.js';
 import { mapState } from 'vuex';
-import sample from '@/assets/audio/arnold_circus_demo.mp3';
+import sample from '@/assets/audio/BootlegSpatialRecall.mp3';
 
 export default {
   async asyncData({ $content }) {
