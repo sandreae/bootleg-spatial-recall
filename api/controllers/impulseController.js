@@ -56,8 +56,12 @@ exports.processFiles = catchAsync(async (req, res, next) => {
     }
   }
 
-  req.imageFile = await uploadHelpers.resizeImage(req.imageFile);
-  req.audioFile = await uploadHelpers.compressAudio(req.audioFile);
+  try {
+    req.imageFile = await uploadHelpers.resizeImage(req.imageFile);
+    req.audioFile = await uploadHelpers.compressAudio(req.audioFile);
+  } catch (error) {
+    return next(new AppError(error.message, 400));
+  }
   next();
 });
 

@@ -37,17 +37,23 @@ exports.resizeImage = async (file) => {
 };
 
 exports.compressAudio = async (file) => {
-  const encoder = new Lame({
-    output: 'buffer',
-    bitrate: 192,
-  }).setBuffer(file.buffer);
-
-  try {
-    await encoder.encode();
-  } catch (error) {
-    return new AppError('Error occured when encoding audio.', 400);
+  if (file.name.split('.')[1] === 'wav') {
+    const encoder = new Lame({
+      output: 'buffer',
+      bitrate: 192,
+    }).setBuffer(file.buffer);
+    try {
+      await encoder.encode();
+    } catch (error) {
+      throw new AppError('Error occured when encoding audio.', 400);
+    }
+    file.buffer = encoder.getBuffer();
+    file.name = file.name.split('.')[0] + '.mp3';
+  } else if (file.size > 1 * 1024 * 1024) {
+    throw new AppError(
+      'Audio file too large (max 1mb), try a different format, wav files will be compressed automatically.',
+      400,
+    );
   }
-  file.buffer = encoder.getBuffer();
-  file.name = file.name.split('.')[0] + '.mp3';
   return file;
 };
