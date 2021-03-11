@@ -27,18 +27,23 @@ export default {
     downloadItem() {
       this.$axios
         .$get(this.selectedImpulse.audioFile, {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
           responseType: 'blob',
         })
         .then((data) => {
           const blob = new Blob([data]);
           const link = document.createElement('a');
           link.href = URL.createObjectURL(blob);
-          link.download = `${this.selectedImpulse.slug}.mp3`;
+          const splitUrl = this.selectedImpulse.audioFile.split('.');
+          const fileType = splitUrl[splitUrl.length - 1];
+          link.download = `${this.selectedImpulse.slug}.${fileType}`;
           link.click();
           URL.revokeObjectURL(link.href);
         })
         .catch((error) => {
-          this.context.error(error);
+          window.alert(error.message);
         });
     },
   },
