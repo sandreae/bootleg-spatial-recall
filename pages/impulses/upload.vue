@@ -57,7 +57,7 @@ export default {
         this.$router.push({ path: '/' });
       } catch (error) {
         this.messages = [];
-        this.errors.push(error.result.data.message);
+        this.errors.push(error.data.message);
       } finally {
         this.disabled = false;
       }

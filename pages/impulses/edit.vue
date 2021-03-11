@@ -78,7 +78,7 @@ export default {
         this.$store.dispatch('updateImpulses');
       } catch (error) {
         this.messages = [];
-        this.errors.push(error.result.data.message);
+        this.errors.push(error.data.message);
       } finally {
         this.disabled = false;
       }
