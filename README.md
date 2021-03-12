@@ -1,6 +1,6 @@
 # bootleg-spatial-recall
 
-Convolution reverb on a shoe-string. Website accompanying projects by [Otto Willberg](http://www.ottowillberg.com/) for uploading, listening to and archiving convolution reverbs. Uses webaudio in the browser to perform convolution. Built by [Sam Andreae](https://samandreae.com).
+Convolution reverb on a shoe-string. Website accompanying projects by [Otto Willberg](http://www.ottowillberg.com/) for uploading, listening to and archiving convolution reverb impulses. Uses webaudio in the browser to perform convolution. Built by [Sam Andreae](https://samandreae.com).
 
 - Express API
 - Nuxt frontend
