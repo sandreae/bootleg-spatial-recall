@@ -28,7 +28,6 @@ export default {
       this.$axios
         .$get(this.selectedImpulse.audioFile, {
           headers: {
-            'Access-Control-Allow-Origin': '*',
             Authorization:
               'Bearer ' + this.$auth.strategy.token.get(),
           },

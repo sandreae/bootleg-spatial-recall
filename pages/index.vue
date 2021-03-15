@@ -54,9 +54,6 @@ export default {
       const impulseFile = await this.$axios.$get(
         this.selectedImpulse.audioFile,
         {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
           responseType: 'blob',
         },
       );

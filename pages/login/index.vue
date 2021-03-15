@@ -30,8 +30,6 @@ export default {
   },
   methods: {
     async onLogin(user) {
-      console.log(this.$auth.strategy.token.get());
-
       if (this.errors.length > 0) {
         return;
       }
@@ -47,7 +45,6 @@ export default {
         this.errors.push(err.response.data.message);
       } finally {
         this.disabled = false;
-        console.log(this.$auth.strategy.token.get());
       }
     },
     async onLogout() {

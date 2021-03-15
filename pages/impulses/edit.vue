@@ -52,7 +52,6 @@ export default {
       try {
         await this.$axios.$patch(`/api/impulses/${id}`, postData, {
           headers: {
-            'Access-Control-Allow-Origin': '*',
             Authorization: this.$auth.strategy.token.get(),
           },
         });
@@ -79,7 +78,6 @@ export default {
       try {
         await this.$axios.$delete(`/api/impulses/${id}`, {
           headers: {
-            'Access-Control-Allow-Origin': '*',
             Authorization: this.$auth.strategy.token.get(),
           },
         });
