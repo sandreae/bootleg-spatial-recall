@@ -51,12 +51,7 @@ export default {
       });
       await Promise.all(promises);
       // GET sample and initial impulse file then init player
-      const impulseFile = await this.$axios.$get(
-        this.selectedImpulse.audioFile,
-        {
-          responseType: 'blob',
-        },
-      );
+      const impulseFile = await fetch(this.selectedImpulse.audioFile);
       const sampleFile = await fetch(sample);
       this.impulsePlayer = new ImpulsePlayer();
       this.impulsePlayer.init(sampleFile, impulseFile);
