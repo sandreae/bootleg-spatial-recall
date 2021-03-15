@@ -1,13 +1,14 @@
+/* custom variables */
 :root {
   --main-bg-color: rgb(200, 166, 82);
+  --about-page-bg-color: rgb(130, 169, 171);
+  --upload-page-bg-color: rgb(133, 165, 128);
   --secondary-bg-color: rgb(255, 251, 129);
+  --fuzz-color: rgb(255, 251, 129);
   --break-point: 800px;
 }
 
-:focus {
-  outline: none !important;
-}
-
+/* fonts */
 @font-face {
   font-family: 'johnston-underground';
   src: url('~assets/fonts/johnston-underground-regular.ttf') format('truetype');
@@ -15,49 +16,9 @@
   font-style: normal;
 }
 
-/* @font-face {
-  font-family: 'johnston-underground';
-  src: url('~assets/fonts/johnston-underground-bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-} */
-
-/* @font-face {
-  font-family: 'JenrivTitling';
-  src: url('~assets/fonts/JenrivTitling-Regular.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'JenrivTitling';
-  src: url('~assets/fonts/JenrivTitling-Bold.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'JenrivTitling';
-  src: url('~assets/fonts/JenrivTitling-Italic.otf') format('opentype');
-  font-weight: normal;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'JenrivTitling';
-  src: url('~assets/fonts/JenrivTitling-BoldItalic.otf') format('opentype');
-  font-weight: bold;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Roman';
-  src: url('~assets/fonts/Roman_SD.ttf') format('truetype');
-} */
-
+/* general body styles */
 html,
 body {
-  background-color: var(--main-bg-color);
   font-family: 'johnston-underground';
   font-size: 1rem;
   word-spacing: 1px;
@@ -75,6 +36,10 @@ body {
   }
 }
 
+:focus {
+  outline: none !important;
+}
+
 *,
 *::before,
 *::after {
@@ -83,6 +48,21 @@ body {
 }
 
 
+/* nuxt transitions */
+.page-leave-active {
+  transition: opacity 0s;
+}
+
+.page-enter-active {
+  transition: opacity 0.5s;
+}
+
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
+
+/* custom flex classes */
 [class*="--flex-column"] {
   display: flex;
   flex-direction: column;
@@ -104,6 +84,8 @@ body {
   text-align: center;
 }
 
+
+/* general element styles and classes */
 h1,
 h2,
 h3,
@@ -133,8 +115,6 @@ h4 {
   height: calc(100% - 20px);
   position: absolute;
   filter: blur(12px);
-  background-image:
-    radial-gradient(circle, var(--secondary-bg-color) 50%, #e406f0 100%);
 }
 
 .button-fuzzy {
