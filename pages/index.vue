@@ -1,6 +1,6 @@
 <template>
   <div v-if="$fetchState.pending" class="page-container--flex-column">
-    Fetching impulses...
+    Loading impulses...
   </div>
   <div
     v-else-if="$fetchState.error"
@@ -40,6 +40,7 @@ export default {
   },
   async fetch() {
     if (this.impulses.length > 0) {
+      // GET all impulses
       const promises = this.impulses.map((impulse) => {
         return new Promise(function (resolve, reject) {
           const img = new Image();
@@ -49,6 +50,18 @@ export default {
         });
       });
       await Promise.all(promises);
+      // GET sample and initial impulse file then init player
+      const impulseFile = await this.$axios.$get(
+        this.selectedImpulse.audioFile,
+        {
+          responseType: 'blob',
+        },
+      );
+      const sampleFile = await this.$axios.$get(sample, {
+        responseType: 'blob',
+      });
+      this.impulsePlayer = new ImpulsePlayer();
+      this.impulsePlayer.init(sampleFile, impulseFile);
     }
   },
   fetchOnServer: false,
@@ -85,15 +98,6 @@ export default {
       this.impulsePlayer.impulseNode.onended = () => {};
       this.impulsePlayer.playImpulse();
     },
-  },
-  async mounted() {
-    let impulseFile;
-    const sampleFile = await fetch(sample);
-    if (this.selectedImpulse.audioFile) {
-      impulseFile = await fetch(this.selectedImpulse.audioFile);
-    }
-    this.impulsePlayer = new ImpulsePlayer();
-    this.impulsePlayer.init(sampleFile, impulseFile);
   },
 };
 </script>
