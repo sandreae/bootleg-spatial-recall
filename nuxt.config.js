@@ -79,6 +79,7 @@ export default {
       local: {
         token: {
           property: 'token',
+          global: false,
         },
         user: {
           property: 'user',

@@ -50,7 +50,12 @@ export default {
       this.disabled = true;
 
       try {
-        await this.$axios.$patch(`/api/impulses/${id}`, postData);
+        await this.$axios.$patch(`/api/impulses/${id}`, postData, {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            Authorization: this.$auth.strategy.token.get(),
+          },
+        });
         this.messages = [];
         this.messages.push('Impulses updated succesfully');
         this.$store.dispatch('updateImpulses');
@@ -72,7 +77,12 @@ export default {
       this.disabled = true;
 
       try {
-        await this.$axios.$delete(`/api/impulses/${id}`);
+        await this.$axios.$delete(`/api/impulses/${id}`, {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            Authorization: this.$auth.strategy.token.get(),
+          },
+        });
         this.messages = [];
         this.messages.push('Impulses deleted!');
         this.$store.dispatch('updateImpulses');
