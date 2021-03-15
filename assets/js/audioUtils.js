@@ -1,3 +1,4 @@
+import { AudioContext } from 'standardized-audio-context';
 export class ImpulsePlayer {
   constructor() {
     this.audioCtx = new AudioContext();
