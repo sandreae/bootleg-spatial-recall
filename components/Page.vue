@@ -22,6 +22,7 @@ export default {
 </script>
 <style scoped>
 .content--flex-column-centre {
+  text-align: justify;
   z-index: 1;
   margin-top: 10px;
 }
@@ -30,11 +31,15 @@ export default {
 }
 
 @media only screen and (min-width: 800px) {
+  .content--flex-column-centre {
+    margin: 20px;
+  }
   .page--flex-column-centre {
-    max-width: 90vw;
+    max-width: 70vw;
   }
   .page--flex-column-centre {
     margin: 30px;
+    font-size: 1.2em;
   }
   .wrapper--flex-column {
     justify-content: center;
