@@ -60,12 +60,7 @@ export default {
           responseType: 'blob',
         },
       );
-      const sampleFile = await this.$axios.$get(sample, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-        responseType: 'blob',
-      });
+      const sampleFile = await fetch(sample);
       this.impulsePlayer = new ImpulsePlayer();
       this.impulsePlayer.init(sampleFile, impulseFile);
     }
