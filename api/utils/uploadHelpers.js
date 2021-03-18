@@ -29,6 +29,7 @@ exports.resizeImage = async (file) => {
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
+    .withMetadata()
     .toBuffer();
 
   file.buffer = buffer;
