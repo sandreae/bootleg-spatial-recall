@@ -27,10 +27,6 @@ export default {
     downloadItem() {
       this.$axios
         .$get(this.selectedImpulse.audioFile, {
-          headers: {
-            Authorization:
-              'Bearer ' + this.$auth.strategy.token.get(),
-          },
           responseType: 'blob',
         })
         .then((data) => {
