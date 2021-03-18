@@ -58,5 +58,17 @@ $ npm run docker:db
 
 The `express` API is located in api/ and is served as a middleware module through `nuxt`.
 
+## Require ENV variables
+
+MONGO_URL=mongodb://localhost:27017/
+MONGO_DB=db-name
+TEST_MONGO_DB=test-db-name
+AWS_ACCESS_KEY_ID=aws-access-key
+AWS_SECRET_ACCESS_KEY=aws-secret-access-key
+DO_BUCKET=bucket-name
+JWT_SECRET=longsecretkey
+JWT_EXPIRES_IN=30d
+JWT_COOKIE_EXPIRES_IN=30d
+NODE_ENV=development
 
 
