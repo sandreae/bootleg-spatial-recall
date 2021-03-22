@@ -124,9 +124,9 @@ export class ImpulsePlayer {
 
   async playImpulse() {
     // connect the sampleNode and play
+    this.impulseNode = await this.setImpulseNode();
     this.impulseNode.connect(this.audioCtx.destination);
     this.impulseNode.start();
-    this.impulseNode = await this.setImpulseNode();
     return true;
   }
 
