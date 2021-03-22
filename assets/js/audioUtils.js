@@ -112,11 +112,13 @@ export class ImpulsePlayer {
       this.sampleNode.connect(this.sampleGain);
       this.sampleNode.start();
       this.playing = !this.playing;
+      return 'stop';
     } else {
       this.sampleNode.stop();
       this.playing = !this.playing;
       this.sampleNode = await this.setSampleNode();
       this.makeConnections();
+      return 'play';
     }
   }
 
