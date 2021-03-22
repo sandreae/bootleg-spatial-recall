@@ -76,9 +76,13 @@ export default {
   },
   watch: {
     selectedImpulse(newImpulse, oldCount) {
-      fetch(newImpulse.audioFile).then((impulseFile) => {
-        return this.impulsePlayer.setNewImpulse(impulseFile);
-      });
+      this.$axios
+        .$get(this.selectedImpulse.audioFile, {
+          responseType: 'blob',
+        })
+        .then((impulseFile) => {
+          this.impulsePlayer.setNewImpulse(impulseFile);
+        });
     },
     mixLevel(newLevel, oldCount) {
       this.impulsePlayer.mixLevel(newLevel);
