@@ -77,7 +77,7 @@ export default {
         responseType: 'blob',
       });
       this.impulsePlayer = new ImpulsePlayer();
-      this.impulsePlayer.init(sampleFile, impulseFile);
+      await this.impulsePlayer.init(sampleFile, impulseFile);
     }
   },
   fetchOnServer: false,
@@ -106,6 +106,7 @@ export default {
     },
     async playing(isPlaying, wasPlaying) {
       if (isPlaying === wasPlaying) {
+        this.disabled = false;
         return;
       }
       this.disabled = true;
