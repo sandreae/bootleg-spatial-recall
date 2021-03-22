@@ -38,46 +38,25 @@ export default {
   },
   data() {
     return {
-      disabled: false,
+      disabled: true,
       impulsePlayer: null,
     };
   },
   async fetch() {
     if (this.impulses.length > 0) {
       // GET all impulses
-      const imagePromises = this.impulses.map((impulse) => {
-        // preload all impulse image files
-        return new Promise(function (resolve, reject) {
-          const img = new Image();
-          img.src = impulse.imageFile;
-          img.onload = resolve();
-          img.onerror = reject(new Error('Image did not load'));
-        });
-      });
-      const audioPromises = this.impulses.map((impulse) => {
-        // preload all impulse audio files
-        return new Promise(function (resolve, reject) {
-          const audio = new Audio();
-          audio.src = impulse.audioFile;
-          audio.onload = resolve();
-          audio.onerror = reject(new Error('Audio did not load'));
-        });
-      });
-      await Promise.all(imagePromises);
-      await Promise.all(audioPromises);
-      // GET sample and initial impulse file then init player
       const impulseFile = await this.$axios.$get(
         this.selectedImpulse.audioFile,
         {
           responseType: 'blob',
         },
       );
-
       const sampleFile = await this.$axios.$get(sample, {
         responseType: 'blob',
       });
       this.impulsePlayer = new ImpulsePlayer();
       await this.impulsePlayer.init(sampleFile, impulseFile);
+      this.disabled = false;
     }
   },
   fetchOnServer: false,
