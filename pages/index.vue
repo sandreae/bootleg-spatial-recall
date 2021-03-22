@@ -9,7 +9,10 @@
     Error loading impulses...
   </div>
   <section v-else class="page-container--flex-column">
-    <div class="impulse-container--flex-column-centre">
+    <div
+      class="impulse-container--flex-column-centre"
+      :class="disabled ? 'disabled' : ''"
+    >
       <ImpulsesDetails />
       <ImpulsesControls />
       <ImpulsesMix />
@@ -35,13 +38,15 @@ export default {
   },
   data() {
     return {
+      disabled: false,
       impulsePlayer: null,
     };
   },
   async fetch() {
     if (this.impulses.length > 0) {
       // GET all impulses
-      const promises = this.impulses.map((impulse) => {
+      const imagePromises = this.impulses.map((impulse) => {
+        // preload all impulse image files
         return new Promise(function (resolve, reject) {
           const img = new Image();
           img.src = impulse.imageFile;
@@ -49,10 +54,28 @@ export default {
           img.onerror = reject(new Error('Image did not load'));
         });
       });
-      await Promise.all(promises);
+      const audioPromises = this.impulses.map((impulse) => {
+        // preload all impulse audio files
+        return new Promise(function (resolve, reject) {
+          const audio = new Audio();
+          audio.src = impulse.audioFile;
+          audio.onload = resolve();
+          audio.onerror = reject(new Error('Audio did not load'));
+        });
+      });
+      await Promise.all(imagePromises);
+      await Promise.all(audioPromises);
       // GET sample and initial impulse file then init player
-      const impulseFile = await fetch(this.selectedImpulse.audioFile);
-      const sampleFile = await fetch(sample);
+      const impulseFile = await this.$axios.$get(
+        this.selectedImpulse.audioFile,
+        {
+          responseType: 'blob',
+        },
+      );
+
+      const sampleFile = await this.$axios.$get(sample, {
+        responseType: 'blob',
+      });
       this.impulsePlayer = new ImpulsePlayer();
       this.impulsePlayer.init(sampleFile, impulseFile);
     }
@@ -81,15 +104,17 @@ export default {
     mixLevel(newLevel, oldCount) {
       this.impulsePlayer.mixLevel(newLevel);
     },
-    playing(isPlaying, wasPlaying) {
+    async playing(isPlaying, wasPlaying) {
       if (isPlaying === wasPlaying) {
         return;
       }
-      this.impulsePlayer.togglePlay();
+      this.disabled = true;
+      await this.impulsePlayer.togglePlay();
+      this.disabled = false;
     },
-    playImpulse() {
+    async playImpulse() {
       this.impulsePlayer.impulseNode.onended = () => {};
-      this.impulsePlayer.playImpulse();
+      await this.impulsePlayer.playImpulse();
     },
   },
 };
@@ -99,6 +124,11 @@ export default {
 .page-container--flex-column {
   max-width: 70vw;
   justify-content: flex-start;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 @media only screen and (min-width: 800px) {
