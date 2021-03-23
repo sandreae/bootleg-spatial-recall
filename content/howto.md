@@ -10,12 +10,8 @@ Once you’ve recorded the impulse, if possible, trim down the  audio clip so it
 
 <br>
 
-We would recommend that you upload the impulse from a computer, rather than directly from a phone as there is still some teething behind the scenes.
-
-<br>
-
 Once you’ve submitted, it will appear among the list of impulses, and you can hear your impulse convolved with the example audio on the homepage of the site.
 
 <br>
 
-The site should be able to handle most audio file types but there may be some bugs we don't know about yet, so please get in contact if you have any problems. 
+File formats: **wav** and **mp3** files are fully supported, **m4a** is partially supported as it has compatibility issues with some browsers, other formats may well work but you're safest with the ones mentioned. Please get in touch if you have any issues uploading or playing back your impulse.
