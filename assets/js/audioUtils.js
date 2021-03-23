@@ -2,7 +2,6 @@ import { AudioContext } from 'standardized-audio-context';
 export class ImpulsePlayer {
   constructor() {
     this.audioCtx = new AudioContext();
-    this.analyserNode = this.audioCtx.createAnalyser();
     this.convolverGain = this.audioCtx.createGain();
     this.sampleGain = this.audioCtx.createGain();
     this.impulseGain = this.audioCtx.createGain();
@@ -15,8 +14,6 @@ export class ImpulsePlayer {
     this.cleanVolume = 0.5;
     this.wetVolume = 0.5;
     this.playing = false;
-
-    this.analyserNode.fftSize = 2048;
   }
 
   async init(sampleFile, impulseFile) {
@@ -96,7 +93,6 @@ export class ImpulsePlayer {
         this.audioCtx.currentTime,
       );
       this.convolverGain.connect(this.audioCtx.destination);
-      this.convolverGain.connect(this.analyserNode);
     }
 
     this.sampleGain.gain.setValueAtTime(
@@ -104,7 +100,6 @@ export class ImpulsePlayer {
       this.audioCtx.currentTime,
     );
     this.sampleGain.connect(this.audioCtx.destination);
-    this.sampleGain.connect(this.analyserNode);
   }
 
   async togglePlay() {
