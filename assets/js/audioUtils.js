@@ -65,7 +65,9 @@ export class ImpulsePlayer {
   async setNewImpulse(impulse) {
     this.impulseBuffer = await this.setImpulseBuffer(impulse);
     this.impulseNode = await this.setImpulseNode();
-    this.convolverNode = await this.setConvolverNode();
+    this.convolverNode.buffer = await this.audioCtx.decodeAudioData(
+      this.impulseBuffer.slice(0),
+    );
     this.makeConnections();
     return true;
   }
