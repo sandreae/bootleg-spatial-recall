@@ -75,14 +75,14 @@ export default {
     }),
   },
   watch: {
-    selectedImpulse(newImpulse, oldCount) {
-      this.$axios
-        .$get(this.selectedImpulse.audioFile, {
+    async selectedImpulse(newImpulse, oldCount) {
+      const impulseFile = await this.$axios.$get(
+        this.selectedImpulse.audioFile,
+        {
           responseType: 'blob',
-        })
-        .then((impulseFile) => {
-          this.impulsePlayer.setNewImpulse(impulseFile);
-        });
+        },
+      );
+      await this.impulsePlayer.setNewImpulse(impulseFile);
     },
     mixLevel(newLevel, oldCount) {
       this.impulsePlayer.mixLevel(newLevel);
