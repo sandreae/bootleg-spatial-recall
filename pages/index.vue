@@ -44,6 +44,16 @@ export default {
   },
   async fetch() {
     if (this.impulses.length > 0) {
+      const imagePromises = this.impulses.map((impulse) => {
+        // preload all impulse image files
+        return new Promise(function (resolve, reject) {
+          const img = new Image();
+          img.src = impulse.imageFile;
+          img.onload = resolve();
+          img.onerror = reject(new Error('Image did not load'));
+        });
+      });
+      await Promise.all(imagePromises);
       // GET all impulses
       const impulseFile = await this.$axios.$get(
         this.selectedImpulse.audioFile,
