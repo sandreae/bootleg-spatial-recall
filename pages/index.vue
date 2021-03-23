@@ -55,15 +55,8 @@ export default {
       });
       await Promise.all(imagePromises);
       // GET all impulses
-      const impulseFile = await this.$axios.$get(
-        this.selectedImpulse.audioFile,
-        {
-          responseType: 'blob',
-        },
-      );
-      const sampleFile = await this.$axios.$get(sample, {
-        responseType: 'blob',
-      });
+      const impulseFile = await fetch(this.selectedImpulse.audioFile);
+      const sampleFile = await fetch(sample);
       this.impulsePlayer = new ImpulsePlayer();
       await this.impulsePlayer.init(sampleFile, impulseFile);
       this.disabled = false;
@@ -86,12 +79,7 @@ export default {
   },
   watch: {
     async selectedImpulse(newImpulse, oldCount) {
-      const impulseFile = await this.$axios.$get(
-        this.selectedImpulse.audioFile,
-        {
-          responseType: 'blob',
-        },
-      );
+      const impulseFile = await fetch(this.selectedImpulse.audioFile);
       await this.impulsePlayer.setNewImpulse(impulseFile);
     },
     mixLevel(newLevel, oldCount) {
