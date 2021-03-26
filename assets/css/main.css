@@ -93,6 +93,16 @@ h4 {
   text-decoration-line: underline;
 }
 
+.logo {
+  max-height: 2rem;
+}
+
+@media only screen and (min-width: 800px) {
+  .logo {
+    max-height: 3rem;
+  }
+}
+
 .click {
   cursor: pointer;
 }
@@ -101,7 +111,6 @@ h4 {
   filter: sepia(30%);
   text-decoration-line: underline;
 }
-
 
 .fuzzy {
   padding: 10px;

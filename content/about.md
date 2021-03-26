@@ -29,3 +29,12 @@ The site is part of a project by [Otto Willberg](http://www.ottowillberg.com/) w
 
 The website has been made possible with support from Sound and Music's New Voices programme, Arts Council England, PRS and RVW Trust. It has been built by [Sam Andreae](https://www.samandreae.com/).
 
+<br>
+
+<div>
+    <img src="/grant_png_black.png" class="logo">
+    <img src="/New_Voices_logo_black.jpg" class="logo">
+    <img src="/prs-talentdevelopmentpartner-logotype-black-small.png" class="logo">
+    <img src="/RVW-Trust-logo.jpg" class="logo">
+    <img src="/SOUND_AND_MUSIC_RGB_POS.png" class="logo">
+</div>
