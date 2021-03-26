@@ -24,7 +24,7 @@ export default {
 .content--flex-column-centre {
   text-align: justify;
   z-index: 1;
-  margin-top: 10px;
+  margin: 10px;
 }
 .page--flex-column-centre {
   justify-content: flex-start;
