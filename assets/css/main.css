@@ -86,6 +86,19 @@ body {
 
 
 /* general element styles and classes */
+
+a:link {
+  color: black;
+}
+
+a:visited {
+  color: black;
+}
+
+a:hover {
+  color: blue;
+}
+
 h1,
 h2,
 h3,
