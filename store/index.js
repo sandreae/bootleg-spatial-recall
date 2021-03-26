@@ -20,7 +20,7 @@ export const mutations = {
     state.mixLevel =
       state.mixLevel >= 20 ? state.mixLevel : (state.mixLevel += 1);
   },
-  decreaseMixLevel(state, level) {
+  decreaseMixLevel(state) {
     state.mixLevel =
       state.mixLevel <= 1 ? state.mixLevel : (state.mixLevel -= 1);
   },

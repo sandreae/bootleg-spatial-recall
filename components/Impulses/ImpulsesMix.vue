@@ -1,24 +1,30 @@
 <template>
   <div class="impulse-mix--flex-row">
-    <div
-      class="item button-fuzzy ear"
-      @click="decreaseMixLevel()"
-      v-html="arrowLeft"
-    ></div>
-    <div
-      v-for="n in length"
-      :key="n"
-      class="item button-fuzzy"
-      @click="setMixLevel(n)"
-    >
-      <span v-if="n !== level" v-html="sliderInactive"></span>
-      <span v-else v-html="sliderActive"></span>
+    <div class="item">
+      <div
+        class="button button-fuzzy"
+        @click="decreaseMixLevel()"
+        v-html="ear"
+      ></div>
     </div>
-    <div
-      class="item button-fuzzy ear"
-      @click="increaseMixLevel()"
-      v-html="speaker"
-    ></div>
+    <div class="item slider">
+      <input
+        id="mix"
+        :value="level"
+        type="range"
+        name="mix"
+        min="0"
+        max="20"
+        @change="onChange"
+      />
+    </div>
+    <div class="item">
+      <div
+        class="button button-fuzzy"
+        @click="increaseMixLevel()"
+        v-html="speaker"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -30,12 +36,8 @@ export default {
     return {
       impulsePlayer: null,
       playing: false,
-      sliderInactive: '&#x2504',
-      sliderActive: '&#x2505',
-      arrowLeft: '&#128066',
-      arrowRight: '&#128066',
+      ear: '&#128066',
       speaker: '&#128266',
-      length: 20,
     };
   },
   computed: {
@@ -49,6 +51,9 @@ export default {
       decreaseMixLevel: 'decreaseMixLevel',
       increaseMixLevel: 'increaseMixLevel',
     }),
+    onChange(e) {
+      this.setMixLevel(parseInt(e.target.value));
+    },
   },
 };
 </script>
@@ -59,25 +64,29 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-.item {
-  -webkit-user-select: none;
-  user-select: none;
-  flex: 1 1 15px;
-  font-size: 0.8em;
+
+input {
+  width: 100%;
 }
 
-.ear {
+.impulse-mix--flex-row div:nth-child(2n + 1) {
+  display: flex;
+  flex: 1 1 30px;
+  justify-content: center;
+}
+
+.impulse-mix--flex-row div:nth-child(2) {
+  flex: 4 1 30px;
+}
+
+.button {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
   font-size: 2em;
+  max-width: 1em;
 }
 
 @media only screen and (min-width: 800px) {
-  .item {
-    font-size: 1.5em;
-    flex: 1 1 15px;
-    cursor: pointer;
-  }
-  .ear {
-    font-size: 2em;
-  }
 }
 </style>
