@@ -4,7 +4,7 @@
 
 Otto Willberg [website](http://www.ottowillberg.com/)
 
-***opwillberg at btinternet dot com***
+***contact@bootlegspatialrecall.net***
 
 <br>
 

@@ -12,7 +12,7 @@ Trim the recording so it starts right at the beginning of the sound, and ends wh
 
 <br>
 
-File formats: **wav** and **mp3** files are fully supported, **m4a** is partially supported as it has compatibility issues with some mobile device browserd, other formats may well work but you're safest with the ones mentioned. Please get in touch if you have any issues uploading or playing back your impulse.
+File formats: **wav** and **mp3** files are fully supported, **m4a** is partially supported as it has compatibility issues with some mobile device browsers, other formats may well work but you're safest with the ones mentioned. Please get in touch if you have any issues uploading or playing back your impulse.
 
 <br>
 
