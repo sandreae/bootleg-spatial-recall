@@ -18,6 +18,7 @@ export default {
 </script>
 <style scoped>
 .info--flex-column {
+  text-align: justify;
   z-index: 1;
   padding: 20px;
 }

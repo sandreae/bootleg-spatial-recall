@@ -87,7 +87,7 @@ export default {
 
 @media only screen and (min-width: 800px) {
   .page-container--flex-column-centre {
-    flex-flow: row-reverse;
+    flex-flow: row;
   }
   .info-container--flex-column {
     max-width: 50vw;
