@@ -3,6 +3,7 @@
     <div class="nav--flex-row">
       <NuxtLink class="nav-item" to="/">home</NuxtLink>
       <NuxtLink class="nav-item" to="/about">about</NuxtLink>
+      <NuxtLink class="nav-item" to="/contact">contact</NuxtLink>
       <NuxtLink class="nav-item" to="/impulses/upload"
         >upload</NuxtLink
       >
