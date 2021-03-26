@@ -8,7 +8,7 @@ If you don't have a recording device a phone is more than capable of capturing d
 
 <br>
 
-Trim the recording so it starts right at the beginning of the sound, and ends when the decay of the sound has finished. For a more in-depth how-to you can read [this] guide.
+Trim the recording so it starts right at the beginning of the sound, and ends when the decay of the sound has finished. For a more in-depth how-to you can read <a href="/bsr-recording-guide.pdf">this</a> guide.
 
 <br>
 

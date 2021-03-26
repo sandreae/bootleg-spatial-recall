@@ -1,6 +1,19 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
 
+  render: {
+    // https://github.com/nuxt/serve-placeholder
+    fallback: {
+      static: {
+        handlers: {
+          '.gif': false,
+          '.png': false,
+          '.jpg': false,
+          '.pdf': false,
+        },
+      },
+    },
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'bootleg-spatial-recall',
