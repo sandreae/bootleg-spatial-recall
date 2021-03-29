@@ -38,6 +38,7 @@ app.use(
       'default-src': [
         "'self'",
         'bootleg-spatial-recall.fra1.digitaloceanspaces.com',
+        'bootlegspatialrecall.net',
       ],
       permittedPolicies: 'all',
     },
